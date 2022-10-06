@@ -1,6 +1,7 @@
 # to do list
 
-Time to tackle the ol' to do list app.  
+Time to tackle the ol' to do list app. 
+Using webpack, bootstrap, and sass.   
 
 ## Steps
 
