@@ -1,15 +1,13 @@
-import _ from 'lodash';
 import printMe from './print.js';
 import './input.scss';
 
 function component() {
-    // select the view pane
     const viewPane = document.querySelector('#view-pane');
     viewPane.classList.add('view-pane');
-
-    viewPane.innerHTML = _.join(['first', 'second'], ' ');
+    viewPane.innerHTML = "test";
 
     const btn = document.createElement('button');
+    btn.classList.add('btn','btn-primary');
     btn.textContent = 'Click me and check the console';
     btn.onclick = printMe;
     viewPane.appendChild(btn);

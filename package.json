@@ -6,13 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack",
+    "scss": "sass --watch input.scss output.css"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "mini-css-extract-plugin": "^2.6.1",
     "sass": "^1.55.0",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
