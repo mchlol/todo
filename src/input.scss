@@ -1,5 +1,9 @@
-$primary: purple;
+$primary: blue;
 
 .view-pane {
     color: $primary;
+}
+
+div>* {
+    border: 1px solid $primary;
 }

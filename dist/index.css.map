@@ -1,1 +1,1 @@
-{"version":3,"file":"index.css","mappings":"AAEA,WACI,YAHM,C","sources":["webpack://todo/./src/input.scss"],"sourcesContent":["$primary: purple;\n\n.view-pane {\n    color: $primary;\n}"],"names":[],"sourceRoot":""}
+{"version":3,"file":"index.css","mappings":"AAEA,WACI,UAHM,CAMV,MACI,sB","sources":["webpack://todo/./src/input.scss"],"sourcesContent":["$primary: blue;\n\n.view-pane {\n    color: $primary;\n}\n\ndiv>* {\n    border: 1px solid $primary;\n}"],"names":[],"sourceRoot":""}
