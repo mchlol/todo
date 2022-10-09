@@ -14,8 +14,8 @@
 </head>
 
 <body>
-    <main class="vh-100">
-        <div class="container-fluid h-100 d-inline-block">
+    <main class="vh-100 border border-success">
+        <div class="container-fluid h-100">
             <div class="row border">
                 <div class="col g-0">
                     <header class="text-center m-3">
@@ -23,8 +23,8 @@
                     </header>
                 </div>
             </div>
-            <div class="row">
-                <nav class="col-4 border vh-100">
+            <div class="row border border-warning">
+                <nav class="col-4 border border-primary">
 
                     <div id="tasks-list" class="p-1 border border-primary mt-3 w-100">
                         <h2 class="p-1 text-primary">Tasks</h2>
@@ -45,17 +45,60 @@
                     </div>
                 </nav>
 
-                <section id="view-container" class="col-8">
-                    <div id="add-new-wrap" class="border">
-                        <h2>Tasks</h2>
-                        <label for="item">Enter a new task:</label>
-                        <input type="text" name="item" id="item">
-                        <button>Add task</button>
+                <section id="view-container" class="col-8 border border-secondary">
+                    <div id="add-new-wrap" class="p-2 mt-3 border border-primary">
+                        <h2 class="text-primary">Add a new task</h2>
+                        <form id="add-form" class="m-1 border border-primary">
+
+                            <div class="p-1">
+                                <label for="item">Title</label>
+                                <input type="text" name="item" id="item">
+                            </div>
+
+                            <div class="p-1">
+                                <input type="button" class="btn btn-primary" value="Quick add">
+
+                                <input type="button" class="btn btn-info" value="Add info">
+                            </div>
+                        </form>
                     </div>
-                    <div class="view-pane-wrap">
+                    <div id="view-pane-wrap" class="p-2 mt-3 border border-primary">
                         <!-- this will be created with javascript -->
-                        <h2>Today</h2>
-                        <div id="view-pane" class="view-pane">
+                        <h2 id="current-view-title">Today</h2>
+                        <div id="current-view-pane" class="view-pane">
+
+                            <div id="active-tasks" class="row">
+
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <input type="checkbox" class="form-check-input me-1" value="" aria-label="...">
+                                        <span id="task1" class="text-primary">Wash dishes</span>
+                                        <span class="text-secondary text-sm">No description</span>
+                                        <span>Added 09/10/22</span>
+                                        <span>Due 09/10/22</span>
+                                        <span>Priority: 4</span>
+                                    </li>
+                                </ul>
+
+                                <div class="col" id="task-item">
+                                    <!--
+                                        checkbox
+                                        title
+                                        description
+                                        date added
+                                        due date
+                                        priority
+                                        delete btn
+                                    -->
+                                    <!-- <input type="checkbox" name="task1" id="task1">
+                                    <p class="text-primary">Wash dishes</p>
+                                    <p class="text-secondary text-sm">No description</p>
+                                    <p>Added 09/10/22</p>
+                                    <p>Due 09/10/22</p>
+                                    <p>Priority: 4</p>
+                                    <button class="btn btn-danger">Delete</button> -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
