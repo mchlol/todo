@@ -14,49 +14,51 @@
 </head>
 
 <body>
-    <main class="min-vh-100">
-        <div class="container-fluid h-100">
-            <div class="row">
+    <main class="vh-100">
+        <div class="container-fluid h-100 d-inline-block">
+            <div class="row border">
                 <div class="col g-0">
-                    <header class="text-center">
-                        <h1>To Do List</h1>
+                    <header class="text-center m-3">
+                        <h1 class="p-1">To Do List</h1>
                     </header>
                 </div>
             </div>
             <div class="row">
-                <nav class="col-4">
-                    <div class="tasks">
-                        <h3>Tasks</h3>
-                        <ul>
-                            <li>Today</li>
-                            <li>Upcoming</li>
+                <nav class="col-4 border vh-100">
+
+                    <div id="tasks-list" class="p-1 border border-primary mt-3 w-100">
+                        <h2 class="p-1 text-primary">Tasks</h2>
+                        <ul class="list-group">
+                            <li class="list-group-item">Today</li>
+                            <li class="list-group-item">Future</li>
+                            <li class="list-group-item">No date</li>
                         </ul>
                     </div>
 
-                    <div class="projects">
-                        <h3>Projects</h3>
-                        <ul>
-                            <li>Project 1</li>
+                    <div id="projects-list" class="p-1 border border-primary mt-3 w-100">
+                        <h3 class="p-1 text-primary">Projects</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">Project 1</li>
+                            <li class="list-group-item">Project 2</li>
+                            <li class="list-group-item">Project 3</li>
                         </ul>
                     </div>
                 </nav>
 
-                <section class="col-8">
-                    <div class="add-new-wrap">
+                <section id="view-container" class="col-8">
+                    <div id="add-new-wrap" class="border">
+                        <h2>Tasks</h2>
                         <label for="item">Enter a new task:</label>
                         <input type="text" name="item" id="item">
                         <button>Add task</button>
                     </div>
                     <div class="view-pane-wrap">
                         <!-- this will be created with javascript -->
-                        <h3>Today</h3>
+                        <h2>Today</h2>
                         <div id="view-pane" class="view-pane">
                         </div>
                     </div>
                 </section>
-            </div>
-            <div class="row">
-                <footer class="col">footer</footer>
             </div>
         </div>
     </main>

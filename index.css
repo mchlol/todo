@@ -1,3 +1,4 @@
-.view-pane{color:blue}div>*{border:1px solid blue}
+@import url(https://fonts.googleapis.com/css2?family=Figtree&family=Noto+Serif&display=swap);
+body{font-family:"Figtree",sans-serif}h1,h2,h3,h4{font-family:"Noto Serif",serif}.view-pane{color:blue}
 
 /*# sourceMappingURL=index.css.map*/
