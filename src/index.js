@@ -17,3 +17,8 @@ function component() {
   }
   
 component();
+
+// add class '.active' to show current section
+// add badges to show no of tasks in a section
+// https://getbootstrap.com/docs/5.0/components/list-group/
+
