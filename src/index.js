@@ -2,9 +2,9 @@ import printMe from './print.js';
 import './input.scss';
 
 function component() {
-    const viewPane = document.querySelector('#view-pane');
-    viewPane.classList.add('view-pane');
-    viewPane.innerHTML = "test";
+    const viewPane = document.querySelector('#current-view-pane');
+    viewPane.classList.add('view-pane', 'm-1');
+    viewPane.innerHTML = "All content in this panel is generated with JavaScript";
 
     const btn = document.createElement('button');
     btn.classList.add('btn','btn-primary');
@@ -16,7 +16,7 @@ function component() {
     return viewPane;
   }
   
-component();
+// component();
 
 // add class '.active' to show current section
 // add badges to show no of tasks in a section
