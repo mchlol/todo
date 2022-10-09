@@ -43,7 +43,11 @@ Default behaviour for task quick add:
 - date: current date
 - dueDate: current date
 - priority: 4  
-Tasks have 4 priority levels, from 1 (highest) to 4 (lowest, default).  
+- id number: generated? 
+
+View will be a row, starting with a checkbox and ending with a delete button.  
+
+**Priority:** Tasks have 4 priority levels, from 1 (highest) to 4 (lowest, default).  
 
 
 ## Functionality
