@@ -1,16 +1,47 @@
-# to do list
+# To do list - WIP
 
 Time to tackle the ol' to do list app. 
-Using webpack, bootstrap, and sass.  
 
-## UI
+## Technologies & tools
 
-Pretty shameless based on Todoist (which I actually use already!) but what I noticed about the other apps suggested is that...they all look pretty much the same. I'll be using sass for the css and also trying out Bootstrap.  
+- Figma
+- HTML
+- JavaScript (vanilla)
+- Bootstrap
+- Sass for custom CSS
+- Webpack
+- Git
 
-**Note:** work out a way to automate compiling the sass and the build process together, I don't want all my css in a style tag in the head.  
-[something like this](https://stackoverflow.com/questions/50394789/webpack-4-compile-scss-to-separate-css-file)  
+## Project set up
 
-## Steps for the javascript
+### User interface design
+
+Based on the format of [Todoist](https://todoist.com), an app I use in everyday life. No need to reinvent the wheel.  
+I have created my design in Figma, [view it here](https://www.figma.com/file/lNjJ3WOAyo7zY9mGzCDK3u/Todo?node-id=0%3A1).
+The UI uses a 2 column layout - nav on the left, section view on the right.  
+**Nav** will have 2 boxes;  
+- Tasks - today (default), future, and no date.  
+- Projects - added by user and ordered by oldest first. *Projects can be deleted.*  
+
+The section view will be divided into two rows;  
+- Add new task
+- View pane, showing all the tasks in the currently selected view  
+
+
+## Task item requirements
+
+Default behaviour for task quick add:  
+- title: from input
+- description: null
+- date: current date
+- dueDate: current date
+- priority: 4  
+Tasks have 4 priority levels, from 1 (highest) to 4 (lowest, default).  
+
+
+## Functionality
+
+### JavaScript pseudocode/algorithm 
 
 create a text input and button  
 create a div to act as a view pane  
