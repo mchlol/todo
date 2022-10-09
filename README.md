@@ -14,6 +14,13 @@ Time to tackle the ol' to do list app.
 
 ## Project set up
 
+### Scaffolding
+
+Linked Bootstrap via the CDN.  
+Followed the [webpack project set up tutorial](https://webpack.js.org/guides/getting-started/) again  
+Added sass and mini css extract plugin so sass is compiled to css into a file, instead of being injected into the head with style-loader.  
+Added a watch condition to my webpack config so I can run the build command once and it stays open, watching for changes.  
+
 ### User interface design
 
 Based on the format of [Todoist](https://todoist.com), an app I use in everyday life. No need to reinvent the wheel.  
@@ -28,7 +35,7 @@ The section view will be divided into two rows;
 - View pane, showing all the tasks in the currently selected view  
 
 
-## Task item requirements
+### Task item requirements
 
 Default behaviour for task quick add:  
 - title: from input
