@@ -21,18 +21,20 @@ Followed the [webpack project set up tutorial](https://webpack.js.org/guides/get
 Added sass and mini css extract plugin so sass is compiled to css into a file, instead of being injected into the head with style-loader.  
 Added a watch condition to my webpack config so I can run the build command once and it stays open, watching for changes.  
 
-### User interface design
+### User interface 
 
 Based on the format of [Todoist](https://todoist.com), an app I use in everyday life. No need to reinvent the wheel.  
-I have created my design in Figma, [view it here](https://www.figma.com/file/lNjJ3WOAyo7zY9mGzCDK3u/Todo?node-id=0%3A1).
+I have created my design in Figma, [which can be seen here](https://www.figma.com/file/lNjJ3WOAyo7zY9mGzCDK3u/Todo?node-id=0%3A1).
 The UI uses a 2 column layout - nav on the left, section view on the right.  
 **Nav** will have 2 boxes;  
-- Tasks - today (default), future, and no date.  
-- Projects - added by user and ordered by oldest first. *Projects can be deleted.*  
+- Tasks - categories are: today (default), future, and no date. *Categories cannot be created or deleted.*  
+- Projects - added by user and ordered by oldest first. *Projects can be created and deleted.*  
 
 The section view will be divided into two rows;  
 - Add new task
-- View pane, showing all the tasks in the currently selected view  
+- View pane  
+
+The view pane will have 2 sections, with a heading at the top followed by a list of tasks.  
 
 
 ### Task item requirements
@@ -45,7 +47,7 @@ Default behaviour for task quick add:
 - priority: 4  
 - id number: generated? 
 
-View will be a row, starting with a checkbox and ending with a delete button.  
+Each task will be presented in a row, starting with a checkbox, and ending with a delete button.  
 
 **Priority:** Tasks have 4 priority levels, from 1 (highest) to 4 (lowest, default).  
 
