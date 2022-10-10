@@ -2,6 +2,11 @@ import printMe from './print.js';
 import './input.scss';
 
 function component() {
+    const viewPaneWrap = document.querySelector('#view-pane-wrap');
+    const viewHeading = document.querySelector('#viewHeading');
+    
+
+
     const viewPane = document.querySelector('#current-view-pane');
     viewPane.classList.add('view-pane', 'm-1');
     viewPane.innerHTML = "All content in this panel is generated with JavaScript";
