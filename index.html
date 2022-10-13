@@ -60,32 +60,30 @@
                         <h2 class="text-primary">Add a new task</h2>
 
                         <form id="add-task-form" class="m-1 border border-primary">
-                            <div class="row">
+                            <div class="d-flex justify-content-between">
 
-                                <div class="col">
-                                    <label for="title">Title
-                                        <input type="text" name="title" id="title">
-                                    </label>
+                                <label for="title">Title
+                                    <input type="text" name="title" id="title">
+                                </label>
 
-                                    <label for="dueDate">Due
-                                        <input type="date" name="dueDate" id="dueDate">
-                                    </label>
-                                </div>
+                                <label for="dueDate">Due
+                                    <input type="date" name="dueDate" id="dueDate">
+                                </label>
 
                             </div>
 
-                            <div class="col">
-                                <label for="priority">Priority
-                                    <select name="priority" id="priority" class="form-select">
-                                        <option value="1">Priority 1 (high)</option>
-                                        <option value="2">Priority 2</option>
-                                        <option value="3">Priority 3</option>
-                                        <option selected value="4">Priority 4 (low)</option>
-                                    </select>
-                                </label>
+                            <div class="d-flex justify-content-center align-items-center">
+
+                                <select name="priority" id="priority" class="form-select">
+                                    <option value="1">Priority 1 (high)</option>
+                                    <option value="2">Priority 2</option>
+                                    <option value="3">Priority 3</option>
+                                    <option selected value="4">Priority 4 (low)</option>
+                                </select>
 
 
                                 <input type="submit" class="btn btn-primary" value="Submit">
+
                             </div>
 
 
@@ -110,15 +108,26 @@
 
                                     <li class="list-group-item border border-primary m-1">
 
-                                        <div class="d-flex w-100 justify-content-start align-items-center">
-                                            <input type="checkbox" class="form-check-input m-1" value=""
-                                                aria-label="...">
-                                            <span id="task1" class="fw-bold m-1">Wash dishes</span>
-                                            <span class="text-muted small m-1">No description but if there was how
-                                                much space would it take up? This could have a character limit.</span>
+                                        <div class="row border w-100">
+
+                                            <div class="col-1">
+                                                <input type="checkbox" class="form-check-input m-1">
+                                            </div>
+
+                                            <div class="col-4">
+                                                <span id="task1" class="fw-bold m-1">Name of task and some other text to
+                                                    fill the space</span>
+                                            </div>
+
+                                            <div class="col-7">
+                                                <span class="text-muted small m-1">No description but if there was how
+                                                    much space would it take up? This should have a character
+                                                    limit or fixed scrolling.</span>
+                                            </div>
+
                                         </div>
 
-                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                        <div class="border d-flex justify-content-between align-items-center">
                                             <span class="small m-1">Added: 09/10/22</span>
                                             <span class="small m-1">Due: 09/10/22</span>
                                             <span class="small m-1">Priority: 4</span>
