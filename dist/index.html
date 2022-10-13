@@ -23,8 +23,9 @@
                     </header>
                 </div>
             </div>
-            <div class="row border border-warning">
-                <nav class="col-4 border border-primary">
+            <div class="row border border-secondary">
+                <!-- start tasks list -->
+                <nav class="col-4 border border-warning">
 
                     <div id="tasks-list" class="p-1 border border-primary mt-3 w-100">
                         <h2 class="p-1 text-primary">Tasks</h2>
@@ -51,53 +52,61 @@
                         </ul>
                     </div>
                 </nav>
+                <!-- end tasks list -->
 
-                <section id="view-container" class="col-8 border border-secondary">
+                <section id="view-container" class="col-8 border border-warning">
+                    <!-- start add new -->
                     <div id="add-new-wrap" class="p-2 mt-3 border border-primary">
                         <h2 class="text-primary">Add a new task</h2>
 
-                        <form id="add-form" class="m-1 border border-primary">
+                        <form id="add-task-form" class="m-1 border border-primary">
+                            <div class="row">
 
-                            <div class="p-1">
-                                <label for="item">Title</label>
-                                <input type="text" name="item" id="item">
+                                <div class="col">
+                                    <label for="title">Title
+                                        <input type="text" name="title" id="title">
+                                    </label>
 
-                                <input type="button" class="btn btn-primary" value="Quick add">
+                                    <label for="dueDate">Due
+                                        <input type="date" name="dueDate" id="dueDate">
+                                    </label>
+                                </div>
 
-                                <input type="button" class="btn btn-info" value="Add info">
                             </div>
+
+                            <div class="col">
+                                <label for="priority">Priority
+                                    <select name="priority" id="priority" class="form-select">
+                                        <option value="1">Priority 1 (high)</option>
+                                        <option value="2">Priority 2</option>
+                                        <option value="3">Priority 3</option>
+                                        <option selected value="4">Priority 4 (low)</option>
+                                    </select>
+                                </label>
+
+
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </div>
+
 
                         </form>
                     </div>
+                    <!-- end add new -->
+
+                    <!-- start view pane -->
                     <div id="view-pane-wrap" class="p-2 mt-3 border border-primary">
-                        <!-- this will be created with javascript -->
+                        <!-- start view heading - created with javascript -->
                         <div id="view-heading">
                             <h2 id="current-view-title" class="text-primary display-5">Today</h2>
                         </div>
+                        <!-- end view heading -->
 
+                        <!-- start tasks view -->
                         <div id="current-view-pane" class="view-pane">
 
                             <div id="active-tasks" class="row">
 
                                 <ul class="list-group">
-
-                                    <li class="list-group-item border border-primary m-1">
-
-                                        <div class="d-flex justify-content-start align-items-center">
-                                            <input type="checkbox" class="form-check-input m-1" value=""
-                                                aria-label="...">
-                                            <span id="task1" class="fw-bold m-1">Go to the supermarket</span>
-                                            <span class="text-muted small m-1">Prepare weekly menu and make a shopping
-                                                list</span>
-                                        </div>
-
-                                        <div class="d-flex w-100 justify-content-between align-items-center">
-                                            <span class="small m-1">Added: 09/10/22</span>
-                                            <span class="small m-1">Due: 09/10/22</span>
-                                            <span class="small m-1 text-danger">Priority: 1</span>
-                                            <button class="btn btn-sm btn-danger m-1">Delete</button>
-                                        </div>
-                                    </li>
 
                                     <li class="list-group-item border border-primary m-1">
 
@@ -116,29 +125,11 @@
                                             <button class="btn btn-sm btn-danger m-1">Delete</button>
                                         </div>
                                     </li>
-
                                 </ul>
 
-                                <div class="col" id="task-item">
-                                    <!--
-                                        checkbox
-                                        title
-                                        description
-                                        date added
-                                        due date
-                                        priority
-                                        delete btn
-                                    -->
-                                    <!-- <input type="checkbox" name="task1" id="task1">
-                                    <p class="text-primary">Wash dishes</p>
-                                    <p class="text-secondary text-sm">No description</p>
-                                    <p>Added 09/10/22</p>
-                                    <p>Due 09/10/22</p>
-                                    <p>Priority: 4</p>
-                                    <button class="btn btn-danger">Delete</button> -->
-                                </div>
                             </div>
                         </div>
+
                     </div>
                 </section>
             </div>
