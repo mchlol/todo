@@ -36,8 +36,8 @@
                     <div class="row align-items-center mb-2">
 
                         <div class="col-sm-4">
-                            <input type="text" name="title" id="title" class="form-control" placeholder="New task"
-                                required>
+                            <input type="text" name="title" id="title" maxlength="50" class="form-control"
+                                placeholder="New task" required>
                         </div>
 
                         <div class="col-sm-4">
@@ -61,7 +61,7 @@
                         <div class="col-sm-9">
                             <label for="notes" class="form-label w-100">
                                 <textarea name="tasknotes" id="tasknotes" placeholder="Notes or comments" rows="2"
-                                    style="resize: none" class="form-control"></textarea>
+                                    maxlength="125" style="resize: none" class="form-control"></textarea>
                             </label>
                         </div>
                         <div class="col-sm-2"><input type="submit" class="btn btn-primary m-1" value="Submit"></div>
@@ -75,7 +75,7 @@
             <!-- end add new wrap -->
 
             <!-- start nav -->
-            <nav class="p-2" style="border: 3px solid goldenrod">
+            <nav class="p-2 mt-2" style="border: 3px solid goldenrod">
 
                 <ul class="nav nav-pills d-flex justify-content-evenly align-items-center">
 
@@ -159,7 +159,7 @@
             <!-- end nav -->
 
             <!-- start view wrap - header and content to be created with js -->
-            <section id="view-wrap" class="p-2 mt-3" style="border: 3px solid red">
+            <section id="view-wrap" class="p-2 mt-2" style="border: 3px solid red">
                 <!-- start view heading - create with js -->
                 <div id="view-heading" class="mb-2 p-2" style="border: 3px solid red">
                     <h2 id="current-view-title">Today:</h2>
@@ -167,7 +167,7 @@
                 <!-- end view heading -->
 
                 <!-- start tasks view - create with js -->
-                <div id="tasks-view" style="border: 3px solid green">
+                <div id="tasks-view" style="border: 3px solid red">
 
                     <ul class="list-group">
                         <li class="list-group-item">
