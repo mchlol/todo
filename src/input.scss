@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree&family=Noto+Serif&display=swap');
 
-$primary: blue;
+$primary: goldenrod;
 $sans-serif: 'Figtree', sans-serif;
 $serif: 'Noto Serif', serif;
 
@@ -17,4 +17,14 @@ h4 {
 
 .view-pane {
     color: $primary;
+    border: 3px solid $primary;
+    border-radius: 1rem;
+}
+
+#priority {
+    width: auto;
+}
+
+#add-task-form {
+    max-width: 500px;
 }
