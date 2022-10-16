@@ -28,3 +28,33 @@ h4 {
 #add-task-form {
     max-width: 500px;
 }
+
+.task-tab {
+    background-color: goldenrod;
+
+    a {
+        color: #fff;
+    }
+}
+
+.project-tab {
+    background-color: palevioletred;
+
+    a {
+        color: #fff;
+    }
+}
+
+// screen is less than 840px wide
+@media screen and (max-width: 840px) {
+    main {
+        width: 100%;
+    }
+}
+
+// screen is at least 841px wide
+@media screen and (min-width: 841px) {
+    main {
+        width: 75%;
+    }
+}

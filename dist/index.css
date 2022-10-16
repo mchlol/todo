@@ -1,4 +1,4 @@
 @import url(https://fonts.googleapis.com/css2?family=Figtree&family=Noto+Serif&display=swap);
-body{font-family:"Figtree",sans-serif}h1,h2,h3,h4{font-family:"Noto Serif",serif}.view-pane{color:#daa520;border:3px solid #daa520;border-radius:1rem}#priority{width:auto}#add-task-form{max-width:500px}
+body{font-family:"Figtree",sans-serif}h1,h2,h3,h4{font-family:"Noto Serif",serif}.view-pane{color:#daa520;border:3px solid #daa520;border-radius:1rem}#priority{width:auto}#add-task-form{max-width:500px}.task-tab{background-color:#daa520}.task-tab a{color:#fff}.project-tab{background-color:#db7093}.project-tab a{color:#fff}@media screen and (max-width: 840px){main{width:100%}}@media screen and (min-width: 841px){main{width:75%}}
 
 /*# sourceMappingURL=index.css.map*/
