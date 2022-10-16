@@ -13,16 +13,15 @@
 
 </head>
 
-<body>
-    <main class="vh-100">
+<body class="d-flex justify-content-center">
+    <main class="vh-100 w-75">
         <div class="container-fluid h-100">
-            <div class="row">
-                <div class="col">
-                    <header class="text-center m-3">
-                        <h1 class="display-1 p-1 text-primary">To Do List</h1>
-                    </header>
-                </div>
-            </div>
+
+            <header class="text-center m-3">
+                <h1 class="display-1 p-1 text-primary">To Do List</h1>
+            </header>
+
+            <!-- start content wrap -->
             <div class="row border border-secondary">
                 <!-- start tasks list -->
                 <nav class="col-4 border border-warning">
@@ -60,35 +59,40 @@
                         <h2 class="text-primary">Add a new task</h2>
 
                         <form id="add-task-form" class="m-1 border border-primary">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between m-1">
 
-                                <label for="title">Title
-                                    <input type="text" name="title" id="title">
-                                </label>
-
-                                <label for="dueDate">Due
-                                    <input type="date" name="dueDate" id="dueDate">
+                                <label for="title" class="m-1 w-100">Title
+                                    <input type="text" class="w-100" name="title" id="title" placeholder="Wash dishes"
+                                        required>
                                 </label>
 
                             </div>
 
-                            <div class="d-flex justify-content-center align-items-center">
+                            <div class="d-flex justify-content-between align-items-center m-1">
 
-                                <select name="priority" id="priority" class="form-select">
+                                <label for="dueDate" class="m-1">Due:
+                                    <input type="date" name="dueDate" id="dueDate">
+                                </label>
+
+                                <select name="priority" id="priority" class="form-select m-1">
                                     <option value="1">Priority 1 (high)</option>
                                     <option value="2">Priority 2</option>
                                     <option value="3">Priority 3</option>
                                     <option selected value="4">Priority 4 (low)</option>
                                 </select>
 
-
-                                <input type="submit" class="btn btn-primary" value="Submit">
-
                             </div>
 
+                            <div class="d-flex justify-content-between align-items-end m-1">
 
-                        </form>
+                                <textarea name="description" id="description" cols="40" rows="5"></textarea>
+                                <input type="submit" class="btn btn-primary m-1" value="Submit">
+                            </div>
+
                     </div>
+
+
+                    </form>
                     <!-- end add new -->
 
                     <!-- start view pane -->
@@ -111,7 +115,8 @@
                                         <div class="row border w-100">
 
                                             <div class="col-1">
-                                                <input type="checkbox" class="form-check-input m-1">
+                                                <input type="checkbox" value="mark-complete"
+                                                    class="form-check-input m-1">
                                             </div>
 
                                             <div class="col-4">
@@ -140,8 +145,12 @@
                         </div>
 
                     </div>
-                </section>
+                    <!-- end view pane -->
             </div>
+
+
+
+        </div>
         </div>
     </main>
 

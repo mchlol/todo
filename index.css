@@ -1,4 +1,4 @@
 @import url(https://fonts.googleapis.com/css2?family=Figtree&family=Noto+Serif&display=swap);
-body{font-family:"Figtree",sans-serif}h1,h2,h3,h4{font-family:"Noto Serif",serif}.view-pane{color:blue}
+body{font-family:"Figtree",sans-serif}h1,h2,h3,h4{font-family:"Noto Serif",serif}.view-pane{color:#daa520;border:3px solid #daa520;border-radius:1rem}#priority{width:auto}#add-task-form{max-width:500px}
 
 /*# sourceMappingURL=index.css.map*/
