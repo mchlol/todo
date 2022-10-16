@@ -57,7 +57,7 @@
                     </li>
                     <li class="nav-item m-1 project-tab">
                         <a href="#" class="nav-link">
-                            Kitchen reno
+                            Kitchen renovation
                         </a>
                     </li>
                     <li class="nav-item m-1 project-tab">
@@ -108,49 +108,58 @@
             </nav>
             <!-- end nav -->
 
+            <!-- start add new -->
+            <div id="add-new-wrap" class="p-2 mt-3" style="border: 3px solid palegreen">
+                <h2 class="text-primary">Add a new task</h2>
+
+                <form id="add-task-form" class="m-1 border border-primary">
+
+
+                    <div class="row align-items-center">
+
+                        <div class="col-5">
+                            <label for="title" class="form-label">Title:
+                                <input type="text" name="title" id="title" class="form-control"
+                                    placeholder="Wash dishes" required>
+                            </label>
+                        </div>
+
+                        <div class="col-4">
+                            <label for="dueDate" class="form-label">Due:
+                                <input class="form-control" type="date" name="dueDate" id="dueDate">
+                            </label>
+                        </div>
+
+                        <div class="col-3">
+                            <label for="priority">
+                                <select name="priority" id="priority" class="form-control form-select m-1">
+                                    <option value="1">Priority 1 (high)</option>
+                                    <option value="2">Priority 2</option>
+                                    <option value="3">Priority 3</option>
+                                    <option selected value="4">Priority 4 (low)</option>
+                                </select>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <label for="notes" class="form-label w-100">
+                                <input type="text" name="tasknotes" id="tasknotes" placeholder="Notes or comments"
+                                    class="form-control"></input>
+                            </label>
+                        </div>
+                        <div class="col-4"><input type="submit" class="btn btn-primary m-1" value="Submit"></div>
+                    </div>
+
+                </form>
+            </div>
+            <!-- end add new -->
+
             <!-- start view container -->
-            <section id="view-container" class="border border-warning">
-
-                <!-- start add new -->
-                <div id="add-new-wrap" class="p-2 mt-3" style="border: 3px solid palegreen">
-                    <h2 class="text-primary">Add a new task</h2>
-
-                    <form id="add-task-form" class="m-1 border border-primary">
-                        <div class="d-flex justify-content-between m-1">
-
-                            <label for="title" class="m-1 w-100">Title
-                                <input type="text" class="w-100" name="title" id="title" placeholder="Wash dishes"
-                                    required>
-                            </label>
-
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center m-1">
-
-                            <label for="dueDate" class="m-1">Due:
-                                <input type="date" name="dueDate" id="dueDate">
-                            </label>
-
-                            <select name="priority" id="priority" class="form-select m-1">
-                                <option value="1">Priority 1 (high)</option>
-                                <option value="2">Priority 2</option>
-                                <option value="3">Priority 3</option>
-                                <option selected value="4">Priority 4 (low)</option>
-                            </select>
-
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-end m-1">
-
-                            <textarea name="tasknotes" id="tasknotes" cols="40" rows="5"
-                                placeholder="Notes or comments"></textarea>
-
-                            <input type="submit" class="btn btn-primary m-1" value="Submit">
-                        </div>
-
-                    </form>
-                </div>
-                <!-- end add new -->
+            <section id="view-container">
 
                 <!-- start view pane -->
                 <div id="view-pane-wrap" class="p-2 mt-3" style="border: 3px solid red">
