@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <main class="container-fluid">
+    <main class="container-fluid w-75 mt-2">
 
         <!-- start header -->
         <header class="text-center mt-1 mb-1 w-100" style="border: 3px solid blue">
@@ -23,44 +23,94 @@
         <!-- end header -->
 
         <!-- start content wrap -->
-        <div class="p-2" style="border: 2px solid black">
+
+        <div class="p-2" style="border: 3px solid black">
+
+            <!-- start add new wrap -->
+            <div id="add-new-wrap" class="p-2" style="border: 3px solid palegreen">
+
+                <!-- start add new form -->
+                <form id="add-task-form" class="m-1 p-2" style="border:3px solid palegreen">
+
+                    <!-- start form top row -->
+                    <div class="row align-items-center mb-2">
+
+                        <div class="col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="New task"
+                                required>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input class="form-control" type="date" name="dueDate" id="dueDate">
+                        </div>
+
+                        <div class="col-sm-4">
+                            <select name="priority" id="priority" class="form-control form-select">
+                                <option value="1">Priority 1 (high)</option>
+                                <option value="2">Priority 2</option>
+                                <option value="3">Priority 3</option>
+                                <option selected value="4">Priority 4 (low)</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <!-- end form top row -->
+
+                    <!-- start form bottom row -->
+                    <div class="row align-items-start">
+                        <div class="col-sm-9">
+                            <label for="notes" class="form-label w-100">
+                                <textarea name="tasknotes" id="tasknotes" placeholder="Notes or comments" rows="2"
+                                    style="resize: none" class="form-control"></textarea>
+                            </label>
+                        </div>
+                        <div class="col-sm-2"><input type="submit" class="btn btn-primary m-1" value="Submit"></div>
+                    </div>
+                    <!-- end form bottom row -->
+
+                </form>
+                <!-- end add new form -->
+
+            </div>
+            <!-- end add new wrap -->
 
             <!-- start nav -->
             <nav class="p-2" style="border: 3px solid goldenrod">
 
-                <ul class="nav nav-pills">
-                    <li class="nav-item task-tab m-1">
+                <ul class="nav nav-pills d-flex justify-content-evenly align-items-center">
+
+                    <li class="nav-item rounded-pill task-tab m-1">
                         <a href="#" class="nav-link active" aria-current="page">
                             Today
                         </a>
                     </li>
-                    <li class="nav-item task-tab m-1">
+                    <li class="nav-item rounded-pill task-tab m-1">
                         <a href="#" class="nav-link">
                             Future
                         </a>
                     </li>
-                    <li class="nav-item task-tab m-1">
+                    <li class="nav-item rounded-pill task-tab m-1">
                         <a href="#" class="nav-link">
                             No date
                         </a>
                     </li>
 
-                    <li class="nav-item m-1 project-tab">
+                    <li class="nav-item rounded-pill m-1 project-tab">
                         <a href="#" class="nav-link">
                             Italy trip
                         </a>
                     </li>
-                    <li class="nav-item m-1 project-tab">
+                    <li class="nav-item rounded-pill m-1 project-tab">
                         <a href="#" class="nav-link">
                             Decluttering
                         </a>
                     </li>
-                    <li class="nav-item m-1 project-tab">
+                    <li class="nav-item rounded-pill m-1 project-tab">
                         <a href="#" class="nav-link">
                             Kitchen renovation
                         </a>
                     </li>
-                    <li class="nav-item m-1 project-tab">
+                    <li class="nav-item rounded-pill m-1 project-tab">
                         <a href="#" class="nav-link">
                             App build
                         </a>
@@ -108,115 +158,58 @@
             </nav>
             <!-- end nav -->
 
-            <!-- start add new -->
-            <div id="add-new-wrap" class="p-2 mt-3" style="border: 3px solid palegreen">
-                <h2 class="text-primary">Add a new task</h2>
+            <!-- start view wrap - header and content to be created with js -->
+            <section id="view-wrap" class="p-2 mt-3" style="border: 3px solid red">
+                <!-- start view heading - create with js -->
+                <div id="view-heading" class="mb-2 p-2" style="border: 3px solid red">
+                    <h2 id="current-view-title">Today:</h2>
+                </div>
+                <!-- end view heading -->
 
-                <form id="add-task-form" class="m-1 border border-primary">
+                <!-- start tasks view - create with js -->
+                <div id="tasks-view" style="border: 3px solid green">
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+
+                            <div class="row border">
+
+                                <div class="col-1">
+                                    <input type="checkbox" value="mark-complete" id="check-task1"
+                                        class="form-check-input m-1">
+                                </div>
+
+                                <div class="col-4">
+                                    <span id="display-task1" class="fw-bold m-1">Name of task and some other
+                                        text to
+                                        fill the space</span>
+                                </div>
+
+                                <div class="col-7">
+                                    <span class="text-muted small m-1" id="display-tasknotes">No description
+                                        but if there was how
+                                        much space would it take up? This should have a character
+                                        limit or fixed scrolling.</span>
+                                </div>
+
+                            </div>
+
+                            <div class="border d-flex justify-content-between align-items-center">
+                                <span class="small m-1">Added: 09/10/22</span>
+                                <span class="small m-1">Due: 09/10/22</span>
+                                <span class="small m-1">Priority: 4</span>
+                                <button class="btn btn-sm btn-danger m-1">Delete</button>
+                            </div>
+                        </li>
+                    </ul>
 
 
-                    <div class="row align-items-center">
-
-                        <div class="col-5">
-                            <label for="title" class="form-label">Title:
-                                <input type="text" name="title" id="title" class="form-control"
-                                    placeholder="Wash dishes" required>
-                            </label>
-                        </div>
-
-                        <div class="col-4">
-                            <label for="dueDate" class="form-label">Due:
-                                <input class="form-control" type="date" name="dueDate" id="dueDate">
-                            </label>
-                        </div>
-
-                        <div class="col-3">
-                            <label for="priority">
-                                <select name="priority" id="priority" class="form-control form-select m-1">
-                                    <option value="1">Priority 1 (high)</option>
-                                    <option value="2">Priority 2</option>
-                                    <option value="3">Priority 3</option>
-                                    <option selected value="4">Priority 4 (low)</option>
-                                </select>
-                            </label>
-                        </div>
-
-                    </div>
-
-
-                    <div class="row align-items-center">
-                        <div class="col-8">
-                            <label for="notes" class="form-label w-100">
-                                <input type="text" name="tasknotes" id="tasknotes" placeholder="Notes or comments"
-                                    class="form-control"></input>
-                            </label>
-                        </div>
-                        <div class="col-4"><input type="submit" class="btn btn-primary m-1" value="Submit"></div>
-                    </div>
-
-                </form>
-            </div>
-            <!-- end add new -->
-
-            <!-- start view container -->
-            <section id="view-container">
-
-                <!-- start view pane -->
-                <div id="view-pane-wrap" class="p-2 mt-3" style="border: 3px solid red">
-                    <!-- start view heading - created with javascript -->
-                    <div id="view-heading">
-                        <h2 id="current-view-title" class="text-primary display-5">Today</h2>
-                    </div>
-                    <!-- end view heading -->
-
-                    <!-- start tasks view -->
-                    <div id="current-view-pane" class="view-pane">
-
-                        <div id="active-tasks" class="row">
-
-                            <ul class="list-group">
-
-                                <li class="list-group-item border border-primary m-1">
-
-                                    <div class="row border w-100">
-
-                                        <div class="col-1">
-                                            <input type="checkbox" value="mark-complete" id="check-task1"
-                                                class="form-check-input m-1">
-                                        </div>
-
-                                        <div class="col-4">
-                                            <span id="display-task1" class="fw-bold m-1">Name of task and some other
-                                                text to
-                                                fill the space</span>
-                                        </div>
-
-                                        <div class="col-7">
-                                            <span class="text-muted small m-1" id="display-tasknotes">No description
-                                                but if there was how
-                                                much space would it take up? This should have a character
-                                                limit or fixed scrolling.</span>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="border d-flex justify-content-between align-items-center">
-                                        <span class="small m-1">Added: 09/10/22</span>
-                                        <span class="small m-1">Due: 09/10/22</span>
-                                        <span class="small m-1">Priority: 4</span>
-                                        <button class="btn btn-sm btn-danger m-1">Delete</button>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
 
                 </div>
-                <!-- end view pane -->
+                <!-- end tasks view -->
 
             </section>
-            <!-- end view container -->
+            <!-- end view wrap -->
 
         </div>
         <!-- end content wrap -->
