@@ -13,144 +13,208 @@
 
 </head>
 
-<body class="d-flex justify-content-center">
-    <main class="vh-100 w-75">
-        <div class="container-fluid h-100">
+<body>
+    <main class="container-fluid">
 
-            <header class="text-center m-3">
-                <h1 class="display-1 p-1 text-primary">To Do List</h1>
-            </header>
+        <!-- start header -->
+        <header class="text-center mt-1 mb-1 w-100" style="border: 3px solid blue">
+            <h1 class="display-1 text-primary">To Do List</h1>
+        </header>
+        <!-- end header -->
 
-            <!-- start content wrap -->
-            <div class="row border border-secondary">
-                <!-- start tasks list -->
-                <nav class="col-4 border border-warning">
+        <!-- start content wrap -->
+        <div class="p-2" style="border: 2px solid black">
 
-                    <div id="tasks-list" class="p-1 border border-primary mt-3 w-100">
-                        <h2 class="p-1 text-primary">Tasks</h2>
-                        <ul class="list-group">
+            <!-- start nav -->
+            <nav class="p-2" style="border: 3px solid goldenrod">
+
+                <ul class="nav nav-pills">
+                    <li class="nav-item task-tab m-1">
+                        <a href="#" class="nav-link active" aria-current="page">
+                            Today
+                        </a>
+                    </li>
+                    <li class="nav-item task-tab m-1">
+                        <a href="#" class="nav-link">
+                            Future
+                        </a>
+                    </li>
+                    <li class="nav-item task-tab m-1">
+                        <a href="#" class="nav-link">
+                            No date
+                        </a>
+                    </li>
+
+                    <li class="nav-item m-1 project-tab">
+                        <a href="#" class="nav-link">
+                            Italy trip
+                        </a>
+                    </li>
+                    <li class="nav-item m-1 project-tab">
+                        <a href="#" class="nav-link">
+                            Decluttering
+                        </a>
+                    </li>
+                    <li class="nav-item m-1 project-tab">
+                        <a href="#" class="nav-link">
+                            Kitchen reno
+                        </a>
+                    </li>
+                    <li class="nav-item m-1 project-tab">
+                        <a href="#" class="nav-link">
+                            App build
+                        </a>
+                    </li>
+                </ul>
+
+
+
+                <!-- <div id="tasks-list" class="p-1 border border-primary mt-3 w-100">
+                    <h2 class="p-1 text-primary">Tasks</h2>
+                    <ul class="list-group">
+                        <a href="#">
                             <li class="list-group-item">Today</li>
+                        </a>
+                        <a href="#">
                             <li class="list-group-item">Future</li>
+                        </a>
+                        <a href="#">
                             <li class="list-group-item">No date</li>
-                        </ul>
+                        </a>
+                    </ul>
+                </div>
+
+                <div id="projects-list" class="p-1 border border-primary mt-3 w-100">
+                    <div class="d-flex flex-row justify-content-between">
+
+                        <h3 class="p-1 text-primary">Projects</h3>
+
+                        <button class="btn btn-sm btn-primary">+</button>
+
                     </div>
 
-                    <div id="projects-list" class="p-1 border border-primary mt-3 w-100">
-                        <div class="d-flex flex-row justify-content-between">
+                    <ul class="list-group">
+                        <a href="#">
+                            <li class="list-group-item">Kitchen reno</li>
+                        </a>
+                        <a href="#">
+                            <li class="list-group-item">Declutter</li>
+                        </a>
+                        <a href="#">
+                            <li class="list-group-item">Italy trip</li>
+                        </a>
+                    </ul>
+                </div> -->
+            </nav>
+            <!-- end nav -->
 
-                            <h3 class="p-1 text-primary">Projects</h3>
+            <!-- start view container -->
+            <section id="view-container" class="border border-warning">
 
-                            <button class="btn btn-sm btn-primary">+</button>
+                <!-- start add new -->
+                <div id="add-new-wrap" class="p-2 mt-3" style="border: 3px solid palegreen">
+                    <h2 class="text-primary">Add a new task</h2>
+
+                    <form id="add-task-form" class="m-1 border border-primary">
+                        <div class="d-flex justify-content-between m-1">
+
+                            <label for="title" class="m-1 w-100">Title
+                                <input type="text" class="w-100" name="title" id="title" placeholder="Wash dishes"
+                                    required>
+                            </label>
 
                         </div>
 
-                        <ul class="list-group">
-                            <li class="list-group-item">Project 1</li>
-                            <li class="list-group-item">Project 2</li>
-                            <li class="list-group-item">Project 3</li>
-                        </ul>
-                    </div>
-                </nav>
-                <!-- end tasks list -->
+                        <div class="d-flex justify-content-between align-items-center m-1">
 
-                <section id="view-container" class="col-8 border border-warning">
-                    <!-- start add new -->
-                    <div id="add-new-wrap" class="p-2 mt-3 border border-primary">
-                        <h2 class="text-primary">Add a new task</h2>
+                            <label for="dueDate" class="m-1">Due:
+                                <input type="date" name="dueDate" id="dueDate">
+                            </label>
 
-                        <form id="add-task-form" class="m-1 border border-primary">
-                            <div class="d-flex justify-content-between m-1">
+                            <select name="priority" id="priority" class="form-select m-1">
+                                <option value="1">Priority 1 (high)</option>
+                                <option value="2">Priority 2</option>
+                                <option value="3">Priority 3</option>
+                                <option selected value="4">Priority 4 (low)</option>
+                            </select>
 
-                                <label for="title" class="m-1 w-100">Title
-                                    <input type="text" class="w-100" name="title" id="title" placeholder="Wash dishes"
-                                        required>
-                                </label>
+                        </div>
 
-                            </div>
+                        <div class="d-flex justify-content-between align-items-end m-1">
 
-                            <div class="d-flex justify-content-between align-items-center m-1">
+                            <textarea name="tasknotes" id="tasknotes" cols="40" rows="5"
+                                placeholder="Notes or comments"></textarea>
 
-                                <label for="dueDate" class="m-1">Due:
-                                    <input type="date" name="dueDate" id="dueDate">
-                                </label>
-
-                                <select name="priority" id="priority" class="form-select m-1">
-                                    <option value="1">Priority 1 (high)</option>
-                                    <option value="2">Priority 2</option>
-                                    <option value="3">Priority 3</option>
-                                    <option selected value="4">Priority 4 (low)</option>
-                                </select>
-
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-end m-1">
-
-                                <textarea name="description" id="description" cols="40" rows="5"></textarea>
-                                <input type="submit" class="btn btn-primary m-1" value="Submit">
-                            </div>
-
-                    </div>
-
+                            <input type="submit" class="btn btn-primary m-1" value="Submit">
+                        </div>
 
                     </form>
-                    <!-- end add new -->
+                </div>
+                <!-- end add new -->
 
-                    <!-- start view pane -->
-                    <div id="view-pane-wrap" class="p-2 mt-3 border border-primary">
-                        <!-- start view heading - created with javascript -->
-                        <div id="view-heading">
-                            <h2 id="current-view-title" class="text-primary display-5">Today</h2>
-                        </div>
-                        <!-- end view heading -->
-
-                        <!-- start tasks view -->
-                        <div id="current-view-pane" class="view-pane">
-
-                            <div id="active-tasks" class="row">
-
-                                <ul class="list-group">
-
-                                    <li class="list-group-item border border-primary m-1">
-
-                                        <div class="row border w-100">
-
-                                            <div class="col-1">
-                                                <input type="checkbox" value="mark-complete"
-                                                    class="form-check-input m-1">
-                                            </div>
-
-                                            <div class="col-4">
-                                                <span id="task1" class="fw-bold m-1">Name of task and some other text to
-                                                    fill the space</span>
-                                            </div>
-
-                                            <div class="col-7">
-                                                <span class="text-muted small m-1">No description but if there was how
-                                                    much space would it take up? This should have a character
-                                                    limit or fixed scrolling.</span>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="border d-flex justify-content-between align-items-center">
-                                            <span class="small m-1">Added: 09/10/22</span>
-                                            <span class="small m-1">Due: 09/10/22</span>
-                                            <span class="small m-1">Priority: 4</span>
-                                            <button class="btn btn-sm btn-danger m-1">Delete</button>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-
+                <!-- start view pane -->
+                <div id="view-pane-wrap" class="p-2 mt-3" style="border: 3px solid red">
+                    <!-- start view heading - created with javascript -->
+                    <div id="view-heading">
+                        <h2 id="current-view-title" class="text-primary display-5">Today</h2>
                     </div>
-                    <!-- end view pane -->
-            </div>
+                    <!-- end view heading -->
 
+                    <!-- start tasks view -->
+                    <div id="current-view-pane" class="view-pane">
 
+                        <div id="active-tasks" class="row">
+
+                            <ul class="list-group">
+
+                                <li class="list-group-item border border-primary m-1">
+
+                                    <div class="row border w-100">
+
+                                        <div class="col-1">
+                                            <input type="checkbox" value="mark-complete" id="check-task1"
+                                                class="form-check-input m-1">
+                                        </div>
+
+                                        <div class="col-4">
+                                            <span id="display-task1" class="fw-bold m-1">Name of task and some other
+                                                text to
+                                                fill the space</span>
+                                        </div>
+
+                                        <div class="col-7">
+                                            <span class="text-muted small m-1" id="display-tasknotes">No description
+                                                but if there was how
+                                                much space would it take up? This should have a character
+                                                limit or fixed scrolling.</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="border d-flex justify-content-between align-items-center">
+                                        <span class="small m-1">Added: 09/10/22</span>
+                                        <span class="small m-1">Due: 09/10/22</span>
+                                        <span class="small m-1">Priority: 4</span>
+                                        <button class="btn btn-sm btn-danger m-1">Delete</button>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end view pane -->
+
+            </section>
+            <!-- end view container -->
 
         </div>
+        <!-- end content wrap -->
+
+
+
+
         </div>
     </main>
 
