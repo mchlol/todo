@@ -16,11 +16,12 @@
 </head>
 
 <body>
-    <main class="container-fluid w-75 mt-2">
+    <main class="container-fluid mt-2">
 
         <!-- start header -->
-        <header class="text-center p-2 mt-1 mb-1 w-100" style="border: 3px solid blue">
-            <h1 class="display-1 text-primary">To Do List</h1>
+        <header class="text-center p-2 mt-1 mb-1 w-100" style="border: 3px solid black">
+            <h1 class="display-3 text-primary">To Do List</h1>
+
         </header>
         <!-- end header -->
 
@@ -28,10 +29,10 @@
         <div class="p-2 mb-2" style="border: 3px solid black">
 
             <!-- start view wrap - create with js -->
-            <div id="view-wrap" class="p-2" style="border: 3px solid red">
+            <div id="view-wrap" class="p-2">
 
                 <!-- start view heading -->
-                <h2 id="current-view-title">
+                <h2 id="current-view-title" class="text-center">
                     Today
                 </h2>
                 <!-- end view heading -->
@@ -39,7 +40,7 @@
                 <!-- start tasks list -->
                 <ul class="list-group">
 
-                    <li class="list-group-item m-1" style="border: 1px solid red">
+                    <li class="list-group-item m-1 border">
 
                         <!-- checkbox -->
                         <input type="checkbox" value="mark-complete" id="check-task1" class="form-check-input m-1">
@@ -56,7 +57,7 @@
                         </p>
 
                         <!-- details row -->
-                        <div class="border d-flex justify-content-between align-items-center">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center">
                             <span class="small m-1">
                                 <span class="task-added">Added</span> 09/10/22</span>
                             <span class="small m-1">
@@ -65,13 +66,17 @@
                                 <span id="task-priority">Low</span> priority</span>
 
                             <!-- start task icons -->
-                            <div class="d-flex flex-column">
-                                <span class="material-icons text-primary">
-                                    mode
-                                </span>
-                                <span class="material-icons text-danger">
-                                    delete
-                                </span>
+                            <div class="d-flex">
+                                <button class="btn btn-sm">
+                                    <span class="material-icons text-primary">
+                                        mode
+                                    </span>
+                                </button>
+                                <button class="btn btn-sm">
+                                    <span class="material-icons text-danger">
+                                        delete
+                                    </span>
+                                </button>
                             </div>
                             <!-- end task icons -->
                         </div>
@@ -84,9 +89,10 @@
 
             <!-- start nav -->
             <nav class="p-2 mt-2 d-flex justify-content-between align-items-center bg-light">
+
                 <!-- light/dark mode switch -->
                 <div class="form-check form-switch">
-
+                    <!-- icon colour: off=grey & on=yellow-->
                     <label for="lightMode" class="form-check-label">
                         <span class="material-icons">
                             light_mode
@@ -98,6 +104,7 @@
                 </div>
 
 
+
                 <!-- start nav buttons -->
                 <div class="d-flex justify-content-end align-items-center">
 
@@ -105,8 +112,8 @@
                     <div class="btn-group dropup">
 
                         <!-- lists button -->
-                        <button class="btn btn-primary dropdown-toggle m-1" type="button" id="dropdownMenuButtonLists"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-sm btn-primary dropdown-toggle m-1" type="button"
+                            id="dropdownMenuButtonLists" data-bs-toggle="dropdown" aria-expanded="false">
                             Lists
                         </button>
 
@@ -133,7 +140,7 @@
 
 
                         <!-- projects button -->
-                        <button class="btn btn-primary dropdown-toggle m-1" type="button"
+                        <button class="btn btn-sm btn-primary dropdown-toggle m-1" type="button"
                             id="dropdownMenuButtonProjects" data-bs-toggle="dropdown" aria-expanded="false">
                             Projects
                         </button>
@@ -159,7 +166,7 @@
                         <!-- end projects list -->
 
                         <!-- tasks button -->
-                        <button class="btn btn-outline-primary dropdown-toggle m-1" type="button"
+                        <button class="btn btn-sm btn-outline-primary dropdown-toggle m-1" type="button"
                             id="dropdownMenuButtonTasks" data-bs-toggle="dropdown" aria-expanded="false">
                             Tasks
                         </button>
@@ -192,21 +199,17 @@
                     </div>
                     <!-- end dropdown buttons -->
 
-                    <!-- start modal trigger -->
-                    <button type="button" class="btn btn-danger m-1" data-bs-toggle="modal"
-                        data-bs-target="#addTaskModal">
-                        +
-                    </button>
-                    <!-- end modal trigger -->
-
-                    <button class="btn btn-outline">
-                        <span class="material-icons text-primary">
-                            home
-                        </span>
-                    </button>
-
                 </div>
                 <!-- end nav buttons -->
+
+
+
+                <!-- start modal trigger -->
+                <button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
+                    data-bs-target="#addTaskModal">
+                    +
+                </button>
+                <!-- end modal trigger -->
 
                 <!-- start modal window -->
                 <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel"
