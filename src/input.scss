@@ -72,13 +72,6 @@ main {
     max-width: 630px;
 }
 
-fieldset,
-legend,
-{
-all: revert;
-}
-
-
 
 // screen is less than 840px wide
 @media screen and (max-width: 840px) {
