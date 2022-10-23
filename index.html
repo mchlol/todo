@@ -27,191 +27,226 @@
         <div class="p-2" style="border: 3px solid black">
 
             <!-- start add new wrap -->
-            <div id="add-new-wrap" class="p-2" style="border: 3px solid palegreen">
+            <div id="add-new-wrap" class="p-2 pb-0" style="border: 3px solid palegreen">
 
                 <!-- start add new form -->
-                <form id="add-task-form" class="m-1 p-2" style="border:3px solid palegreen">
+                <form id="add-task-form">
 
-                    <!-- start form top row -->
-                    <div class="row align-items-center mb-2">
+                    <fieldset style="border:3px solid palegreen">
 
-                        <div class="col-sm-4">
+                        <legend class="fs-6">Add a new task</legend>
+
+                        <!-- title -->
+                        <label for="title" class="form-label w-100">Title
                             <input type="text" name="title" id="title" maxlength="50" class="form-control"
                                 placeholder="New task" required>
+                        </label>
+
+                        <!-- notes -->
+                        <label for="notes" class="form-label w-100">Notes
+                            <textarea name="tasknotes" id="tasknotes" placeholder="Notes or comments" rows="2"
+                                maxlength="125" style="resize: none" class="form-control"></textarea>
+                        </label>
+
+                        <div class="d-flex align-items-baseline justify-content-between">
+
+                            <div>
+                                <!-- due date -->
+                                <label for="dueDate">Due Date
+                                    <input class="form-control" type="date" name="dueDate" id="dueDate">
+                                </label>
+                            </div>
+
+                            <div>
+                                <!-- priority -->
+                                <label for="priority">Priority
+                                    <select name="priority" id="priority" class="form-control form-select">
+                                        <option value="high">High</option>
+                                        <option value="medium">Medium</option>
+                                        <option selected value="low">Low</option>
+                                    </select>
+                                </label>
+                            </div>
+
+                            <div>
+                                <input type="submit" class="btn btn-primary m-1" value="Submit">
+                            </div>
+
                         </div>
-
-                        <div class="col-sm-4">
-                            <input class="form-control" type="date" name="dueDate" id="dueDate">
-                        </div>
-
-                        <div class="col-sm-4">
-                            <select name="priority" id="priority" class="form-control form-select">
-                                <option value="1">Priority 1 (high)</option>
-                                <option value="2">Priority 2</option>
-                                <option value="3">Priority 3</option>
-                                <option selected value="4">Priority 4 (low)</option>
-                            </select>
-                        </div>
-
-                    </div>
-                    <!-- end form top row -->
-
-                    <!-- start form bottom row -->
-                    <div class="row align-items-start">
-                        <div class="col-sm-9">
-                            <label for="notes" class="form-label w-100">
-                                <textarea name="tasknotes" id="tasknotes" placeholder="Notes or comments" rows="2"
-                                    maxlength="125" style="resize: none" class="form-control"></textarea>
-                            </label>
-                        </div>
-                        <div class="col-sm-2"><input type="submit" class="btn btn-primary m-1" value="Submit"></div>
-                    </div>
-                    <!-- end form bottom row -->
-
-                </form>
-                <!-- end add new form -->
 
             </div>
-            <!-- end add new wrap -->
 
-            <!-- start nav -->
-            <nav class="p-2 mt-2" style="border: 3px solid goldenrod">
 
-                <ul class="nav nav-pills d-flex justify-content-evenly align-items-center">
 
-                    <li class="nav-item rounded-pill task-tab m-1">
-                        <a href="#" class="nav-link active" aria-current="page">
-                            Today
-                        </a>
-                    </li>
-                    <li class="nav-item rounded-pill task-tab m-1">
-                        <a href="#" class="nav-link">
-                            Future
-                        </a>
-                    </li>
-                    <li class="nav-item rounded-pill task-tab m-1">
-                        <a href="#" class="nav-link">
-                            No date
-                        </a>
+
+            </fieldset>
+            </form>
+
+            <!-- end add new form -->
+
+        </div>
+        <!-- end add new wrap -->
+
+        <!-- start nav -->
+        <nav class="p-2 mt-2" style="border: 3px solid goldenrod">
+
+            <!-- start tasks list -->
+            <div class="nav-tasks">
+                <ul class="nav nav-pills">
+
+                    <fieldset class="d-flex align-items-center align-content-center"
+                        style="border: 3px solid goldenrod">
+                        <legend>Tasks</legend>
+                        <li class="nav-item rounded-pill task-tab m-1">
+                            <a href="#" class="nav-link active" aria-current="page">
+                                Today
+                            </a>
+                        </li>
+                        <li class="nav-item rounded-pill task-tab m-1">
+                            <a href="#" class="nav-link">
+                                Soon
+                            </a>
+                        </li>
+                        <li class="nav-item rounded-pill task-tab m-1">
+                            <a href="#" class="nav-link">
+                                Someday
+                            </a>
+                        </li>
+                    </fieldset>
+                </ul>
+            </div>
+
+            <!-- start projects list -->
+            <div class="nav-projects">
+
+                <fieldset class="nav-fieldset" style="border: 3px solid goldenrod">
+
+                    <legend>Projects</legend>
+
+                    <ul class="nav nav-pills d-flex align-items-center">
+                        <li class="nav-item rounded-pill m-1 project-tab">
+                            <a href="#" class="nav-link">
+                                Italy trip
+                            </a>
+                        </li>
+                        <li class="nav-item rounded-pill m-1 project-tab">
+                            <a href="#" class="nav-link">
+                                Decluttering
+                            </a>
+                        </li>
+                        <li class="nav-item rounded-pill m-1 project-tab">
+                            <a href="#" class="nav-link">
+                                Kitchen renovation
+                            </a>
+                        </li>
+                        <li class="nav-item rounded-pill m-1 project-tab">
+                            <a href="#" class="nav-link">
+                                App build
+                            </a>
+                        </li>
+
+                        <!-- move this button as an indicator -->
+                        <button class="btn btn-outline-primary rounded-pill">
+                            +
+                        </button>
+                    </ul>
+                </fieldset>
+
+            </div>
+
+        </nav>
+        <!-- end nav -->
+
+        <!-- start view wrap - header and content to be created with js -->
+        <section id="view-wrap" class="p-2 mt-2" style="border: 3px solid red">
+            <!-- start view heading - create with js -->
+            <div id="view-heading" class="mb-2 p-1 sticky-top" style="border: 3px solid red">
+                <p id="current-view-title">Viewing tasks for <span>Today</span>:</p>
+            </div>
+            <!-- end view heading -->
+
+            <!-- ### FIX RESPONSIVE ISSUE WITH TASKS VIEW ## -->
+
+            <!-- start tasks view - create with js -->
+            <div id="tasks-view" style="border: 3px solid red">
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+
+                        <div class="row border">
+
+                            <div class="col-1">
+                                <input type="checkbox" value="mark-complete" id="check-task1"
+                                    class="form-check-input m-1">
+                            </div>
+
+                            <div class="col-4">
+                                <span id="display-task1" class="fw-bold m-1">Name of task and some other
+                                    text to
+                                    fill the space</span>
+                            </div>
+
+                            <div class="col-7">
+                                <span class="text-muted small m-1" id="display-tasknotes">No description
+                                    but if there was how
+                                    much space would it take up? This should have a character
+                                    limit or fixed scrolling.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="border d-flex justify-content-between align-items-center">
+                            <span class="small m-1">Added: 09/10/22</span>
+                            <span class="small m-1">Due: 09/10/22</span>
+                            <span class="small m-1">Priority: 4</span>
+                            <button class="btn btn-sm btn-danger m-1">Delete</button>
+                        </div>
                     </li>
 
-                    <li class="nav-item rounded-pill m-1 project-tab">
-                        <a href="#" class="nav-link">
-                            Italy trip
-                        </a>
-                    </li>
-                    <li class="nav-item rounded-pill m-1 project-tab">
-                        <a href="#" class="nav-link">
-                            Decluttering
-                        </a>
-                    </li>
-                    <li class="nav-item rounded-pill m-1 project-tab">
-                        <a href="#" class="nav-link">
-                            Kitchen renovation
-                        </a>
-                    </li>
-                    <li class="nav-item rounded-pill m-1 project-tab">
-                        <a href="#" class="nav-link">
-                            App build
-                        </a>
+                    <li class="list-group-item">
+
+                        <div class="row border">
+
+                            <div class="col-1">
+                                <input type="checkbox" value="mark-complete" id="check-task1"
+                                    class="form-check-input m-1">
+                            </div>
+
+                            <div class="col-4">
+                                <span id="display-task1" class="fw-bold m-1">Name of task and some other
+                                    text to
+                                    fill the space</span>
+                            </div>
+
+                            <div class="col-7">
+                                <span class="text-muted small m-1" id="display-tasknotes">No description
+                                    but if there was how
+                                    much space would it take up? This should have a character
+                                    limit or fixed scrolling.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="border d-flex justify-content-between align-items-center">
+                            <span class="small m-1">Added: 09/10/22</span>
+                            <span class="small m-1">Due: 09/10/22</span>
+                            <span class="small m-1">Priority: 4</span>
+                            <button class="btn btn-sm btn-danger m-1">Delete</button>
+                        </div>
                     </li>
                 </ul>
 
 
 
-                <!-- <div id="tasks-list" class="p-1 border border-primary mt-3 w-100">
-                    <h2 class="p-1 text-primary">Tasks</h2>
-                    <ul class="list-group">
-                        <a href="#">
-                            <li class="list-group-item">Today</li>
-                        </a>
-                        <a href="#">
-                            <li class="list-group-item">Future</li>
-                        </a>
-                        <a href="#">
-                            <li class="list-group-item">No date</li>
-                        </a>
-                    </ul>
-                </div>
+            </div>
+            <!-- end tasks view -->
 
-                <div id="projects-list" class="p-1 border border-primary mt-3 w-100">
-                    <div class="d-flex flex-row justify-content-between">
-
-                        <h3 class="p-1 text-primary">Projects</h3>
-
-                        <button class="btn btn-sm btn-primary">+</button>
-
-                    </div>
-
-                    <ul class="list-group">
-                        <a href="#">
-                            <li class="list-group-item">Kitchen reno</li>
-                        </a>
-                        <a href="#">
-                            <li class="list-group-item">Declutter</li>
-                        </a>
-                        <a href="#">
-                            <li class="list-group-item">Italy trip</li>
-                        </a>
-                    </ul>
-                </div> -->
-            </nav>
-            <!-- end nav -->
-
-            <!-- start view wrap - header and content to be created with js -->
-            <section id="view-wrap" class="p-2 mt-2" style="border: 3px solid red">
-                <!-- start view heading - create with js -->
-                <div id="view-heading" class="mb-2 p-2" style="border: 3px solid red">
-                    <h2 id="current-view-title">Today:</h2>
-                </div>
-                <!-- end view heading -->
-
-                <!-- start tasks view - create with js -->
-                <div id="tasks-view" style="border: 3px solid red">
-
-                    <ul class="list-group">
-                        <li class="list-group-item">
-
-                            <div class="row border">
-
-                                <div class="col-1">
-                                    <input type="checkbox" value="mark-complete" id="check-task1"
-                                        class="form-check-input m-1">
-                                </div>
-
-                                <div class="col-4">
-                                    <span id="display-task1" class="fw-bold m-1">Name of task and some other
-                                        text to
-                                        fill the space</span>
-                                </div>
-
-                                <div class="col-7">
-                                    <span class="text-muted small m-1" id="display-tasknotes">No description
-                                        but if there was how
-                                        much space would it take up? This should have a character
-                                        limit or fixed scrolling.</span>
-                                </div>
-
-                            </div>
-
-                            <div class="border d-flex justify-content-between align-items-center">
-                                <span class="small m-1">Added: 09/10/22</span>
-                                <span class="small m-1">Due: 09/10/22</span>
-                                <span class="small m-1">Priority: 4</span>
-                                <button class="btn btn-sm btn-danger m-1">Delete</button>
-                            </div>
-                        </li>
-                    </ul>
-
-
-
-                </div>
-                <!-- end tasks view -->
-
-            </section>
-            <!-- end view wrap -->
+        </section>
+        <!-- end view wrap -->
 
         </div>
+        </div>
+
         <!-- end content wrap -->
 
 
