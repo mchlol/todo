@@ -37,14 +37,90 @@
         <!-- start content wrap -->
         <div class="p-2 mb-2" style="border: 3px solid black">
 
-            <!-- start add new wrap -->
-            <div id="add-new-wrap" class="p-2" style="border: 3px solid palegreen">
+            <!-- start nav -->
+            <nav class="p-2" style="border: 3px solid palegreen">
 
-                <!-- start modal trigger -->
-                <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#addTaskModal">
-                    Add a new task
-                </button>
-                <!-- end modal trigger -->
+                <!-- start nav buttons -->
+                <div class="d-flex align-items-baseline">
+
+                    <!-- start modal trigger -->
+                    <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal"
+                        data-bs-target="#addTaskModal">
+                        Add a new task
+                    </button>
+                    <!-- end modal trigger -->
+
+                    <!-- start dropdown buttons -->
+                    <div class="dropdown">
+
+                        <!-- tasks button -->
+                        <button class="btn btn-primary dropdown-toggle m-1" type="button" id="dropdownMenuButtonTasks"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Tasks
+                        </button>
+
+                        <!-- start tasks list -->
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    Today
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    Soon
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    Someday
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    Completed
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- end tasks list -->
+
+
+                        <!-- projects button -->
+                        <button class="btn btn-primary dropdown-toggle m-1" type="button"
+                            id="dropdownMenuButtonProjects" data-bs-toggle="dropdown" aria-expanded="false">
+                            Projects
+                        </button>
+
+                        <!-- start projects list -->
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    Italy trip
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    Decluttering
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    Renovation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    App build
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- end projects list -->
+
+                    </div>
+                    <!-- end dropdown buttons -->
+
+                </div>
+                <!-- end nav buttons -->
 
                 <!-- start modal window -->
                 <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel"
@@ -100,82 +176,6 @@
                     </div>
                 </div>
                 <!-- end modal window -->
-
-            </div>
-            <!-- end add new wrap -->
-
-            <!-- start nav -->
-            <nav class="p-2 mt-2" style="border: 3px solid goldenrod">
-
-                <!-- start tasks list -->
-                <div class="nav-tasks">
-                    <ul class="nav nav-pills">
-                        <span class="visual-notes">This should be a dropdown menu</span>
-                        <fieldset class="d-flex align-items-center align-content-center"
-                            style="border: 3px solid goldenrod">
-                            <legend>Tasks</legend>
-                            <li class="nav-item rounded-pill task-tab m-1">
-                                <a href="#" class="nav-link rounded-pill active" aria-current="page">
-                                    Today
-                                </a>
-                            </li>
-                            <li class="nav-item rounded-pill task-tab m-1">
-                                <a href="#" class="nav-link">
-                                    Soon
-                                </a>
-                            </li>
-                            <li class="nav-item rounded-pill task-tab m-1">
-                                <a href="#" class="nav-link">
-                                    Someday
-                                </a>
-                            </li>
-                            <li class="nav-item rounded-pill task-tab m-1">
-                                <a href="#" class="nav-link">
-                                    Completed
-                                </a>
-                            </li>
-
-                        </fieldset>
-                    </ul>
-                </div>
-
-                <!-- start projects list -->
-                <div class="nav-projects">
-
-                    <fieldset class="nav-fieldset" style="border: 3px solid goldenrod">
-
-                        <legend>Projects
-                            <span class="material-icons text-primary">
-                                add_circle
-                            </span>
-                        </legend>
-
-                        <ul class="nav nav-pills d-flex align-items-center">
-                            <li class="nav-item rounded-pill m-1 project-tab">
-                                <a href="#" class="nav-link">
-                                    Italy trip
-                                </a>
-                            </li>
-                            <li class="nav-item rounded-pill m-1 project-tab">
-                                <a href="#" class="nav-link">
-                                    Decluttering
-                                </a>
-                            </li>
-                            <li class="nav-item rounded-pill m-1 project-tab">
-                                <a href="#" class="nav-link">
-                                    Kitchen renovation
-                                </a>
-                            </li>
-                            <li class="nav-item rounded-pill m-1 project-tab">
-                                <a href="#" class="nav-link">
-                                    App build
-                                </a>
-                            </li>
-
-                        </ul>
-                    </fieldset>
-
-                </div>
 
             </nav>
             <!-- end nav -->
@@ -234,6 +234,7 @@
             <!-- end view wrap -->
 
         </div>
+
         <!-- end content wrap -->
 
     </main>
