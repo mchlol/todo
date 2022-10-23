@@ -26,6 +26,16 @@
     font-feature-settings: 'liga';
 }
 
+.toggle.ios,
+.toggle-on.ios,
+.toggle-off.ios {
+    border-radius: 20px;
+}
+
+.toggle.ios .toggle-handle {
+    border-radius: 20px;
+}
+
 .visual-notes {
     font-family: monospace;
     color: red;
@@ -96,10 +106,8 @@ main {
 }
 
 // screen is less than 500px wide
-@media screen and (max-width: 540px) {
-    // form should be be in 1 column & accessed through a modal window
-    // task view should be in 1 column
-    // nav should be something like a burger menu or task bar with icons
+@media screen and (max-width: 450px) {
+    // nav should be a burger menu
 
     // test to make sure this media query is accessed
     #current-view-title {
