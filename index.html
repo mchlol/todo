@@ -35,60 +35,71 @@
         <!-- end header -->
 
         <!-- start content wrap -->
-
         <div class="p-2 mb-2" style="border: 3px solid black">
 
             <!-- start add new wrap -->
-            <div id="add-new-wrap" class="p-2 pb-0" style="border: 3px solid palegreen">
+            <div id="add-new-wrap" class="p-2" style="border: 3px solid palegreen">
 
-                <!-- start add new form -->
-                <form id="add-task-form">
-                    <span class="visual-notes">This should be a modal</span>
+                <!-- start modal trigger -->
+                <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+                    Add a new task
+                </button>
+                <!-- end modal trigger -->
 
-                    <fieldset style="border:3px solid palegreen">
+                <!-- start modal window -->
+                <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
 
-                        <legend class="fs-6">Add a new task</legend>
-
-                        <!-- title -->
-                        <label for="title" class="form-label w-100">Title
-                            <input type="text" name="title" id="title" maxlength="50" class="form-control"
-                                placeholder="New task" required>
-                        </label>
-
-                        <!-- notes -->
-                        <label for="notes" class="form-label w-100">Notes
-                            <textarea name="tasknotes" id="tasknotes" placeholder="Notes or comments" rows="2"
-                                maxlength="125" style="resize: none" class="form-control"></textarea>
-                        </label>
-
-                        <div class="d-flex align-items-baseline justify-content-between">
-
-                            <div>
-                                <!-- due date -->
-                                <label for="dueDate">Due Date
-                                    <input class="form-control" type="date" name="dueDate" id="dueDate">
-                                </label>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">Add a new task</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
 
-                            <div>
-                                <!-- priority -->
-                                <label for="priority">Priority
-                                    <select name="priority" id="priority" class="form-control form-select">
-                                        <option value="high">High</option>
-                                        <option value="medium">Medium</option>
-                                        <option selected value="low">Low</option>
-                                    </select>
-                                </label>
+                            <!-- start add new form -->
+                            <div class="modal-body">
+                                <form id="add-task-form">
+                                    <!-- title -->
+                                    <label for="title" class="form-label w-100">Title
+                                        <input type="text" name="title" id="title" maxlength="50" class="form-control"
+                                            placeholder="New task" required>
+                                    </label>
+
+                                    <!-- notes -->
+                                    <label for="notes" class="form-label w-100">Notes
+                                        <textarea name="tasknotes" id="tasknotes" placeholder="Notes or comments"
+                                            rows="2" maxlength="125" style="resize: none"
+                                            class="form-control"></textarea>
+                                    </label>
+
+                                    <label for="dueDate">Due Date
+                                        <input class="form-control" type="date" name="dueDate" id="dueDate">
+                                    </label>
+
+                                    <!-- priority -->
+                                    <label for="priority">Priority
+                                        <select name="priority" id="priority" class="form-control form-select">
+                                            <option value="high">High</option>
+                                            <option value="medium">Medium</option>
+                                            <option selected value="low">Low</option>
+                                        </select>
+                                    </label>
                             </div>
 
-                            <div>
-                                <input type="submit" class="btn btn-primary m-1" value="Submit">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary">Save </button>
                             </div>
+
+                            </form>
+                            <!-- end add new form -->
 
                         </div>
-                    </fieldset>
-                </form>
-                <!-- end add new form -->
+                    </div>
+                </div>
+                <!-- end modal window -->
 
             </div>
             <!-- end add new wrap -->
@@ -169,7 +180,7 @@
             </nav>
             <!-- end nav -->
 
-            <!-- start view wrap - header and content to be created with js -->
+            <!-- start view wrap - all header and content create with js -->
             <div id="view-wrap" class="p-2 mt-2" style="border: 3px solid red">
 
                 <!-- start tasks view - create with js -->
@@ -223,7 +234,6 @@
             <!-- end view wrap -->
 
         </div>
-
         <!-- end content wrap -->
 
     </main>
@@ -234,8 +244,6 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
     <script src="./index.bundle.js"></script>
-
-
 </body>
 
 </html>
