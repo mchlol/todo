@@ -11,9 +11,12 @@ body {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
     font-family: $serif;
 }
+
+// ## replace these styles to make nav pills
 
 .task-tab {
     background-color: goldenrod;
@@ -31,9 +34,22 @@ h4 {
     }
 }
 
+.nav-link {
+    font-size: smaller;
+    padding: 0.5rem;
+}
+
 main {
     max-width: 630px;
 }
+
+fieldset,
+legend,
+{
+all: revert;
+}
+
+
 
 // screen is less than 840px wide
 @media screen and (max-width: 840px) {
@@ -53,6 +69,19 @@ main {
     // test to make sure this media query is accessed
     #current-view-title {
         color: $primary;
+    }
+
+}
+
+// screen is less than 500px wide
+@media screen and (max-width: 500px) {
+    // form should be be in 1 column & accessed through a modal window
+    // task view should be in 1 column
+    // nav should be something like a burger menu or task bar with icons
+
+    // test to make sure this media query is accessed
+    #current-view-title {
+        color: #0d6efd;
     }
 
 }

@@ -1,6 +1,8 @@
 import printMe from './print.js';
 import './input.scss';
 
+console.log('it works');
+
 function component() {
     const viewPaneWrap = document.querySelector('#view-pane-wrap');
     const viewHeading = document.querySelector('#viewHeading');
