@@ -8,9 +8,11 @@ Time to tackle the ol' to do list app.
 - HTML
 - JavaScript (vanilla)
 - Bootstrap
-- Sass for custom CSS
+- Sass
 - Webpack
 - Git
+- ESLint
+- Prettier
 
 ## Project set up
 

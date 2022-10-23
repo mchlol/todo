@@ -25,7 +25,7 @@ function component() {
   
 // component();
 
-// add class '.active' to show current section
+// add class '.active' to show current section - active tab needs to also have rounded-pill class
 // add badges to show no of tasks in a section
 // https://getbootstrap.com/docs/5.0/components/list-group/
 
