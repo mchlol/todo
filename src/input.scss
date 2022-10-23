@@ -106,12 +106,13 @@ main {
 }
 
 // screen is less than 500px wide
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 400px) {
     // nav should be a burger menu
 
     // test to make sure this media query is accessed
     #current-view-title {
         color: #0d6efd;
     }
+
 
 }
