@@ -1,2 +1,2 @@
-(()=>{"use strict";console.log("it works")})();
+(()=>{"use strict";var o,r={569:(o,r,e)=>{function t(){console.log("I get called from print.js!")}e.d(r,{Z:()=>t})}},e={};function t(o){var n=e[o];if(void 0!==n)return n.exports;var s=e[o]={exports:{}};return r[o](s,s.exports,t),s.exports}t.d=(o,r)=>{for(var e in r)t.o(r,e)&&!t.o(o,e)&&Object.defineProperty(o,e,{enumerable:!0,get:r[e]})},t.o=(o,r)=>Object.prototype.hasOwnProperty.call(o,r),o=t(569),console.log("it works"),(0,o.Z)()})();
 //# sourceMappingURL=index.bundle.js.map
