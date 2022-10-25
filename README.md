@@ -8,9 +8,11 @@ Time to tackle the ol' to do list app.
 - HTML
 - JavaScript (vanilla)
 - Bootstrap
-- Sass for custom CSS
+- Sass
 - Webpack
 - Git
+- ESLint
+- Prettier
 
 ## Project set up
 
@@ -22,6 +24,25 @@ Added sass and mini css extract plugin so sass is compiled to css into a file, i
 Added a watch condition to my webpack config so I can run the build command once and it stays open, watching for changes.  
 
 ### User interface 
+
+**Start by doing research.**
+Go to Dribbble and Behance and look for To do list app projects to get inspiration and ideas.  
+- Tag tasks eg. work, family, community etc.
+- calendar view
+- lists
+- stats
+- set reminders
+- recurring tasks eg. 'every wednesday'
+- landing page
+- braindump "quick note"
+- habit tracking
+- reschedule prior tasks - tasks from yesterday/earlier should appear in today's task view as 'overdue'
+- warning if too many tasks added for today - say 6 - when there's more than 6 tasks prompt user if they want to choose another category lest they be overwhelmed
+- dark mode
+- mobile uses will probably prefer main activity kept to bottom of screen
+- task sorting and searching
+- login for persisting data e.g firebase
+
 
 Based on the format of [Todoist](https://todoist.com), an app I use in everyday life. No need to reinvent the wheel.  
 I have created my design in Figma, [which can be seen here](https://www.figma.com/file/lNjJ3WOAyo7zY9mGzCDK3u/Todo?node-id=0%3A1).

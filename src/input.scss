@@ -1,6 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree&family=Noto+Serif&display=swap');
 
-$primary: blue;
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+.toggle.ios,
+.toggle-on.ios,
+.toggle-off.ios {
+    border-radius: 20px;
+}
+
+.toggle.ios .toggle-handle {
+    border-radius: 20px;
+}
+
+.visual-notes {
+    font-family: monospace;
+    color: red;
+}
+
+$primary: goldenrod;
 $sans-serif: 'Figtree', sans-serif;
 $serif: 'Noto Serif', serif;
 
@@ -11,10 +52,67 @@ body {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
     font-family: $serif;
 }
 
-.view-pane {
-    color: $primary;
+.task-tab {
+    background-color: goldenrod;
+
+    a {
+        color: #fff;
+    }
+}
+
+.project-tab {
+    background-color: palevioletred;
+
+    a {
+        color: #fff;
+    }
+}
+
+.nav-link {
+    font-size: smaller;
+    padding: 0.5rem;
+}
+
+main {
+    max-width: 630px;
+}
+
+
+// screen is less than 840px wide
+@media screen and (max-width: 840px) {
+    // form should be be in 1 column & accessed through a modal window
+    // task view should be in 1 column
+
+    // test to make sure this media query is accessed
+    #current-view-title {
+        color: palevioletred;
+    }
+
+}
+
+// screen is more than 841px wide
+@media screen and (min-width: 841px) {
+
+    // test to make sure this media query is accessed
+    #current-view-title {
+        color: $primary;
+    }
+
+}
+
+// screen is less than 500px wide
+@media screen and (max-width: 400px) {
+    // nav should be a burger menu
+
+    // test to make sure this media query is accessed
+    #current-view-title {
+        color: #0d6efd;
+    }
+
+
 }
