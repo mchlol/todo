@@ -2,32 +2,48 @@ import printMe from './print.js';
 import './input.scss';
 
 console.log('it works');
-
-function component() {
-    const viewPaneWrap = document.querySelector('#view-pane-wrap');
-    const viewHeading = document.querySelector('#viewHeading');
-    
-
-
-    const viewPane = document.querySelector('#current-view-pane');
-    viewPane.classList.add('view-pane', 'm-1');
-    viewPane.innerHTML = "All content in this panel is generated with JavaScript";
-
-    const btn = document.createElement('button');
-    btn.classList.add('btn','btn-primary');
-    btn.textContent = 'Click me and check the console';
-    btn.onclick = printMe;
-    viewPane.appendChild(btn);
-
-  
-    return viewPane;
-  }
-  
-// component();
 printMe();
 
+
+// check task category
+const checkDueDate = (date) => {
+    const today = new Date();
+    const todayString = today.toDateString();
+    const dateInput = new Date(date);
+    const dateString = dateInput.toDateString();
+
+    if (todayString === dateString) {
+        return `Today`;
+    } 
+    else if (Date.parse(date) < today) {
+        return `Overdue`;
+    } 
+    else if (!Date.parse(date)) {
+        return `Someday`;
+    } 
+    else if (dateString) {
+        return `Soon`;
+    }
+};
+
+console.log(checkDueDate('2022-10-26'));
+console.log(checkDueDate('2021-10-26'));
+console.log(checkDueDate());
+console.log(checkDueDate('2022-10-28'));
+
+const currentTitleHandler = function(viewTitle) {
+    
+}
+
+const viewHeadingH2 = document.querySelector('#current-view-title');
+viewHeadingH2.textContent = "Today";
+
+
+
 /*
-user clicks to add task
+default view is today
+user can change view to soon, someday, or completed
+user clicks button to add task
 modal window opens
 user inputs info into the form
 on submit the form data is stored as an object
