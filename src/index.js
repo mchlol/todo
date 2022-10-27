@@ -1,11 +1,10 @@
 import printMe from './print.js';
 import './input.scss';
 
-console.log('it works');
-printMe();
 
 
 // check task category
+
 const checkDueDate = (date) => {
     const today = new Date();
     const todayString = today.toDateString();
@@ -16,6 +15,7 @@ const checkDueDate = (date) => {
         return `Today`;
     } 
     else if (Date.parse(date) < today) {
+        // task == completed ? 'completed' : 'today, overdue warning'
         return `Overdue`;
     } 
     else if (!Date.parse(date)) {
@@ -26,10 +26,17 @@ const checkDueDate = (date) => {
     }
 };
 
-console.log(checkDueDate('2022-10-26'));
-console.log(checkDueDate('2021-10-26'));
-console.log(checkDueDate());
-console.log(checkDueDate('2022-10-28'));
+// test the function for various cases
+// note to self - learn testing
+console.log('Today: ' + checkDueDate('2022-10-26'));
+console.log('Yesterday: ' + checkDueDate('2021-10-26'));
+console.log('No input: ' + checkDueDate());
+console.log('Future: ' + checkDueDate('2022-10-28'));
+console.log('null: ' + checkDueDate(null));
+console.log('undefined: ' + checkDueDate(undefined));
+console.log('random string: ' + checkDueDate('ahlfkahef'));
+console.log(2 + ': ' + checkDueDate(2)); // this returns 'overdue' as 2 is less than a date 
+console.log('Huge number: ' + checkDueDate(999999999999999));
 
 const currentTitleHandler = function(viewTitle) {
     
