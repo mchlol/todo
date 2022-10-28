@@ -38,14 +38,79 @@ console.log('random string: ' + checkDueDate('ahlfkahef'));
 console.log(2 + ': ' + checkDueDate(2)); // this returns 'overdue' as 2 is less than a date 
 console.log('Huge number: ' + checkDueDate(999999999999999));
 
-const currentTitleHandler = function(viewTitle) {
-    
+
+
+// task class
+
+class Task {
+    constructor(title,description,dateAdded,dueDate,priority) {
+        this.title = title;
+        this.description = description;
+        this.dateAdded = dateAdded.toDateString();
+        this.dueDate = dueDate.toDateString();
+        this.priority = priority;
+    }
 }
 
-const viewHeadingH2 = document.querySelector('#current-view-title');
-viewHeadingH2.textContent = "Today";
+// temp args
+let someTitle = 'Lorem ipsum dolor sit amet, consectetuer adipiscin';
+let someDesc = 'make list, buy adaptor, find winter clothes, replace batteries';
+let someDate = new Date();
+let somePrio = 'Low';
+
+// temp task object
+const someTask = new Task(someTitle,someDesc,someDate,someDate,`${somePrio} priority`);
+
+console.log(someTask);
+
+/* ###
+    DOM STUFF
+### */
+
+const taskList = document.querySelector('#task-list');
+
+function displayTaskItem(object) {
+    // create list item
+    let listItem = document.createElement('li');
+    listItem.classList.add('list-group-item', 'task-item-wrapper', 'm-1', 'p-1')
+
+    // create primary text wrap
+    let taskPrimaryText = document.createElement('div');
+    taskPrimaryText.classList.add('task-text-primary')
+
+    // primary text elements
+    // checkbox
+    let check = document.createElement('input');
+    check.type = 'checkbox';
+    check.classList.add('form-check-input', 'm-1')
+    
+    // title
+    let title = document.createElement('span');
+    title.classList.add('fw-bold', 'm-1')
+    title.textContent = object.title;
+
+    // append primary text elements
+    taskPrimaryText.appendChild(check,title);
 
 
+    // create secondary text wrap
+    let taskSecondaryWrap = document.createElement('div');
+    taskSecondaryWrap.classList.add('task-text-secondary');
+
+    //secondary text elements
+    // date added - don't need to display this for now
+
+    // due date
+    
+
+    
+    listItem.appendChild(taskPrimaryText);
+
+    // return list item
+    return taskList.appendChild(listItem);
+}
+
+displayTaskItem(someTask);
 
 /*
 default view is today

@@ -18,68 +18,73 @@
 <body>
     <main class="container-fluid mt-2">
 
-        <!-- start header -->
+        <!-- start app header -->
         <header class="text-center p-2 mt-1 mb-1 w-100" style="border: 3px solid black">
             <h1 class="display-3 text-primary">To Do List</h1>
 
         </header>
-        <!-- end header -->
+        <!-- end app header -->
 
         <!-- start content wrap -->
         <div class="p-2 mb-2" style="border: 3px solid black">
 
             <!-- start view wrap - create with js -->
-            <div id="view-wrap" class="p-2">
+            <div id="view-wrap" class="p-2" style="border: 2px solid palevioletred">
 
                 <!-- start view heading -->
-                <h2 id="current-view-title" class="text-center">
+                <h2 id="current-view-title" class="text-center p-1" style="border: 2px solid black; border-radius: 8px">
                     Today
                 </h2>
                 <!-- end view heading -->
 
                 <!-- start tasks list -->
-                <ul class="list-group">
+                <ul id="task-list" class="list-group p-1" style="border: 2px solid black; border-radius: 8px">
 
-                    <li class="list-group-item m-1 border">
+                    <li class="list-group-item task-item-wrapper m-1 p-1">
 
-                        <!-- checkbox -->
-                        <input type="checkbox" value="mark-complete" id="check-task1" class="form-check-input m-1">
+                        <div class="task-text-primary">
+                            <!-- checkbox -->
+                            <input type="checkbox" value="mark-complete" id="check-task1" class="form-check-input m-1">
 
-                        <!-- title -->
-                        <span id="display-task1" class="fw-bold m-1">Lorem ipsum dolor sit amet,
-                            consectetuer adipiscin</span>
-
-                        <!-- notes -->
-                        <p class="text-muted small m-1 text-justify" id="display-tasknotes">
-                            Lorem ipsum dolor sit
-                            amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean
-                            massa. Cum sociis natoque.
-                        </p>
-
-                        <!-- details row -->
-                        <div class="d-flex flex-wrap justify-content-between align-items-center">
-                            <span class="small m-1">
-                                <span class="task-added">Added</span> 09/10/22</span>
-                            <span class="small m-1">
-                                <span class="task-dueDate">Due</span> 09/10/22</span>
-                            <span class="small m-1">
-                                <span id="task-priority">Low</span> priority</span>
-
-                            <!-- start task icons -->
-                            <div class="d-flex">
-                                <button class="btn btn-sm">
-                                    <span class="material-icons text-primary">
-                                        mode
-                                    </span>
-                                </button>
-                                <button class="btn btn-sm">
-                                    <span class="material-icons text-danger">
-                                        delete
-                                    </span>
-                                </button>
-                            </div>
-                            <!-- end task icons -->
+                            <!-- title -->
+                            <span id="task-item1" class="fw-bold m-1">Lorem ipsum dolor sit amet,
+                                consectetuer adipiscin</span>
                         </div>
+
+                        <div class="task-text-secondary text-muted small">
+                            <!-- notes -->
+                            <p class="m-1 text-justify" id="display-tasknotes">
+                                Lorem ipsum dolor sit
+                                amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean
+                                massa. Cum sociis natoque.
+                            </p>
+
+                            <!-- details row -->
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <span class="small m-1">
+                                    <span class="task-added">Added</span> Thu Oct 27 2022</span>
+                                <span class="small m-1">
+                                    <span class="task-dueDate">Due</span> Mon Oct 31 2022</span>
+                                <span class="small m-1">
+                                    <span id="task-priority">Low</span> priority</span>
+
+                                <!-- start task icons -->
+                                <div class="d-flex">
+                                    <button class="btn btn-sm">
+                                        <span class="material-icons text-primary">
+                                            mode
+                                        </span>
+                                    </button>
+                                    <button class="btn btn-sm">
+                                        <span class="material-icons text-danger">
+                                            delete
+                                        </span>
+                                    </button>
+                                </div>
+                                <!-- end task icons -->
+                            </div>
+                        </div>
+
                     </li>
                 </ul>
                 <!-- end tasks list -->
