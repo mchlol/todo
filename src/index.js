@@ -41,7 +41,7 @@ console.log('Huge number: ' + checkDueDate(999999999999999));
 
 
 // task class
-
+let taskId = 0; // global variable for incrementing id numbers
 class Task {
     constructor(title,description,dateAdded,dueDate,priority) {
         this.title = title;
@@ -49,17 +49,18 @@ class Task {
         this.dateAdded = dateAdded.toDateString();
         this.dueDate = dueDate.toDateString();
         this.priority = priority;
+        this.taskId = `task${++taskId}`;
     }
 }
 
 // temp args
-let someTitle = 'Lorem ipsum dolor sit amet, consectetuer adipiscin';
-let someDesc = 'make list, buy adaptor, find winter clothes, replace batteries';
+let someTitle = 'Pack for snow trip';
+let someNotes = 'make list, buy adaptor, find winter clothes, replace batteries';
 let someDate = new Date();
 let somePrio = 'Low';
 
 // temp task object
-const someTask = new Task(someTitle,someDesc,someDate,someDate,`${somePrio} priority`);
+const someTask = new Task(someTitle,someNotes,someDate,someDate,`${somePrio} priority`);
 
 console.log(someTask);
 
@@ -70,41 +71,62 @@ console.log(someTask);
 const taskList = document.querySelector('#task-list');
 
 function displayTaskItem(object) {
-    // create list item
     let listItem = document.createElement('li');
     listItem.classList.add('list-group-item', 'task-item-wrapper', 'm-1', 'p-1')
 
-    // create primary text wrap
-    let taskPrimaryText = document.createElement('div');
-    taskPrimaryText.classList.add('task-text-primary')
+    let taskPrimaryWrap = document.createElement('div');
+    taskPrimaryWrap.classList.add('task-text-primary')
 
     // primary text elements
-    // checkbox
+
     let check = document.createElement('input');
     check.type = 'checkbox';
     check.classList.add('form-check-input', 'm-1')
     
-    // title
     let title = document.createElement('span');
     title.classList.add('fw-bold', 'm-1')
     title.textContent = object.title;
 
-    // append primary text elements
-    taskPrimaryText.appendChild(check,title);
+
+    taskPrimaryWrap.appendChild(check,title);
 
 
-    // create secondary text wrap
     let taskSecondaryWrap = document.createElement('div');
-    taskSecondaryWrap.classList.add('task-text-secondary');
+    taskSecondaryWrap.classList.add('task-text-secondary', 'text-muted', 'small');
 
     //secondary text elements
+
+    let notes = document.createElement('p');
+    notes.classList.add('m-1','text-justify');
+    notes.textContent = object.notes;
+
+
+    let detailsRow = document.createElement('div');
+    detailsRow.classList.add('d-flex', 'flex-wrap','justify-content-between','align-items-center');
+
     // date added - don't need to display this for now
 
-    // due date
-    
+    let dueDate = document.createElement('span');
+    dueDate.textContent = object.dueDate;
 
+    let priority = document.createElement('span');
+    priority.textContent = object.prio + ' priority';
+
+    let iconWrap = document.createElement('div');
+    iconWrap.classList.add('d-flex');
+    let editBtn = document.createElement('button');
+    editBtn.classList.add('btn','btn-sm');
+    editBtn.setAttribute('id','edit');
+
+
+    detailsRow.appendChild(dueDate,priority,iconWrap);
+
+    taskSecondaryWrap.appendChild(notes);
+    taskSecondaryWrap.appendChild(detailsRow);
     
-    listItem.appendChild(taskPrimaryText);
+    listItem.appendChild(taskPrimaryWrap);
+    listItem.appendChild(taskSecondaryWrap);
+
 
     // return list item
     return taskList.appendChild(listItem);
