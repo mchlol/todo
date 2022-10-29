@@ -68,15 +68,25 @@ main {
 
 .task-item-wrapper {
     text-decoration: none;
-    border: 1px solid red;
+    border: none;
+    border-bottom: 1px solid slategrey;
+    border-radius: none;
+}
+
+.task-item-wrapper:last-child {
+    border: none;
+}
+
+.btn-sm {
+    padding: 0em 0.25em;
 }
 
 .task-text-primary {
-    border: 1px solid limegreen
+    // border: 1px solid limegreen
 }
 
 .task-text-secondary {
-    border: 1px solid blue
+    // border: 1px solid blue
 }
 
 

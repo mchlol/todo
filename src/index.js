@@ -77,7 +77,7 @@ const taskList = document.querySelector('#task-list');
 function displayTaskItem(object) {
 
     let listItem = document.createElement('li');
-    listItem.classList.add('list-group-item', 'task-item-wrapper', 'm-1', 'p-1')
+    listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-1')
 
     let taskPrimaryWrap = document.createElement('div');
     taskPrimaryWrap.classList.add('task-text-primary')
@@ -149,6 +149,8 @@ function displayTaskItem(object) {
     return taskList.appendChild(listItem);
 }
 
+displayTaskItem(someTask);
+displayTaskItem(anotherTask);
 displayTaskItem(someTask);
 displayTaskItem(anotherTask);
 
