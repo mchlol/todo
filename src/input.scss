@@ -66,6 +66,10 @@ main {
     max-width: 630px;
 }
 
+nav {
+    height: 60px;
+}
+
 .task-item-wrapper {
     text-decoration: none;
     border: none;
@@ -81,13 +85,13 @@ main {
     padding: 0em 0.25em;
 }
 
-.task-text-primary {
-    // border: 1px solid limegreen
-}
+// .task-text-primary {
+//     border: 1px solid limegreen
+// }
 
-.task-text-secondary {
-    // border: 1px solid blue
-}
+// .task-text-secondary {
+//     border: 1px solid blue
+// }
 
 
 // screen is less than 840px wide

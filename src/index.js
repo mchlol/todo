@@ -57,14 +57,13 @@ class Task {
 }
 
 // temp args
-let someTitle = 'Pack for snow trip';
-let someNotes = 'make list, buy adaptor, find winter clothes, replace batteries';
+let someTitle = 'Lorem ipsum dolor sit amet, consectetuer adipiscin';
+let someNotes = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque.';
 let someDate = new Date();
-let somePrio = 'Low';
+let somePrio = 'Medium';
 
 // temp task object
 const someTask = new Task(someTitle,someNotes,someDate,somePrio);
-const anotherTask = new Task('Wash dishes','',someDate,'Medium');
 
 console.log(someTask);
 
@@ -150,9 +149,11 @@ function displayTaskItem(object) {
 }
 
 displayTaskItem(someTask);
-displayTaskItem(anotherTask);
 displayTaskItem(someTask);
-displayTaskItem(anotherTask);
+displayTaskItem(someTask);
+displayTaskItem(someTask);
+displayTaskItem(someTask);
+
 
 /*
 default view is today
