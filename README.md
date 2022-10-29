@@ -27,6 +27,7 @@ Added a watch condition to my webpack config so I can run the build command once
 
 **Start by doing research.**
 Go to Dribbble and Behance and look for To do list app projects to get inspiration and ideas.  
+
 - Tag tasks eg. work, family, community etc.
 - calendar view
 - lists
@@ -44,44 +45,6 @@ Go to Dribbble and Behance and look for To do list app projects to get inspirati
 - login for persisting data e.g firebase
 
 
-Based on the format of [Todoist](https://todoist.com), an app I use in everyday life. No need to reinvent the wheel.  
-I have created my design in Figma, [which can be seen here](https://www.figma.com/file/lNjJ3WOAyo7zY9mGzCDK3u/Todo?node-id=0%3A1).
-The UI uses a 2 column layout - nav on the left, section view on the right.  
-**Nav** will have 2 boxes;  
-- Tasks - categories are: today (default), future, and no date. *Categories cannot be created or deleted.*  
-- Projects - added by user and ordered by oldest first. *Projects can be created and deleted.*  
 
-The section view will be divided into two rows;  
-- Add new task
-- View pane  
-
-The view pane will have 2 sections, with a heading at the top followed by a list of tasks.  
-
-
-### Task item requirements
-
-Default behaviour for task quick add:  
-- title: from input
-- description: null
-- date: current date
-- dueDate: current date
-- priority: 4  
-- id number: generated? 
-
-Each task will be presented in a row, starting with a checkbox, and ending with a delete button.  
-
-**Priority:** Tasks have 4 priority levels, from 1 (highest) to 4 (lowest, default).  
-
-
-## Functionality
-
-### JavaScript pseudocode/algorithm 
-
-create a text input and button  
-create a div to act as a view pane  
-clicking the button creates an object  
-make a class to create the todo objects from  
-each todo object contains the string from the text input as 'title'  
-along with 'description' 'dueDate' and 'priority'  
-
-
+## Resources
+[Bootsrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
