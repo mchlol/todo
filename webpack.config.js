@@ -7,6 +7,7 @@ module.exports = {
   watch: true,
   entry: {
     index: './src/index.js',
+    dom: './src/dom.js',
     print: './src/print.js',
   },
   devtool: 'source-map',
