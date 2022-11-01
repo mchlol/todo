@@ -1,11 +1,9 @@
-import printMe from './print.js';
-import { testDom, displayTaskItem } from './dom.js';
+import { displayTaskItem } from './dom.js';
 import './input.scss';
 
 
-
 // check task category
-
+// everything doesn't need to be a module, right?
 const checkDueDate = (date) => {
     const today = new Date();
     const todayString = today.toDateString();
@@ -27,130 +25,83 @@ const checkDueDate = (date) => {
     }
 };
 
-// test the function for various cases
-// note to self - learn testing
-console.log('Today: ' + checkDueDate('2022-10-26'));
-console.log('Yesterday: ' + checkDueDate('2021-10-26'));
-console.log('No input: ' + checkDueDate());
-console.log('Future: ' + checkDueDate('2022-10-28'));
-console.log('null: ' + checkDueDate(null));
-console.log('undefined: ' + checkDueDate(undefined));
-console.log('random string: ' + checkDueDate('ahlfkahef'));
-console.log(2 + ': ' + checkDueDate(2)); // this returns 'overdue' as 2 is less than a date 
-console.log('Huge number: ' + checkDueDate(999999999999999));
-
-
-
-// task class
-let taskId = 0; // global variable for incrementing id numbers
+// global variable for incrementing id numbers
+let taskId = 0;
 // convert date to human readable format
 const dateHandler = (date) => {
-    return date.toDateString();
+    let dayOfWeek = date.getDay();
+    let dayOfMonth = date.getDate();
+    let month = date.getMonth();
+    let year = date.getYear();
+    let string = `${dayOfWeek} ${dayOfMonth} ${month} ${year}`;
+    return string;
 }
+
+// task class
 class Task {
-    constructor(title,notes,dueDate,priority) {
+    constructor(title,notes,dueDate,priority,category) {
         this.title = title;
         this.notes = notes;
-        this.dueDate = dateHandler(dueDate);
+        this.dueDate = dueDate.toDateString();
         this.priority = priority;
         this.taskId = `task${++taskId}`;
+        this.section = checkDueDate(dueDate);
+        this.category = category; // ie 'tasks' or 'projectName'
     }
-}
+};
+
+// ## TEMPORARY TESTING STUFF ##
 
 // temp args
 let someTitle = 'Lorem ipsum dolor sit amet, consectetuer adipiscin';
 let someNotes = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque.';
 let someDate = new Date();
+// above date is always current
 let somePrio = 'Medium';
 
-// temp task object
+// create a temp task object
 const someTask = new Task(someTitle,someNotes,someDate,somePrio);
-
+// log the temp object
 console.log(someTask);
-
-/* ###
-    DOM STUFF
-### */
-
-// const taskList = document.querySelector('#task-list');
-
-// function displayTaskItem(object) {
-
-//     let listItem = document.createElement('li');
-//     listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-1')
-
-//     let taskPrimaryWrap = document.createElement('div');
-//     taskPrimaryWrap.classList.add('task-text-primary')
-
-//     // primary text elements
-
-//     let check = document.createElement('input');
-//     check.type = 'checkbox';
-//     check.classList.add('form-check-input', 'm-1')
-    
-//     let title = document.createElement('span');
-//     title.classList.add('fw-bold', 'm-1')
-//     title.textContent = object.title;
-
-
-//     let taskSecondaryWrap = document.createElement('div');
-//     taskSecondaryWrap.classList.add('task-text-secondary', 'text-muted', 'small');
-
-//     //secondary text elements
-
-//     let notes = document.createElement('p');
-//     notes.classList.add('m-1','text-justify');
-//     notes.textContent = object.notes;
-
-//     let detailsRow = document.createElement('div');
-//     detailsRow.classList.add('d-flex', 'flex-wrap','justify-content-between','align-items-center');
-
-//     let dueDate = document.createElement('span');
-//     dueDate.classList.add('small','m-1');
-//     if (!object.dueDate) {
-//         dueDate.textContent = 'No due date';
-//     }  else dueDate.textContent = `Due ${object.dueDate}`;
-
-//     let priority = document.createElement('span');
-//     priority.classList.add('small','m-1');
-//     priority.textContent = object.priority + ' priority';
-
-//     let iconWrap = document.createElement('div');
-//     iconWrap.classList.add('d-flex');
-
-//     let editBtn = document.createElement('button');
-//     editBtn.classList.add('btn','btn-sm');
-//     editBtn.setAttribute('id','edit');
-//     editBtn.innerHTML = `<span class="material-icons text-primary">mode</span>`;
-
-//     let delBtn = document.createElement('button');
-//     delBtn.classList.add('btn','btn-sm');
-//     delBtn.setAttribute('id','delete');
-//     delBtn.innerHTML = `<span class="material-icons text-danger">delete</span>`;
-
-//     iconWrap.appendChild(editBtn);
-//     iconWrap.appendChild(delBtn);
-
-//     detailsRow.appendChild(dueDate);
-//     detailsRow.appendChild(priority)
-//     detailsRow.appendChild(iconWrap);
-
-//     taskSecondaryWrap.appendChild(notes);
-//     taskSecondaryWrap.appendChild(detailsRow);
-
-//     taskPrimaryWrap.appendChild(check)
-//     taskPrimaryWrap.appendChild(title);
-    
-//     listItem.appendChild(taskPrimaryWrap);
-//     listItem.appendChild(taskSecondaryWrap);
-
-
-//     // return list item
-//     return taskList.appendChild(listItem);
-// }
-
-testDom();
+// test the function from module with temp object
 displayTaskItem(someTask);
+
+// (╯°□°）╯︵ ┻━┻ 
+
+// create an array to hold task objects
+let tasks = [someTask];
+// OR
+let taskStorage = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+
+// access form 
+let addTaskForm = document.querySelector('#add-task-form');
+// access form inputs
+let title = document.querySelector('#title');
+let notes = document.querySelector('#tasknotes');
+let dueDate = document.querySelector('#dueDate');
+let priority = document.querySelector('#priority');
+let formSubmitBtn = document.querySelector('#save-btn');
+
+addTaskForm.onsubmit = (e) => {
+    e.preventDefault();
+    let createTask = new Task(title.value,notes.value,dueDate.value,priority.value);
+    console.log(createTask);
+    addTaskForm.reset();
+    return console.log('call the display function with array');
+};
+
+// const addTaskForm = console.log('#add-task-form');
+// addTaskForm.onsubmit = function(e) {
+//     e.preventDefault();
+//     title = title.value;
+//     notes = inputNotes.value;
+//     dueDate = inputDueDate.value;
+//     priority = inputPriority.value;
+//     let createTask = new Task(title,notes,dueDate,priority);
+//     tasks.unshift(createTask);
+//     form.reset;
+//     return displayTaskItem(task);
+// }
 
 
 /*
@@ -172,4 +123,3 @@ user can 'check' off a task
 when task is added it appears in the list
 ordered by priority, then date added
 */
-

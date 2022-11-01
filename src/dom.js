@@ -1,9 +1,6 @@
-function testDom() {
-console.log('called from dom.js');
-};
-
 const taskList = document.querySelector('#task-list');
 
+// acts on a single item
 function displayTaskItem(object) {
 
     let listItem = document.createElement('li');
@@ -80,6 +77,5 @@ function displayTaskItem(object) {
 }
 
 export {
-    testDom,
     displayTaskItem
 };
