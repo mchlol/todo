@@ -56,7 +56,7 @@ class Task {
 // temp args
 let someTitle = 'Lorem ipsum dolor sit amet, consectetuer adipiscin';
 let someNotes = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque.';
-let someDate = new Date();
+let someDate = '2022-07-10';
 // above date is always current
 let somePrio = 'Medium';
 let someCat = 'tasks';
@@ -68,7 +68,10 @@ console.log(someTask);
 // test the function from module with temp object
 
 
-// (╯°□°）╯︵ ┻━┻ 
+// DATE STUFF (╯°□°）╯︵ ┻━┻ 
+
+// take a date like '2022-10-31' and convert it to Mon 31 Oct 2022' like new Date() would
+// can we not go like new Date(datePickerInput.value)?
 
 // create an array to hold task objects
 let tasks = [someTask];
@@ -88,7 +91,7 @@ let priority = document.querySelector('#priority');
 // form handler
 addTaskForm.onsubmit = (e) => {
     e.preventDefault();
-    let createTask = new Task(title.value,notes.value,dueDate.value,priority.value);
+    let createTask = new Task(title.value,notes.value,new Date(dueDate.value).toDateString(),priority.value);
     console.log(createTask);
     tasks.push(createTask);
     addTaskForm.reset();
