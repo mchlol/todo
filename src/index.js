@@ -1,4 +1,4 @@
-import { displayTaskItem } from './dom.js';
+import { displayTaskList } from './dom.js';
 import './input.scss';
 
 
@@ -66,7 +66,7 @@ const someTask = new Task(someTitle,someNotes,someDate,somePrio,someCat);
 // log the temp object
 console.log(someTask);
 // test the function from module with temp object
-displayTaskItem(someTask);
+
 
 // (╯°□°）╯︵ ┻━┻ 
 
@@ -90,9 +90,12 @@ addTaskForm.onsubmit = (e) => {
     e.preventDefault();
     let createTask = new Task(title.value,notes.value,dueDate.value,priority.value);
     console.log(createTask);
+    tasks.push(createTask);
     addTaskForm.reset();
-    return console.log('call the display function with array');
+    return displayTaskList(tasks);
 };
+
+displayTaskList(tasks);
 
 // const addTaskForm = console.log('#add-task-form');
 // addTaskForm.onsubmit = function(e) {
