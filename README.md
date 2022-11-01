@@ -25,7 +25,7 @@ Added a watch condition to my webpack config so I can run the build command once
 
 ### User interface 
 
-**Start by doing research.**
+**Start by doing research.**  
 Go to Dribbble and Behance and look for To do list app projects to get inspiration and ideas.  
 
 - Tag tasks eg. work, family, community etc.
@@ -47,4 +47,5 @@ Go to Dribbble and Behance and look for To do list app projects to get inspirati
 
 
 ## Resources
-[Bootsrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
+[Bootstrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
+[How to save data in localStorage using JavaScript](https://dev.to/michaelburrows/how-to-save-data-in-localstorage-using-javascript-994)  
