@@ -27,6 +27,7 @@ const checkDueDate = (date) => {
 
 // global variable for incrementing id numbers
 let taskId = 0;
+
 // convert date to human readable format
 const dateHandler = (date) => {
     let dayOfWeek = date.getDay();
@@ -42,7 +43,7 @@ class Task {
     constructor(title,notes,dueDate,priority,category) {
         this.title = title;
         this.notes = notes;
-        this.dueDate = dueDate.toDateString();
+        this.dueDate = dueDate;
         this.priority = priority;
         this.taskId = `task${++taskId}`;
         this.section = checkDueDate(dueDate);
@@ -58,9 +59,10 @@ let someNotes = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenea
 let someDate = new Date();
 // above date is always current
 let somePrio = 'Medium';
+let someCat = 'tasks';
 
 // create a temp task object
-const someTask = new Task(someTitle,someNotes,someDate,somePrio);
+const someTask = new Task(someTitle,someNotes,someDate,somePrio,someCat);
 // log the temp object
 console.log(someTask);
 // test the function from module with temp object
@@ -74,14 +76,16 @@ let tasks = [someTask];
 let taskStorage = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
 
 // access form 
-let addTaskForm = document.querySelector('#add-task-form');
+const addTaskForm = document.querySelector('#add-task-form');
+
 // access form inputs
 let title = document.querySelector('#title');
 let notes = document.querySelector('#tasknotes');
 let dueDate = document.querySelector('#dueDate');
 let priority = document.querySelector('#priority');
-let formSubmitBtn = document.querySelector('#save-btn');
+// let formSubmitBtn = document.querySelector('#save-btn');
 
+// form handler
 addTaskForm.onsubmit = (e) => {
     e.preventDefault();
     let createTask = new Task(title.value,notes.value,dueDate.value,priority.value);

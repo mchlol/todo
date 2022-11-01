@@ -36,7 +36,7 @@ function displayTaskItem(object) {
     dueDate.classList.add('small','m-1');
     if (!object.dueDate) {
         dueDate.textContent = 'No due date';
-    }  else dueDate.textContent = `Due ${object.dueDate}`;
+    }  else dueDate.textContent = `Due ${object.dueDate.toDateString()}`;
 
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
