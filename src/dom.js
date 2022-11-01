@@ -1,6 +1,5 @@
 const taskList = document.querySelector('#task-list');
 
-// acts on a single item
 function displayTaskItem(object) {
 
     let listItem = document.createElement('li');
@@ -8,8 +7,6 @@ function displayTaskItem(object) {
 
     let taskPrimaryWrap = document.createElement('div');
     taskPrimaryWrap.classList.add('task-text-primary')
-
-    // primary text elements
 
     let check = document.createElement('input');
     check.type = 'checkbox';
@@ -19,11 +16,8 @@ function displayTaskItem(object) {
     title.classList.add('fw-bold', 'm-1')
     title.textContent = object.title;
 
-
     let taskSecondaryWrap = document.createElement('div');
     taskSecondaryWrap.classList.add('task-text-secondary', 'text-muted', 'small');
-
-    //secondary text elements
 
     let notes = document.createElement('p');
     notes.classList.add('m-1','text-justify');
@@ -71,10 +65,9 @@ function displayTaskItem(object) {
     listItem.appendChild(taskPrimaryWrap);
     listItem.appendChild(taskSecondaryWrap);
 
-
-    // return list item
     return taskList.appendChild(listItem);
 }
+
 
 function displayTaskList(array) {
     taskList.innerHTML = '';

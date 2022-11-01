@@ -96,19 +96,7 @@ addTaskForm.onsubmit = (e) => {
 };
 
 displayTaskList(tasks);
-
-// const addTaskForm = console.log('#add-task-form');
-// addTaskForm.onsubmit = function(e) {
-//     e.preventDefault();
-//     title = title.value;
-//     notes = inputNotes.value;
-//     dueDate = inputDueDate.value;
-//     priority = inputPriority.value;
-//     let createTask = new Task(title,notes,dueDate,priority);
-//     tasks.unshift(createTask);
-//     form.reset;
-//     return displayTaskItem(task);
-// }
+// on creating a task it should be pushed to the variable in  localStorage
 
 
 /*
