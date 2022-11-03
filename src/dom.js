@@ -71,7 +71,7 @@ function displayTaskItem(object) {
 
 function displayTaskList(array) {
     taskList.innerHTML = '';
-    array.forEach(item => displayTaskItem(item));
+    return array.forEach(item => displayTaskItem(item));
 }
 
 export {
