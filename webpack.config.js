@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     index: './src/index.js',
     dom: './src/dom.js',
+    store: './src/store.js',
   },
   devtool: 'source-map',
   output: {

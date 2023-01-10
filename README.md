@@ -49,15 +49,15 @@ Go to Dribbble and Behance and look for To do list app projects to get inspirati
 ### Create a module for DOM logic
 
 Select the unordered list element that will have each task as a list item.   
-Create a function that takes an object, creates a list item, then creates all the inner elements, assigns the classes, sets the content based on the object's values, appends all the various bits and pieces and returns a list item.   
-Create another function that takes an array, removes all the content of the ul and then returns a forEach loop to call the above function on each list item (task) in the array (collection of tasks).  
-The second function has closure over the first function so the module only needs to export the second function.  
+**To create a list item (task):** Create a function that takes an object, creates a list item, then creates all the inner html elements, assigns the css classes, sets the text content based on the object's values, appends all the various bits and pieces (checkbox, delete button, due date etc.) and returns a list item.   
+**To display the list of tasks:** Create another function that takes an array, removes all the content of the ul and then returns a forEach loop to call the above function on each list item (task) in the array (collection of tasks).  
+*The second function has closure over the first function so the module only needs to export the second function.*  
 
 
 ### Saving the data to local storage
 
 When a task is added (or edited, or deleted) this should be saved in local storage.  
-First handle the case that the data is not in local storage, then proceed with the rest of the function.  
+First handle the case that the data is not in local storage.  
 Local storage uses JSON which cannot store functions, so methods will need to be added after the data is retrieved.  
 
 
@@ -70,4 +70,6 @@ Starting with delete, add the functionality to remove a task from the array when
 [Bootstrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
 [How to save data in localStorage using JavaScript](https://dev.to/michaelburrows/how-to-save-data-in-localstorage-using-javascript-994)  
 [Saving Form Data in Client-Side Storage](https://www.raymondcamden.com/2022/03/27/saving-form-data-in-client-side-storage)  
+[Storing and retrieving JavaScript objects in localStorage](https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/)
+[StackOverflow answer](https://stackoverflow.com/a/49609944/17232226)
 

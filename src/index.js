@@ -1,6 +1,8 @@
 import { displayTaskList } from './dom.js';
+import { store } from './store.js';
 import './input.scss';
 
+store();
 
 // check task category
 // everything doesn't need to be a module, right?
@@ -57,7 +59,6 @@ class Task {
 let someTitle = 'Lorem ipsum dolor sit amet, consectetuer adipiscin';
 let someNotes = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque.';
 let someDate = '2022-07-10';
-// above date is always current
 let somePrio = 'Medium';
 let someCat = 'tasks';
 
@@ -70,13 +71,12 @@ console.log(someTask);
 
 // DATE STUFF (╯°□°）╯︵ ┻━┻ 
 
-// take a date like '2022-10-31' and convert it to Mon 31 Oct 2022' like new Date() would
-// can we not go like new Date(datePickerInput.value)?
+// take a date like '2022-10-31' and convert it to Mon 31 Oct 2022' like new Date() would so it matches form input value
 
 // create an array to hold task objects
 let tasks = [someTask];
 // OR
-let taskStorage = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+// let taskStorage = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
 
 // access form 
 const addTaskForm = document.querySelector('#add-task-form');
@@ -86,14 +86,35 @@ let title = document.querySelector('#title');
 let notes = document.querySelector('#tasknotes');
 let dueDate = document.querySelector('#dueDate');
 let priority = document.querySelector('#priority');
-// let formSubmitBtn = document.querySelector('#save-btn');
+let formSubmitBtn = document.querySelector('#save-btn');
 
 // form handler
+// addTaskForm.onsubmit = (e) => {
+//     e.preventDefault();
+//     let createTask = new Task(title.value,notes.value,new Date(dueDate.value).toDateString(),priority.value);
+//     console.log(createTask);
+//     tasks.push(createTask);
+//     addTaskForm.reset();
+//     return displayTaskList(tasks);
+// };
+
 addTaskForm.onsubmit = (e) => {
     e.preventDefault();
-    let createTask = new Task(title.value,notes.value,new Date(dueDate.value).toDateString(),priority.value);
-    console.log(createTask);
-    tasks.push(createTask);
+    let title = document.querySelector('#title');
+    let notes = document.querySelector('#tasknotes');
+    let dueDate = document.querySelector('#dueDate');
+    let priority = document.querySelector('#priority');
+    let taskData = {
+        title: title,
+        notes: notes,
+        dueDate: dueDate,
+        priority: priority
+    }
+    store(taskData);
+    console.log(taskData);
+    // let createTask = new Task(title.value,notes.value,new Date(dueDate.value).toDateString(),priority.value);
+    // console.log(createTask);
+    // tasks.push(createTask);
     addTaskForm.reset();
     return displayTaskList(tasks);
 };

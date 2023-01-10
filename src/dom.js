@@ -48,6 +48,7 @@ function displayTaskItem(object) {
     delBtn.classList.add('btn','btn-sm');
     delBtn.setAttribute('id','delete');
     delBtn.innerHTML = `<span class="material-icons text-danger">delete</span>`;
+    // delBtn.addEventListener('click', deleteItem);
 
     iconWrap.appendChild(editBtn);
     iconWrap.appendChild(delBtn);
@@ -67,6 +68,15 @@ function displayTaskItem(object) {
 
     return taskList.appendChild(listItem);
 }
+
+// from shopping list:
+// function deleteItem(btn) {
+//     let element = btn.target.parentNode;
+//     const index = [...element.parentElement.children].indexOf(element);
+//     itemStorage.splice(index, 1);
+//     localStorage.setItem('items', JSON.stringify(itemStorage));
+//     element.remove();
+//   };
 
 
 function displayTaskList(array) {
