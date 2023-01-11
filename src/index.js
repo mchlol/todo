@@ -15,11 +15,14 @@ const form = document.querySelector('#add-task-form');
 // access ul for displaying tasks
 const list = document.querySelector('#task-list');
 
-// this function will create a task from the form data
-// then add the task to the tasks array
-// 
+/* this function will:
+    create a task object from the form data
+    add the task to the tasks array
+    clear the form
+    let the list element know the state has changed - it will be listening
+*/ 
 function handleSubmit(event) {
-    e.preventDefault(); // stop the 'page refresh with data in the url' behaviour
+    event.preventDefault(); // stop the 'page refresh with data in the url' behaviour
     console.log('form submitted');
 
     // create the task in an object
@@ -42,26 +45,48 @@ function handleSubmit(event) {
     tasks.push(task); 
     console.log(`No. of tasks in state: ${tasks.length}`);
     // clear the form inputs
-    e.target.reset();
-    // dispatch a custom event to say the tasks array state has changed
+    event.target.reset();
+    // dispatch a custom event to the list element to say the tasks array state has changed
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
-
-    // task class
-    // could creating a task also be a module?
-    // class Task {
-    //     constructor(title,notes,dueDate,priority,category) {
-    //     this.title = title;
-    //     this.notes = notes;
-    //     this.dueDate = dueDate;
-    //     this.priority = priority;
-    //     this.taskId = Date.now();
-    //     this.section = checkDueDate(dueDate); // check name if module
-    //     this.category = category; // ie 'tasks' or 'projectName'
-    //     }
-    // };
 }
 
-// ## original code here ## //
+
+function displayTasks() {
+    console.log(tasks);
+    const html = tasks.map(
+        task => `
+        <li>
+        ${task.title}
+        </li>
+        `
+    );
+    list.textContent = html;
+}
+
+function storeTask() {
+    console.log('task saved to localStorage');
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function restoreFromLocalStorage() {
+    console.log('retrieving tasks from local storage...');
+    const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (localStorageTasks.length) {
+        tasks = localStorageTasks;
+        list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    }
+}
+
+
+
+form.addEventListener('submit', handleSubmit);
+form.addEventListener('tasksUpdated', displayTasks);
+form.addEventListener('tasksUpdated', storeTask);
+
+restoreFromLocalStorage();
+
+
+// ## modules? ## //
 
 // check task due date
 // this could go in a module
@@ -98,13 +123,19 @@ const dateHandler = (date) => {
     return string;
 }
 
-
-
-// we can call this with a custom event
-// this data should be called from local storage
-displayTaskList(tasks);
-// on creating a task it should be pushed to the variable in  localStorage
-
+    // task class
+    // could creating a task also be a module?
+    // class Task {
+    //     constructor(title,notes,dueDate,priority,category) {
+    //     this.title = title;
+    //     this.notes = notes;
+    //     this.dueDate = dueDate;
+    //     this.priority = priority;
+    //     this.taskId = Date.now();
+    //     this.section = checkDueDate(dueDate); // check name if module
+    //     this.category = category; // ie 'tasks' or 'projectName'
+    //     }
+    // };
 
 /*
 default view is today
