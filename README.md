@@ -71,5 +71,8 @@ Starting with delete, add the functionality to remove a task from the array when
 [How to save data in localStorage using JavaScript](https://dev.to/michaelburrows/how-to-save-data-in-localstorage-using-javascript-994)  
 [Saving Form Data in Client-Side Storage](https://www.raymondcamden.com/2022/03/27/saving-form-data-in-client-side-storage)  
 [Storing and retrieving JavaScript objects in localStorage](https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/)
-[StackOverflow answer](https://stackoverflow.com/a/49609944/17232226)
+[StackOverflow answer](https://stackoverflow.com/a/49609944/17232226)  
+Wes Bos [Beginner JavaScript](https://beginnerjavascript.com/) exercise: 'Shopping Form with Custom Events, Delegation and localstorage'  
+[Get the closest element](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)  
+
 
