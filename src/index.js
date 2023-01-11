@@ -3,17 +3,16 @@ import { displayTaskList } from './dom.js';
 import { store } from './store.js';
 import './input.scss';
 
-store();
-
-// create an array to hold task objects
-let tasks = [];
-
 // access form 
 // access form inputs by their name eg. form.notes.value
 const form = document.querySelector('#add-task-form');
 
 // access ul for displaying tasks
 const list = document.querySelector('#task-list');
+
+// create an array to hold task objects
+let tasks = [];
+
 
 /* this function will:
     create a task object from the form data
@@ -27,10 +26,10 @@ function handleSubmit(event) {
 
     // create the task in an object
     // first get the data from the form inputs
-    const title = e.currentTarget.title.value;
-    const taskNotes = e.currentTarget.tasknotes.value;
-    const dueDate = e.currentTarget.dueDate.value;
-    const priority = e.currentTarget.priority.value;
+    const title = event.currentTarget.title.value;
+    const taskNotes = event.currentTarget.tasknotes.value;
+    const dueDate = event.currentTarget.dueDate.value;
+    const priority = event.currentTarget.priority.value;
     // create the task object from above data
     const task = {
         title,
@@ -40,9 +39,10 @@ function handleSubmit(event) {
         id: Date.now(),
         completed: false,
         // havent added category yet
-    }
+    };
     // add the new object to the array
     tasks.push(task); 
+    console.log(tasks);
     console.log(`No. of tasks in state: ${tasks.length}`);
     // clear the form inputs
     event.target.reset();
@@ -60,18 +60,19 @@ function displayTasks() {
         </li>
         `
     );
-    list.textContent = html;
+    list.innerHTML = html;
 }
 
-function storeTask() {
+function mirrorToLocalStorage() {
     console.log('task saved to localStorage');
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    console.log(localStorage.getItem('tasks'));
 }
 
 function restoreFromLocalStorage() {
     console.log('retrieving tasks from local storage...');
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
-    if (localStorageTasks.length) {
+    if (localStorageTasks.length) { // this logs an error if there's nothing in storage yet
         tasks = localStorageTasks;
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
     }
@@ -80,8 +81,8 @@ function restoreFromLocalStorage() {
 
 
 form.addEventListener('submit', handleSubmit);
-form.addEventListener('tasksUpdated', displayTasks);
-form.addEventListener('tasksUpdated', storeTask);
+list.addEventListener('tasksUpdated', displayTasks);
+list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 
 restoreFromLocalStorage();
 
