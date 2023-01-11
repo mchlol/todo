@@ -1,11 +1,70 @@
+// import the modules first
 import { displayTaskList } from './dom.js';
 import { store } from './store.js';
 import './input.scss';
 
 store();
 
-// check task category
-// everything doesn't need to be a module, right?
+// create an array to hold task objects
+let tasks = [];
+
+// access form 
+// access form inputs by their name eg. form.notes.value
+const form = document.querySelector('#add-task-form');
+
+// access ul for displaying tasks
+const list = document.querySelector('#task-list');
+
+// this function will create a task from the form data
+// then add the task to the tasks array
+// 
+function handleSubmit(event) {
+    e.preventDefault(); // stop the 'page refresh with data in the url' behaviour
+    console.log('form submitted');
+
+    // create the task in an object
+    // first get the data from the form inputs
+    const title = e.currentTarget.title.value;
+    const taskNotes = e.currentTarget.tasknotes.value;
+    const dueDate = e.currentTarget.dueDate.value;
+    const priority = e.currentTarget.priority.value;
+    // create the task object from above data
+    const task = {
+        title,
+        taskNotes,
+        dueDate,
+        priority,
+        id: Date.now(),
+        completed: false,
+        // havent added category yet
+    }
+    // add the new object to the array
+    tasks.push(task); 
+    console.log(`No. of tasks in state: ${tasks.length}`);
+    // clear the form inputs
+    e.target.reset();
+    // dispatch a custom event to say the tasks array state has changed
+    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+
+    // task class
+    // could creating a task also be a module?
+    // class Task {
+    //     constructor(title,notes,dueDate,priority,category) {
+    //     this.title = title;
+    //     this.notes = notes;
+    //     this.dueDate = dueDate;
+    //     this.priority = priority;
+    //     this.taskId = Date.now();
+    //     this.section = checkDueDate(dueDate); // check name if module
+    //     this.category = category; // ie 'tasks' or 'projectName'
+    //     }
+    // };
+}
+
+// ## original code here ## //
+
+// check task due date
+// this could go in a module
 const checkDueDate = (date) => {
     const today = new Date();
     const todayString = today.toDateString();
@@ -27,10 +86,9 @@ const checkDueDate = (date) => {
     }
 };
 
-// global variable for incrementing id numbers
-let taskId = 0;
 
 // convert date to human readable format
+// could be a module
 const dateHandler = (date) => {
     let dayOfWeek = date.getDay();
     let dayOfMonth = date.getDate();
@@ -40,70 +98,10 @@ const dateHandler = (date) => {
     return string;
 }
 
-// task class
-class Task {
-    constructor(title,notes,dueDate,priority,category) {
-        this.title = title;
-        this.notes = notes;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.taskId = `task${++taskId}`;
-        this.section = checkDueDate(dueDate);
-        this.category = category; // ie 'tasks' or 'projectName'
-    }
-};
 
 
-// DATE STUFF (╯°□°）╯︵ ┻━┻ 
-
-// take a date like '2022-10-31' and convert it to Mon 31 Oct 2022' like new Date() would so it matches form input value
-
-// create an array to hold task objects
-let tasks = [someTask];
-// OR
-// let taskStorage = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
-
-// access form 
-const addTaskForm = document.querySelector('#add-task-form');
-
-// access form inputs
-let title = document.querySelector('#title');
-let notes = document.querySelector('#tasknotes');
-let dueDate = document.querySelector('#dueDate');
-let priority = document.querySelector('#priority');
-let formSubmitBtn = document.querySelector('#save-btn');
-
-// form handler
-// addTaskForm.onsubmit = (e) => {
-//     e.preventDefault();
-//     let createTask = new Task(title.value,notes.value,new Date(dueDate.value).toDateString(),priority.value);
-//     console.log(createTask);
-//     tasks.push(createTask);
-//     addTaskForm.reset();
-//     return displayTaskList(tasks);
-// };
-
-addTaskForm.onsubmit = (e) => {
-    e.preventDefault();
-    let title = document.querySelector('#title');
-    let notes = document.querySelector('#tasknotes');
-    let dueDate = document.querySelector('#dueDate');
-    let priority = document.querySelector('#priority');
-    let taskData = {
-        title: title,
-        notes: notes,
-        dueDate: dueDate,
-        priority: priority
-    }
-    store(taskData);
-    console.log(taskData);
-    // let createTask = new Task(title.value,notes.value,new Date(dueDate.value).toDateString(),priority.value);
-    // console.log(createTask);
-    // tasks.push(createTask);
-    addTaskForm.reset();
-    return displayTaskList(tasks);
-};
-
+// we can call this with a custom event
+// this data should be called from local storage
 displayTaskList(tasks);
 // on creating a task it should be pushed to the variable in  localStorage
 
