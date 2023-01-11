@@ -53,21 +53,6 @@ class Task {
     }
 };
 
-// ## TEMPORARY TESTING STUFF ##
-
-// temp args
-let someTitle = 'Lorem ipsum dolor sit amet, consectetuer adipiscin';
-let someNotes = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque.';
-let someDate = '2022-07-10';
-let somePrio = 'Medium';
-let someCat = 'tasks';
-
-// create a temp task object
-const someTask = new Task(someTitle,someNotes,someDate,somePrio,someCat);
-// log the temp object
-console.log(someTask);
-// test the function from module with temp object
-
 
 // DATE STUFF (╯°□°）╯︵ ┻━┻ 
 
