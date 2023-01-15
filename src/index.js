@@ -1,6 +1,5 @@
 // import the modules first
-import { displayTaskList } from './dom.js';
-import { store } from './store.js';
+import { createLiElement } from './dom.js';
 import './input.scss';
 
 // access form 
@@ -13,13 +12,6 @@ const list = document.querySelector('#task-list');
 // create an array to hold task objects
 let tasks = [];
 
-
-/* this function will:
-    create a task object from the form data
-    add the task to the tasks array
-    clear the form
-    let the list element know the state has changed - it will be listening
-*/ 
 function handleSubmit(event) {
     event.preventDefault(); // stop the 'page refresh with data in the url' behaviour
     console.log('form submitted');
@@ -53,38 +45,66 @@ function handleSubmit(event) {
 
 function displayTasks() {
     console.log(tasks);
-    const html = tasks.map(
-        task => `
-        <li>
-        ${task.title}
-        </li>
-        `
+    list.innerHTML = '';
+    const html = tasks.forEach(
+        task => createLiElement(task)
     );
-    list.innerHTML = html;
 }
 
 function mirrorToLocalStorage() {
     console.log('task saved to localStorage');
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    console.log(localStorage.getItem('tasks'));
 }
 
 function restoreFromLocalStorage() {
     console.log('retrieving tasks from local storage...');
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
-    if (localStorageTasks.length) { // this logs an error if there's nothing in storage yet
+    if (localStorageTasks) { 
         tasks = localStorageTasks;
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    } else {
+        console.log('no tasks in localStorage yet')
     }
 }
 
+function deleteTask(id) {
+    console.log('deleting task', id);
+    // filter the tasks to leave only those that do NOT match the id
+    console.log(tasks.filter(task => task.id !== id));
+    // log the new array
+    console.log(tasks);
+    // let the list know the tasks updated & re render the list
+    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+}
+
+function markComplete(id) {
+    console.log(`changed task ${id} complete status`);
+    const taskRef = tasks.find(task => task.id === id);
+    taskRef.completed = !taskRef.completed;
+    console.log(taskRef);
+    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+};
 
 
 form.addEventListener('submit', handleSubmit);
 list.addEventListener('tasksUpdated', displayTasks);
-list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 
-restoreFromLocalStorage();
+// anonymous function so we can pass an argument
+list.addEventListener("tasksUpdated", () => { mirrorToLocalStorage(tasks) });
+
+list.addEventListener('click', function(event) {
+    const id = event.target.closest('li').id;
+    console.log('id: ', id);
+    if (event.target.matches('span')) {
+        if (event.target.closest('button')) {
+            deleteTask(id);
+        }
+    } else if (event.target.matches('input[type=checkbox]')) {
+        markComplete(id);
+    }
+});
+
+restoreFromLocalStorage(tasks);
 
 
 // ## modules? ## //
