@@ -57,22 +57,6 @@ h5 {
     font-family: $serif;
 }
 
-.task-tab {
-    background-color: goldenrod;
-
-    a {
-        color: #fff;
-    }
-}
-
-.project-tab {
-    background-color: palevioletred;
-
-    a {
-        color: #fff;
-    }
-}
-
 .nav-link {
     font-size: smaller;
     padding: 0.5rem;
@@ -81,6 +65,33 @@ h5 {
 main {
     max-width: 630px;
 }
+
+nav {
+    height: 60px;
+}
+
+.task-item-wrapper {
+    text-decoration: none;
+    border: none;
+    border-bottom: 1px solid slategrey;
+    border-radius: none;
+}
+
+.task-item-wrapper:last-child {
+    border: none;
+}
+
+.btn-sm {
+    padding: 0em 0.25em;
+}
+
+// .task-text-primary {
+//     border: 1px solid limegreen
+// }
+
+// .task-text-secondary {
+//     border: 1px solid blue
+// }
 
 
 // screen is less than 840px wide

@@ -25,8 +25,9 @@ Added a watch condition to my webpack config so I can run the build command once
 
 ### User interface 
 
-**Start by doing research.**
+**Start by doing research.**  
 Go to Dribbble and Behance and look for To do list app projects to get inspiration and ideas.  
+
 - Tag tasks eg. work, family, community etc.
 - calendar view
 - lists
@@ -37,51 +38,41 @@ Go to Dribbble and Behance and look for To do list app projects to get inspirati
 - braindump "quick note"
 - habit tracking
 - reschedule prior tasks - tasks from yesterday/earlier should appear in today's task view as 'overdue'
-- warning if too many tasks added for today - say 6 - when there's more than 6 tasks prompt user if they want to choose another category lest they be overwhelmed
+- warning if too many tasks added for today - say 6 - when there's more than 6 tasks prompt user if they want to choose another category (lest they be overwhelmed)
 - dark mode
 - mobile uses will probably prefer main activity kept to bottom of screen
 - task sorting and searching
 - login for persisting data e.g firebase
 
+## The Script
 
-Based on the format of [Todoist](https://todoist.com), an app I use in everyday life. No need to reinvent the wheel.  
-I have created my design in Figma, [which can be seen here](https://www.figma.com/file/lNjJ3WOAyo7zY9mGzCDK3u/Todo?node-id=0%3A1).
-The UI uses a 2 column layout - nav on the left, section view on the right.  
-**Nav** will have 2 boxes;  
-- Tasks - categories are: today (default), future, and no date. *Categories cannot be created or deleted.*  
-- Projects - added by user and ordered by oldest first. *Projects can be created and deleted.*  
+### Create a module for DOM logic
 
-The section view will be divided into two rows;  
-- Add new task
-- View pane  
-
-The view pane will have 2 sections, with a heading at the top followed by a list of tasks.  
+Select the unordered list element that will have each task as a list item.   
+**To create a list item (task):** Create a function that takes an object, creates a list item, then creates all the inner html elements, assigns the css classes, sets the text content based on the object's values, appends all the various bits and pieces (checkbox, delete button, due date etc.) and returns a list item.   
+**To display the list of tasks:** Create another function that takes an array, removes all the content of the ul and then returns a forEach loop to call the above function on each list item (task) in the array (collection of tasks).  
+*The second function has closure over the first function so the module only needs to export the second function.*  
 
 
-### Task item requirements
+### Saving the data to local storage
 
-Default behaviour for task quick add:  
-- title: from input
-- description: null
-- date: current date
-- dueDate: current date
-- priority: 4  
-- id number: generated? 
-
-Each task will be presented in a row, starting with a checkbox, and ending with a delete button.  
-
-**Priority:** Tasks have 4 priority levels, from 1 (highest) to 4 (lowest, default).  
+When a task is added (or edited, or deleted) this should be saved in local storage.  
+First handle the case that the data is not in local storage.  
+Local storage uses JSON which cannot store functions, so methods will need to be added after the data is retrieved.  
 
 
-## Functionality
+### Task edit and delete buttons
 
-### JavaScript pseudocode/algorithm 
+Starting with delete, add the functionality to remove a task from the array when the delete button for a specific task is clicked, and then refresh the display of the remaining tasks
 
-create a text input and button  
-create a div to act as a view pane  
-clicking the button creates an object  
-make a class to create the todo objects from  
-each todo object contains the string from the text input as 'title'  
-along with 'description' 'dueDate' and 'priority'  
+
+## Resources
+[Bootstrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
+[How to save data in localStorage using JavaScript](https://dev.to/michaelburrows/how-to-save-data-in-localstorage-using-javascript-994)  
+[Saving Form Data in Client-Side Storage](https://www.raymondcamden.com/2022/03/27/saving-form-data-in-client-side-storage)  
+[Storing and retrieving JavaScript objects in localStorage](https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/)
+[StackOverflow answer](https://stackoverflow.com/a/49609944/17232226)  
+Wes Bos [Beginner JavaScript](https://beginnerjavascript.com/) exercise: 'Shopping Form with Custom Events, Delegation and localstorage'  
+[Get the closest element](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)  
 
 

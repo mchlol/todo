@@ -1,10 +1,116 @@
-import printMe from './print.js';
+// import the modules first
+import { createLiElement } from './dom.js';
 import './input.scss';
 
+// access form 
+// access form inputs by their name eg. form.notes.value
+const form = document.querySelector('#add-task-form');
+
+// access ul for displaying tasks
+const list = document.querySelector('#task-list');
+
+// create an array to hold task objects
+let tasks = [];
+
+function handleSubmit(event) {
+    event.preventDefault(); // stop the 'page refresh with data in the url' behaviour
+    console.log('form submitted');
+
+    // create the task in an object
+    // first get the data from the form inputs
+    const title = event.currentTarget.title.value;
+    const taskNotes = event.currentTarget.tasknotes.value;
+    const dueDate = event.currentTarget.dueDate.value;
+    const priority = event.currentTarget.priority.value;
+    // create the task object from above data
+    const task = {
+        title,
+        taskNotes,
+        dueDate,
+        priority,
+        id: Date.now(),
+        completed: false,
+        // havent added category yet
+    };
+    // add the new object to the array
+    tasks.push(task); 
+    console.log(tasks);
+    console.log(`No. of tasks in state: ${tasks.length}`);
+    // clear the form inputs
+    event.target.reset();
+    // dispatch a custom event to the list element to say the tasks array state has changed
+    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+}
 
 
-// check task category
+function displayTasks() {
+    console.log(tasks);
+    list.innerHTML = '';
+    const html = tasks.forEach(
+        task => createLiElement(task)
+    );
+}
 
+function mirrorToLocalStorage() {
+    console.log('task saved to localStorage');
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function restoreFromLocalStorage() {
+    console.log('retrieving tasks from local storage...');
+    const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (localStorageTasks) { 
+        tasks = localStorageTasks;
+        list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    } else {
+        console.log('no tasks in localStorage yet')
+    }
+}
+
+function deleteTask(id) {
+    console.log('deleting task', id);
+    // filter the tasks to leave only those that do NOT match the id
+    console.log(tasks.filter(task => task.id !== id));
+    // log the new array
+    console.log(tasks);
+    // let the list know the tasks updated & re render the list
+    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+}
+
+function markComplete(id) {
+    console.log(`changed task ${id} complete status`);
+    const taskRef = tasks.find(task => task.id === id);
+    taskRef.completed = !taskRef.completed;
+    console.log(taskRef);
+    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+};
+
+
+form.addEventListener('submit', handleSubmit);
+list.addEventListener('tasksUpdated', displayTasks);
+
+// anonymous function so we can pass an argument
+list.addEventListener("tasksUpdated", () => { mirrorToLocalStorage(tasks) });
+
+list.addEventListener('click', function(event) {
+    const id = event.target.closest('li').id;
+    console.log('id: ', id);
+    if (event.target.matches('span')) {
+        if (event.target.closest('button')) {
+            deleteTask(id);
+        }
+    } else if (event.target.matches('input[type=checkbox]')) {
+        markComplete(id);
+    }
+});
+
+restoreFromLocalStorage(tasks);
+
+
+// ## modules? ## //
+
+// check task due date
+// this could go in a module
 const checkDueDate = (date) => {
     const today = new Date();
     const todayString = today.toDateString();
@@ -26,26 +132,31 @@ const checkDueDate = (date) => {
     }
 };
 
-// test the function for various cases
-// note to self - learn testing
-console.log('Today: ' + checkDueDate('2022-10-26'));
-console.log('Yesterday: ' + checkDueDate('2021-10-26'));
-console.log('No input: ' + checkDueDate());
-console.log('Future: ' + checkDueDate('2022-10-28'));
-console.log('null: ' + checkDueDate(null));
-console.log('undefined: ' + checkDueDate(undefined));
-console.log('random string: ' + checkDueDate('ahlfkahef'));
-console.log(2 + ': ' + checkDueDate(2)); // this returns 'overdue' as 2 is less than a date 
-console.log('Huge number: ' + checkDueDate(999999999999999));
 
-const currentTitleHandler = function(viewTitle) {
-    
+// convert date to human readable format
+// could be a module
+const dateHandler = (date) => {
+    let dayOfWeek = date.getDay();
+    let dayOfMonth = date.getDate();
+    let month = date.getMonth();
+    let year = date.getYear();
+    let string = `${dayOfWeek} ${dayOfMonth} ${month} ${year}`;
+    return string;
 }
 
-const viewHeadingH2 = document.querySelector('#current-view-title');
-viewHeadingH2.textContent = "Today";
-
-
+    // task class
+    // could creating a task also be a module?
+    // class Task {
+    //     constructor(title,notes,dueDate,priority,category) {
+    //     this.title = title;
+    //     this.notes = notes;
+    //     this.dueDate = dueDate;
+    //     this.priority = priority;
+    //     this.taskId = Date.now();
+    //     this.section = checkDueDate(dueDate); // check name if module
+    //     this.category = category; // ie 'tasks' or 'projectName'
+    //     }
+    // };
 
 /*
 default view is today
@@ -66,4 +177,3 @@ user can 'check' off a task
 when task is added it appears in the list
 ordered by priority, then date added
 */
-
