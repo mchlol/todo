@@ -1,7 +1,7 @@
 const taskList = document.querySelector('#task-list');
 
 function createLiElement(task) {
-
+    // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
     listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-1')
     listItem.setAttribute('id', task.id);
@@ -49,7 +49,6 @@ function createLiElement(task) {
     delBtn.classList.add('btn','btn-sm');
     delBtn.setAttribute('id','delete');
     delBtn.innerHTML = `<span class="material-icons text-danger">delete</span>`;
-    // delBtn.addEventListener('click', deleteItem);
 
     // append the elements
     iconWrap.appendChild(editBtn);
@@ -68,18 +67,9 @@ function createLiElement(task) {
     listItem.appendChild(taskPrimaryWrap);
     listItem.appendChild(taskSecondaryWrap);
 
+    // return the final li element appended to the ul element?
     return taskList.appendChild(listItem);
 }
-
-// from shopping list:
-// function deleteItem(btn) {
-//     let element = btn.target.parentNode;
-//     const index = [...element.parentElement.children].indexOf(element);
-//     itemStorage.splice(index, 1);
-//     localStorage.setItem('items', JSON.stringify(itemStorage));
-//     element.remove();
-//   };
-
 
 export {
     createLiElement

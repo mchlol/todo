@@ -3,7 +3,6 @@ import { createLiElement } from './dom.js';
 import './input.scss';
 
 // access form 
-// access form inputs by their name eg. form.notes.value
 const form = document.querySelector('#add-task-form');
 
 // access ul for displaying tasks
@@ -12,12 +11,15 @@ const list = document.querySelector('#task-list');
 // create an array to hold task objects
 let tasks = [];
 
+
 function handleSubmit(event) {
-    event.preventDefault(); // stop the 'page refresh with data in the url' behaviour
+    // stop the 'page refresh with data in the url' behaviour
+    event.preventDefault(); 
+
     console.log('form submitted');
 
     // create the task in an object
-    // first get the data from the form inputs
+    // first get the data from the form inputs *** CAN THIS BE SHORTER?
     const title = event.currentTarget.title.value;
     const taskNotes = event.currentTarget.tasknotes.value;
     const dueDate = event.currentTarget.dueDate.value;
@@ -34,6 +36,7 @@ function handleSubmit(event) {
     };
     // add the new object to the array
     tasks.push(task); 
+    // log the state of the tasks array
     console.log(tasks);
     console.log(`No. of tasks in state: ${tasks.length}`);
     // clear the form inputs
@@ -45,32 +48,42 @@ function handleSubmit(event) {
 
 function displayTasks() {
     console.log(tasks);
+    // clear all the innerHTML of the ul element
     list.innerHTML = '';
+    // create a variable called html which will loop over each item in the tasks array and run the DOM function exported from the dom.js module.
     const html = tasks.forEach(
         task => createLiElement(task)
     );
+    return html;
 }
 
 function mirrorToLocalStorage() {
     console.log('task saved to localStorage');
+    // access the key 'tasks' in localStorage and overwrite it with the tasks array (converted to a string) 
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function restoreFromLocalStorage() {
     console.log('retrieving tasks from local storage...');
+    // create a variable and assign it the contents of the local storage 'tasks' key (converted back to an array of objects)
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
+
     if (localStorageTasks) { 
+        // check if it contains data, if so assign the data from localStorage to the tasks array
         tasks = localStorageTasks;
+        // the list element dispatches the tasksUpdated event - but it also listens for this same event?
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
     } else {
         console.log('no tasks in localStorage yet')
     }
 }
 
+
 function deleteTask(id) {
+    debugger;
     console.log('deleting task', id);
     // filter the tasks to leave only those that do NOT match the id
-    console.log(tasks.filter(task => task.id !== id));
+    tasks = tasks.filter(task => task.id !== id);
     // log the new array
     console.log(tasks);
     // let the list know the tasks updated & re render the list
@@ -86,7 +99,12 @@ function markComplete(id) {
 };
 
 
+// ## EVENT LISTENERS ##
+
+// when the form is submitted (a task is added), run the handleSubmit function
 form.addEventListener('submit', handleSubmit);
+
+// when the tasksUpdated custom event fires, then run the displayTasks function
 list.addEventListener('tasksUpdated', displayTasks);
 
 // anonymous function so we can pass an argument
@@ -110,26 +128,38 @@ restoreFromLocalStorage(tasks);
 // ## modules? ## //
 
 // check task due date
-// this could go in a module
+// could be a module
 const checkDueDate = (date) => {
+    // create a variable to hold the current date
     const today = new Date();
+    // convert that value to a date string
     const todayString = today.toDateString();
+    // create a variable to hold the date from the argument
     const dateInput = new Date(date);
+    // convert that to a date string too
     const dateString = dateInput.toDateString();
+    // create a variable to hold the return value
+    let showDueDay;
 
+    // if the argument is the same as todays date
     if (todayString === dateString) {
-        return `Today`;
+        showDueDay = `Today`;
     } 
+    // if the argument is less the todays date
     else if (Date.parse(date) < today) {
-        // task == completed ? 'completed' : 'today, overdue warning'
-        return `Overdue`;
+        // here should also check if the task was already completed i.e. task == completed ? 'completed' : 'today, overdue warning'
+        showDueDay = `Overdue`;
     } 
+    // if the date cannot be parsed e.g. there is no date input at all 
     else if (!Date.parse(date)) {
-        return `Someday`;
+        showDueDay = `Someday`;
     } 
+    // if the date string is truthy but not today or less than todays date
     else if (dateString) {
-        return `Soon`;
+        showDueDay = `Soon`;
     }
+
+    return showDueDay;
 };
 
 
@@ -158,7 +188,7 @@ const dateHandler = (date) => {
     //     }
     // };
 
-/*
+/* TO DO:
 default view is today
 user can change view to soon, someday, or completed
 user clicks button to add task
