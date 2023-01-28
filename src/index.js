@@ -2,6 +2,8 @@
 import { createLiElement } from './dom.js';
 import './input.scss';
 
+// it appears no variables are global when using webpack!
+
 // access form 
 const form = document.querySelector('#add-task-form');
 
@@ -62,7 +64,7 @@ function displayTasks() {
 
 function mirrorToLocalStorage() {
     // access the key 'tasks' in localStorage and overwrite it with the tasks array (converted to a string) 
-    if (!tasks) {
+    if (!tasks[0]) {
         return console.log('nothing in tasks array');
     } else {
         console.log('task mirrored to localStorage');
@@ -75,13 +77,14 @@ function restoreFromLocalStorage() {
     // create a variable and assign it the contents of the local storage 'tasks' key (converted back to an array of objects)
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
 
-    if (localStorageTasks) { 
-        // check if its truthy (contains data), if so assign the data from localStorage to the tasks array
+    if (!localStorageTasks) { 
+        // if this variable is falsy;
+        console.log('no tasks in localStorage yet')
+    } else {
+        // assign the data from localStorage to the tasks array
         tasks = localStorageTasks;
         // the list element dispatches the tasksUpdated event - but it also listens for this same event?
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
-    } else {
-        console.log('no tasks in localStorage yet')
     }
 }
 
@@ -113,12 +116,11 @@ function markComplete(id) {
 // when the form is submitted (a task is added), run the handleSubmit function
 form.addEventListener('submit', handleSubmit);
 
-// when the tasksUpdated custom event fires, then run the displayTasks function
+// when the tasksUpdated custom event fires, then run these functions:
 list.addEventListener('tasksUpdated', displayTasks);
-
-// as above but with anonymous function so we can pass an argument to the mirrorToLocalStorage function
-// list.addEventListener('tasksUpdated', () => { mirrorToLocalStorage(tasks) });
 list.addEventListener('tasksUpdated', mirrorToLocalStorage());
+// OR use an anonymous function to pass an argument 
+// list.addEventListener('tasksUpdated', () => { mirrorToLocalStorage(tasks) });
 
 list.addEventListener('click', function(event) {
     // get the id of the closest list element, hold it in a variable
@@ -144,7 +146,6 @@ restoreFromLocalStorage(tasks);
 // ## modules? ## //
 
 // check task due date
-// could be a module
 const checkDueDate = (date) => {
     // create a variable to hold the current date
     const today = new Date();
@@ -180,7 +181,6 @@ const checkDueDate = (date) => {
 
 
 // convert date to human readable format
-// could be a module
 const dateHandler = (date) => {
     let dayOfWeek = date.getDay();
     let dayOfMonth = date.getDate();
