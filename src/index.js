@@ -2,39 +2,34 @@
 import { createLiElement } from './dom.js';
 import './input.scss';
 
-// it appears no variables are global when using webpack!
-
-// access form 
 const form = document.querySelector('#add-task-form');
-
-// access ul for displaying tasks
 const list = document.querySelector('#task-list');
-
-// create an array to hold task objects
 let tasks = [];
 
+// every time the tasks array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
 
+// ## DEBUGGING FUNCTION ##
+function showState() {
+    console.log('calling showState()...');
+    console.table('tasks', tasks);
+    console.table('localStorage tasks', JSON.parse(localStorage.getItem('tasks')));
+}
+
+// when the form is submitted (task is added):
 function handleSubmit(event) {
+    console.log('calling handleSubmit()..');
     // stop the 'page refresh with data in the url' behaviour
     event.preventDefault(); 
 
-    console.log('form submitted');
-
     // create the task in an object
-    // first get the data from the form inputs *** CAN THIS BE SHORTER?
-    const title = event.currentTarget.title.value;
-    const taskNotes = event.currentTarget.tasknotes.value;
-    const dueDate = event.currentTarget.dueDate.value;
-    const priority = event.currentTarget.priority.value;
-    // create the task object from above data
     const task = {
-        title,
-        taskNotes,
-        dueDate,
-        priority,
+        title: event.currentTarget.title.value,
+        taskNotes: event.currentTarget.tasknotes.value,
+        dueDate: event.currentTarget.dueDate.value,
+        priority: event.currentTarget.priority.value,
         id: Date.now(),
         completed: false,
-        // havent added category yet
+        // to do: assign task category
     };
     // add the new object to the array
     tasks.push(task); 
@@ -49,31 +44,37 @@ function handleSubmit(event) {
 
 
 function displayTasks() {
-    console.log('displaying current tasks array: ', tasks);
+    console.log('calling displayTasks()...');
+    showState();
     // clear all the innerHTML of the ul element
+    console.log('clearing list html');
     list.innerHTML = '';
     // create a variable called html which will loop over each item in the tasks array and run the DOM function exported from the dom.js module.
+    console.log('repopulating list from tasks array');
     const html = tasks.forEach(
         task => createLiElement(task)
     );
     return html;
 }
 
-// every time the tasks array is changed in any way, those changes must be mirrored to local storage.
+
 // if the tasks array is empty, don't do anything with local storage as it wipes any data already stored there
 
 function mirrorToLocalStorage() {
-    // access the key 'tasks' in localStorage and overwrite it with the tasks array (converted to a string) 
+    console.log('calling mirrorToLocalStorage()...');
     if (!tasks[0]) {
+        // if the tasks array is empty do nothing
         return console.log('nothing in tasks array');
     } else {
-        console.log('task mirrored to localStorage');
-        return localStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        console.log('tasks array mirrored to local storage');
+        // access the key 'tasks' in localStorage and overwrite it with the tasks array (converted to a string) 
+        showState();
     }
 }
 
 function restoreFromLocalStorage() {
-    console.log('retrieving tasks from local storage...');
+    console.log('calling restoreFromLocalStorage...');
     // create a variable and assign it the contents of the local storage 'tasks' key (converted back to an array of objects)
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
 
@@ -83,25 +84,43 @@ function restoreFromLocalStorage() {
     } else {
         // assign the data from localStorage to the tasks array
         tasks = localStorageTasks;
-        // the list element dispatches the tasksUpdated event - but it also listens for this same event?
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
     }
 }
 
 // find the item in the tasks array with the corresponding id from the element and remove it from the array, then call the function to display the new array. 
 function deleteTask(id) {
+    console.log('calling deleteTask()...');
     console.log('deleting task', id);
     // filter the tasks to leave only those that do NOT match the id
-    let filteredTasks = tasks.filter(task => task.id !== id);
-    console.log(filteredTasks);
+    console.log('filtering tasks array to leave those without ', id);
+    let filteredTasks = tasks.filter(task => task.id != id);
+    console.log('filtered tasks: ', filteredTasks);
     // log the new array
     tasks = filteredTasks;
-    console.log(tasks);
+    showState();
     // dispatch the tasks updated event...
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
+function deleteTaskAnotherWay(id) {
+    console.log('calling deleteTaskAnotherWay()...');
+    showState();
+    console.log('looking for task with id',id);
+
+    let index = tasks.findIndex(task => task.id == id);
+    console.log('index of item in tasks array?...',index);
+
+    let stored = JSON.parse(localStorage.getItem('tasks'));
+    console.log(stored);
+    let indexInStorage = stored.findIndex(task => task.id == id);
+
+    console.log('index of item in stored array???...',indexInStorage);
+}
+
+// mark a task as complete and update its status on the page and in local storage
 function markComplete(id) {
+    console.log('calling markComplete()...')
     console.log(`changed task ${id} complete status`);
     // use find() to go through the tasks array and find the first one that has an id the same as the argument
     const taskRef = tasks.find(task => task.id === id);
@@ -110,20 +129,9 @@ function markComplete(id) {
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
 
-
-// ## EVENT LISTENERS ##
-
-// when the form is submitted (a task is added), run the handleSubmit function
-form.addEventListener('submit', handleSubmit);
-
-// when the tasksUpdated custom event fires, then run these functions:
-list.addEventListener('tasksUpdated', displayTasks);
-list.addEventListener('tasksUpdated', mirrorToLocalStorage());
-// OR use an anonymous function to pass an argument 
-// list.addEventListener('tasksUpdated', () => { mirrorToLocalStorage(tasks) });
-
-list.addEventListener('click', function(event) {
-    // get the id of the closest list element, hold it in a variable
+function handleClick(event) {
+    console.log('running handleClick()...');
+    // get the id of the closest list element
     const id = event.target.closest('li').id;
     console.log('id: ', id);
     // check if the element clicked was a span
@@ -132,13 +140,31 @@ list.addEventListener('click', function(event) {
         console.log('span clicked');
         if (event.target.closest('button')) {
             // if true call the delete function with the id
+            console.log('closest element is a button');
             deleteTask(id);
         }
     } else if (event.target.matches('input[type=checkbox]')) {
         console.log('checkbox clicked');
         markComplete(id);
     }
-});
+};
+
+
+// ## EVENT LISTENERS ##
+
+// when the form is submitted (a task is added), run the handleSubmit function
+form.addEventListener('submit', handleSubmit);
+
+// when the tasksUpdated custom event fires:
+// display tasks
+list.addEventListener('tasksUpdated', displayTasks);
+// and copy them to local storage
+list.addEventListener('tasksUpdated', mirrorToLocalStorage);
+// OR use an anonymous function to pass an argument 
+// list.addEventListener('tasksUpdated', () => { mirrorToLocalStorage(tasks) });
+
+// when a checkbox or edit/delete icon is clicked:
+list.addEventListener('click', handleClick);
 
 restoreFromLocalStorage(tasks);
 
