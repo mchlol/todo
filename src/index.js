@@ -59,7 +59,8 @@ function displayTasks() {
 
 
 // if the tasks array is empty, don't do anything with local storage as it wipes any data already stored there
-
+// ## this means if we delete the ONLY task, local storage won't update!!
+// could work with on page load???
 function mirrorToLocalStorage() {
     console.log('calling mirrorToLocalStorage()...');
     if (!tasks[0]) {
@@ -91,32 +92,18 @@ function restoreFromLocalStorage() {
 // find the item in the tasks array with the corresponding id from the element and remove it from the array, then call the function to display the new array. 
 function deleteTask(id) {
     console.log('calling deleteTask()...');
-    console.log('deleting task', id);
+    console.log('looking for id', id);
     // filter the tasks to leave only those that do NOT match the id
-    console.log('filtering tasks array to leave those without ', id);
+    console.log('filtering tasks array');
     let filteredTasks = tasks.filter(task => task.id != id);
     console.log('filtered tasks: ', filteredTasks);
-    // log the new array
+    console.log('changing the tasks array to have the contented of the filtered array instead');
     tasks = filteredTasks;
     showState();
     // dispatch the tasks updated event...
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
-function deleteTaskAnotherWay(id) {
-    console.log('calling deleteTaskAnotherWay()...');
-    showState();
-    console.log('looking for task with id',id);
-
-    let index = tasks.findIndex(task => task.id == id);
-    console.log('index of item in tasks array?...',index);
-
-    let stored = JSON.parse(localStorage.getItem('tasks'));
-    console.log(stored);
-    let indexInStorage = stored.findIndex(task => task.id == id);
-
-    console.log('index of item in stored array???...',indexInStorage);
-}
 
 // mark a task as complete and update its status on the page and in local storage
 function markComplete(id) {
