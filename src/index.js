@@ -47,7 +47,7 @@ function handleSubmit(event) {
 
 
 function displayTasks() {
-    console.log(tasks);
+    console.log('displaying current tasks array: ', tasks);
     // clear all the innerHTML of the ul element
     list.innerHTML = '';
     // create a variable called html which will loop over each item in the tasks array and run the DOM function exported from the dom.js module.
@@ -57,10 +57,17 @@ function displayTasks() {
     return html;
 }
 
+// every time the tasks array is changed in any way, those changes must be mirrored to local storage.
+// if the tasks array is empty, don't do anything with local storage as it wipes any data already stored there
+
 function mirrorToLocalStorage() {
-    console.log('task saved to localStorage');
     // access the key 'tasks' in localStorage and overwrite it with the tasks array (converted to a string) 
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    if (!tasks) {
+        return console.log('nothing in tasks array');
+    } else {
+        console.log('task mirrored to localStorage');
+        return localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
 }
 
 function restoreFromLocalStorage() {
@@ -69,7 +76,7 @@ function restoreFromLocalStorage() {
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
 
     if (localStorageTasks) { 
-        // check if it contains data, if so assign the data from localStorage to the tasks array
+        // check if its truthy (contains data), if so assign the data from localStorage to the tasks array
         tasks = localStorageTasks;
         // the list element dispatches the tasksUpdated event - but it also listens for this same event?
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
@@ -78,22 +85,24 @@ function restoreFromLocalStorage() {
     }
 }
 
-
+// find the item in the tasks array with the corresponding id from the element and remove it from the array, then call the function to display the new array. 
 function deleteTask(id) {
-    debugger;
     console.log('deleting task', id);
     // filter the tasks to leave only those that do NOT match the id
-    tasks = tasks.filter(task => task.id !== id);
+    let filteredTasks = tasks.filter(task => task.id !== id);
+    console.log(filteredTasks);
     // log the new array
+    tasks = filteredTasks;
     console.log(tasks);
-    // let the list know the tasks updated & re render the list
+    // dispatch the tasks updated event...
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
 function markComplete(id) {
     console.log(`changed task ${id} complete status`);
+    // use find() to go through the tasks array and find the first one that has an id the same as the argument
     const taskRef = tasks.find(task => task.id === id);
-    taskRef.completed = !taskRef.completed;
+    // taskRef.completed = !taskRef.completed;
     console.log(taskRef);
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
@@ -107,17 +116,24 @@ form.addEventListener('submit', handleSubmit);
 // when the tasksUpdated custom event fires, then run the displayTasks function
 list.addEventListener('tasksUpdated', displayTasks);
 
-// anonymous function so we can pass an argument
-list.addEventListener("tasksUpdated", () => { mirrorToLocalStorage(tasks) });
+// as above but with anonymous function so we can pass an argument to the mirrorToLocalStorage function
+// list.addEventListener('tasksUpdated', () => { mirrorToLocalStorage(tasks) });
+list.addEventListener('tasksUpdated', mirrorToLocalStorage());
 
 list.addEventListener('click', function(event) {
+    // get the id of the closest list element, hold it in a variable
     const id = event.target.closest('li').id;
     console.log('id: ', id);
+    // check if the element clicked was a span
     if (event.target.matches('span')) {
+        // if it is, check if the nearest parent is a button with the id 'delete' (so we can add edit later)
+        console.log('span clicked');
         if (event.target.closest('button')) {
+            // if true call the delete function with the id
             deleteTask(id);
         }
     } else if (event.target.matches('input[type=checkbox]')) {
+        console.log('checkbox clicked');
         markComplete(id);
     }
 });
