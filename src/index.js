@@ -35,8 +35,8 @@ function handleSubmit(event) {
     // add the new object to the array
     tasks.push(task); 
     // log the state of the tasks array
-    console.log(tasks);
     console.log(`No. of tasks in state: ${tasks.length}`);
+    console.log('tasks: ', tasks);
     // clear the form inputs
     event.target.reset();
     // dispatch a custom event to the list element to say the tasks array state has changed
@@ -51,7 +51,10 @@ function displayTasks() {
         console.log('no tasks');
         if (JSON.parse(localStorage.getItem('tasks')).length === 0) {
             console.log('no local tasks either');
-            noTasks();
+            console.log('calling noTasks');
+            console.log('clearing list html');
+            list.innerHTML = '';
+            return noTasks();
         } else {
             console.log('the tasks array is empty but local storage is not');
         }
@@ -71,7 +74,6 @@ function displayTasks() {
 
 function mirrorToLocalStorage() {
     console.log('calling mirrorToLocalStorage()...');
-    // copy the tasks array to local storage
     localStorage.setItem('tasks', JSON.stringify(tasks));
     console.log('tasks array mirrored to local storage');
     showState();
@@ -79,15 +81,16 @@ function mirrorToLocalStorage() {
 
 function restoreFromLocalStorage() {
     console.log('calling restoreFromLocalStorage...');
-    // create a variable and assign it the contents of the local storage 'tasks' key (converted back to an array of objects)
+    // get the data from local storage
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
-
-    if (!localStorageTasks) { 
-        // if this variable is falsy;
+    // check if any data was found
+    if (localStorageTasks.length === 0) { 
         console.log('no tasks in localStorage yet')
+        noTasks();
     } else {
-        // assign the data from localStorage to the tasks array
+        // copy the data found in localStorage to the tasks array - this is how we make that data 'persist' between sessions!
         tasks = localStorageTasks;
+        // from here the display tasks will run but mirror will also run again...
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
     }
 }
@@ -99,19 +102,20 @@ function deleteTask(id) {
     // now let's check if that was the only task
     if (tasks.length === 1) {
         console.log('this is the only task');
-        let filteredTasks = tasks.filter(task => task.id != id);
-        tasks = filteredTasks;
+        // the id doesnt matter, because there is only one task
+        console.log('clearing tasks array');
+        tasks = [];
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
         showState();
-        noTasks();
+        // there was a task, but we deleted it so now there are no tasks!
     } else {
-        // console.log('filtering tasks array');
+        console.log('filtering tasks array');
+        // filter the tasks to leave only those that do NOT match the id
         let filteredTasks = tasks.filter(task => task.id != id);
-        // console.log('filtered tasks: ', filteredTasks);
-        // console.log('changing the tasks array to have the contents of the filtered array instead');
+        console.log('filtered tasks: ', filteredTasks);
+        console.log('changing the tasks array to have the contents of the filtered array instead');
         tasks = filteredTasks;
     }
-    // filter the tasks to leave only those that do NOT match the id
 
     // dispatch the tasks updated event...
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
