@@ -71,6 +71,13 @@ function createLiElement(task) {
     return taskList.appendChild(listItem);
 }
 
+function noTasks() {
+    let div = document.createElement('div');
+    div.textContent = "No tasks yet!";
+    return taskList.appendChild(div);
+}
+
 export {
-    createLiElement
+    createLiElement,
+    noTasks,
 };

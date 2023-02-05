@@ -1,5 +1,6 @@
 // import the modules first
 import { createLiElement } from './dom.js';
+import { noTasks } from './dom.js';
 import './input.scss';
 
 const form = document.querySelector('#add-task-form');
@@ -46,33 +47,35 @@ function handleSubmit(event) {
 function displayTasks() {
     console.log('calling displayTasks()...');
     showState();
-    // clear all the innerHTML of the ul element
-    console.log('clearing list html');
-    list.innerHTML = '';
-    // create a variable called html which will loop over each item in the tasks array and run the DOM function exported from the dom.js module.
-    console.log('repopulating list from tasks array');
-    const html = tasks.forEach(
-        task => createLiElement(task)
-    );
-    return html;
-}
-
-
-// if the tasks array is empty, don't do anything with local storage as it wipes any data already stored there
-// ## this means if we delete the ONLY task, local storage won't update!!
-// could work with on page load???
-function mirrorToLocalStorage() {
-    console.log('calling mirrorToLocalStorage()...');
-    if (!tasks[0]) {
-        // if the tasks array is empty do nothing
-        return console.log('nothing in tasks array');
+    if (tasks.length === 0) {
+        console.log('no tasks');
+        if (JSON.parse(localStorage.getItem('tasks')).length === 0) {
+            console.log('no local tasks either');
+            noTasks();
+        } else {
+            console.log('the tasks array is empty but local storage is not');
+        }
     } else {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        console.log('tasks array mirrored to local storage');
-        // access the key 'tasks' in localStorage and overwrite it with the tasks array (converted to a string) 
-        showState();
+        // clear all the innerHTML of the ul element
+        console.log('clearing list html');
+        list.innerHTML = '';
+        // create a variable called html which will loop over each item in the tasks array and run the DOM function exported from the dom.js module.
+        console.log('repopulating list from tasks array');
+        const html = tasks.forEach(
+        task => createLiElement(task)
+        );
+        return html;
     }
 }
+
+
+function mirrorToLocalStorage() {
+    console.log('calling mirrorToLocalStorage()...');
+    // copy the tasks array to local storage
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    console.log('tasks array mirrored to local storage');
+    showState();
+    };
 
 function restoreFromLocalStorage() {
     console.log('calling restoreFromLocalStorage...');
@@ -93,15 +96,26 @@ function restoreFromLocalStorage() {
 function deleteTask(id) {
     console.log('calling deleteTask()...');
     console.log('looking for id', id);
+    // now let's check if that was the only task
+    if (tasks.length === 1) {
+        console.log('this is the only task');
+        let filteredTasks = tasks.filter(task => task.id != id);
+        tasks = filteredTasks;
+        list.dispatchEvent(new CustomEvent('tasksUpdated'));
+        showState();
+        noTasks();
+    } else {
+        // console.log('filtering tasks array');
+        let filteredTasks = tasks.filter(task => task.id != id);
+        // console.log('filtered tasks: ', filteredTasks);
+        // console.log('changing the tasks array to have the contents of the filtered array instead');
+        tasks = filteredTasks;
+    }
     // filter the tasks to leave only those that do NOT match the id
-    console.log('filtering tasks array');
-    let filteredTasks = tasks.filter(task => task.id != id);
-    console.log('filtered tasks: ', filteredTasks);
-    console.log('changing the tasks array to have the contented of the filtered array instead');
-    tasks = filteredTasks;
-    showState();
+
     // dispatch the tasks updated event...
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    showState();
 }
 
 
@@ -143,10 +157,10 @@ function handleClick(event) {
 form.addEventListener('submit', handleSubmit);
 
 // when the tasksUpdated custom event fires:
+// copy tasks to local storage
+list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 // display tasks
 list.addEventListener('tasksUpdated', displayTasks);
-// and copy them to local storage
-list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 // OR use an anonymous function to pass an argument 
 // list.addEventListener('tasksUpdated', () => { mirrorToLocalStorage(tasks) });
 
