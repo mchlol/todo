@@ -39,7 +39,8 @@ var __webpack_exports__ = {};
   \********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createLiElement": () => (/* binding */ createLiElement)
+/* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
+/* harmony export */   "noTasks": () => (/* binding */ noTasks)
 /* harmony export */ });
 const taskList = document.querySelector('#task-list');
 
@@ -112,6 +113,12 @@ function createLiElement(task) {
 
     // return the final li element appended to the ul element?
     return taskList.appendChild(listItem);
+}
+
+function noTasks() {
+    let div = document.createElement('div');
+    div.textContent = "No tasks yet!";
+    return taskList.appendChild(div);
 }
 
 
