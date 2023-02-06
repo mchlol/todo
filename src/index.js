@@ -147,8 +147,11 @@ function markComplete(id) {
     // find the input[type='checkbox'] within
     let checkbox = element.querySelector('input[type=checkbox');
     console.log(checkbox);
-    // change the checkbox property to checked
-    checkbox.checked = true;
+    // toggle the checkbox
+    checkbox.checked = !checkbox.checked;
+    // is this doing anything?
+    // checking/unchecking box is now done with an if statement in the dom.js function, if task is completed the checkbox is generated as checked and vice versa - display function kept overriding checked status
+    console.log(checkbox);
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
 
