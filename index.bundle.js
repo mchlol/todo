@@ -39,6 +39,9 @@ function createLiElement(task) {
     let check = document.createElement('input');
     check.type = 'checkbox';
     check.classList.add('form-check-input', 'm-1')
+    if (task.completed) {
+        check.checked = true;
+    };
     
     let title = document.createElement('span');
     title.classList.add('fw-bold', 'm-1')
@@ -322,8 +325,11 @@ function markComplete(id) {
     // find the input[type='checkbox'] within
     let checkbox = element.querySelector('input[type=checkbox');
     console.log(checkbox);
-    // change the checkbox property to checked
-    checkbox.checked = true;
+    // toggle the checkbox
+    checkbox.checked = !checkbox.checked;
+    // is this doing anything?
+    // checking/unchecking box is now done with an if statement in the dom.js function, if task is completed the checkbox is generated as checked and vice versa - display function kept overriding checked status
+    console.log(checkbox);
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
 
