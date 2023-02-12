@@ -1,6 +1,7 @@
 # To do list - WIP
 
 Time to tackle the ol' to do list app. 
+This project is part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list) curriculum.  
 
 ## Technologies & tools
 
@@ -28,13 +29,14 @@ Added a watch condition to my webpack config so I can run the build command once
 **Start by doing research.**  
 Go to Dribbble and Behance and look for To do list app projects to get inspiration and ideas.  
 
+Some ideas for features:  
 - Tag tasks eg. work, family, community etc.
 - calendar view
 - lists
-- stats
+- stats 
 - set reminders
 - recurring tasks eg. 'every wednesday'
-- landing page
+- product landing page
 - braindump "quick note"
 - habit tracking
 - reschedule prior tasks - tasks from yesterday/earlier should appear in today's task view as 'overdue'
@@ -49,21 +51,23 @@ Go to Dribbble and Behance and look for To do list app projects to get inspirati
 ### Create a module for DOM logic
 
 Select the unordered list element that will have each task as a list item.   
-**To create a list item (task):** Create a function that takes an object, creates a list item, then creates all the inner html elements, assigns the css classes, sets the text content based on the object's values, appends all the various bits and pieces (checkbox, delete button, due date etc.) and returns a list item.   
+**To create a list item (task):** Create a function that takes an object, creates a list item element, then creates all the inner html elements, assigns the css classes, sets the text content based on the object's values, appends all the various bits and pieces (checkbox, delete button, due date etc.) and returns a list item.   
 **To display the list of tasks:** Create another function that takes an array, removes all the content of the ul and then returns a forEach loop to call the above function on each list item (task) in the array (collection of tasks).  
 *The second function has closure over the first function so the module only needs to export the second function.*  
+**When there is only one task left:** Create a functio to display a special message when there's no tasks to show.  
 
 
 ### Saving the data to local storage
 
 When a task is added (or edited, or deleted) this should be saved in local storage.  
-First handle the case that the data is not in local storage.  
 Local storage uses JSON which cannot store functions, so methods will need to be added after the data is retrieved.  
+I used Wes Bos' method of using a custom event to copy a task to local storage when it's created and display all the current tasks. However I am having an issue when one last task remains, deleting it does not remove it from the localstorage.  
 
 
 ### Task edit and delete buttons
 
-Starting with delete, add the functionality to remove a task from the array when the delete button for a specific task is clicked, and then refresh the display of the remaining tasks
+Starting with delete: add the functionality to remove a task from the array when the delete button for a specific task is clicked, and then refresh the display of the remaining tasks.  
+
 
 
 ## Resources

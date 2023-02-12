@@ -12,6 +12,9 @@ function createLiElement(task) {
     let check = document.createElement('input');
     check.type = 'checkbox';
     check.classList.add('form-check-input', 'm-1')
+    if (task.completed) {
+        check.checked = true;
+    };
     
     let title = document.createElement('span');
     title.classList.add('fw-bold', 'm-1')
@@ -71,6 +74,13 @@ function createLiElement(task) {
     return taskList.appendChild(listItem);
 }
 
+function noTasks() {
+    let div = document.createElement('div');
+    div.textContent = "No tasks yet!";
+    return taskList.appendChild(div);
+}
+
 export {
-    createLiElement
+    createLiElement,
+    noTasks,
 };
