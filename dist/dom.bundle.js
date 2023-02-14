@@ -80,6 +80,10 @@ function createLiElement(task) {
         dueDate.textContent = 'No due date';
     }  else dueDate.textContent = `Due ${task.dueDate}`;
 
+    let category = document.createElement('span');
+    category.classList.add('small', 'm-1');
+    category.textContent = task.category;
+
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
     priority.textContent = task.priority + ' priority';
@@ -90,6 +94,8 @@ function createLiElement(task) {
     let editBtn = document.createElement('button');
     editBtn.classList.add('btn','btn-sm');
     editBtn.setAttribute('id','edit');
+    editBtn.setAttribute('data-bs-toggle','modal');
+    editBtn.setAttribute('data-bs-target','#editTaskModal');
     editBtn.innerHTML = `<span class="material-icons text-primary">mode</span>`;
 
     let delBtn = document.createElement('button');
@@ -102,7 +108,8 @@ function createLiElement(task) {
     iconWrap.appendChild(delBtn);
 
     detailsRow.appendChild(dueDate);
-    detailsRow.appendChild(priority)
+    detailsRow.appendChild(category);
+    detailsRow.appendChild(priority);
     detailsRow.appendChild(iconWrap);
 
     taskSecondaryWrap.appendChild(notes);

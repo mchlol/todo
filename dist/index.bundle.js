@@ -63,6 +63,10 @@ function createLiElement(task) {
         dueDate.textContent = 'No due date';
     }  else dueDate.textContent = `Due ${task.dueDate}`;
 
+    let category = document.createElement('span');
+    category.classList.add('small', 'm-1');
+    category.textContent = task.category;
+
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
     priority.textContent = task.priority + ' priority';
@@ -73,6 +77,8 @@ function createLiElement(task) {
     let editBtn = document.createElement('button');
     editBtn.classList.add('btn','btn-sm');
     editBtn.setAttribute('id','edit');
+    editBtn.setAttribute('data-bs-toggle','modal');
+    editBtn.setAttribute('data-bs-target','#editTaskModal');
     editBtn.innerHTML = `<span class="material-icons text-primary">mode</span>`;
 
     let delBtn = document.createElement('button');
@@ -85,7 +91,8 @@ function createLiElement(task) {
     iconWrap.appendChild(delBtn);
 
     detailsRow.appendChild(dueDate);
-    detailsRow.appendChild(priority)
+    detailsRow.appendChild(category);
+    detailsRow.appendChild(priority);
     detailsRow.appendChild(iconWrap);
 
     taskSecondaryWrap.appendChild(notes);
@@ -208,7 +215,7 @@ function handleSubmit(event) {
         priority: event.currentTarget.priority.value,
         id: Date.now(),
         completed: false,
-        // to do: assign task category
+        category: checkDueDate(dueDate)
     };
     console.log('task created: ', task);
     // add the new object to the array
@@ -266,6 +273,7 @@ function restoreFromLocalStorage() {
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
     // check if any data was found
     if (localStorageTasks.length === 0) { 
+        (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.noTasks)();
         return console.log('no tasks in localStorage yet')
     } else {
         // copy the data found in localStorage to the tasks array - this is how we make that data 'persist' between sessions!
@@ -315,8 +323,8 @@ function markComplete(id) {
     // now access the tasks array, find the task with matching id, and replace that task with taskRef
     const taskIndex = tasks.findIndex(task => task.id == id);
     console.log(taskIndex);
-    tasks[0] = taskRef;
-    console.log(tasks[0].completed);
+    tasks[taskIndex] = taskRef;
+    console.log(tasks[taskIndex].completed);
 
     // when a task is completed, the checkbox should appear checked
     // get reference to the list item with matching id
@@ -333,6 +341,12 @@ function markComplete(id) {
     list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
 
+function editTask(id) {
+    // the modal needs to have the textContent from the task values
+    // then we update that object in the array with new values
+    // the new object should replace the content in the original object's position in the array
+}
+
 function handleClick(event) {
     console.log('running handleClick()...');
     // get the id of the closest list element
@@ -343,7 +357,7 @@ function handleClick(event) {
     if (event.target.matches('span')) {
         // then check if the textContent is 'mode' or 'delete'
         if (event.target.textContent === 'mode') {
-            markComplete(id);
+            console.log('edit task');
         } else if (event.target.textContent === 'delete') {
             deleteTask(id);
         }
@@ -376,7 +390,7 @@ restoreFromLocalStorage(tasks);
 // ## modules? ## //
 
 // check task due date
-const checkDueDate = (date) => {
+function checkDueDate(date) {
     // create a variable to hold the current date
     const today = new Date();
     // convert that value to a date string
@@ -388,8 +402,12 @@ const checkDueDate = (date) => {
     // create a variable to hold the return value
     let showDueDay;
 
+    // if the date cannot be parsed e.g. there is no date input at all 
+    if (!Date.parse(date)) {
+        showDueDay = `Someday`;
+    } 
     // if the argument is the same as todays date
-    if (todayString === dateString) {
+    else if (todayString === dateString) {
         showDueDay = `Today`;
     } 
     // if the argument is less the todays date
@@ -397,13 +415,12 @@ const checkDueDate = (date) => {
         // here should also check if the task was already completed i.e. task == completed ? 'completed' : 'today, overdue warning'
         showDueDay = `Overdue`;
     } 
-    // if the date cannot be parsed e.g. there is no date input at all 
-    else if (!Date.parse(date)) {
-        showDueDay = `Someday`;
-    } 
     // if the date string is truthy but not today or less than todays date
     else if (dateString) {
         showDueDay = `Soon`;
+    }
+    else {
+        showDueDay = `???`;
     }
 
     return showDueDay;
