@@ -13,7 +13,7 @@ let tasks = [];
 function showState() {
     console.log('calling showState()...');
     console.table('tasks', tasks);
-    console.table('localStorage tasks', JSON.parse(localStorage.getItem('tasks')));
+    return console.table('localStorage tasks', JSON.parse(localStorage.getItem('tasks')));
 }
 
 // when the form is submitted (task is added):
@@ -41,7 +41,7 @@ function handleSubmit(event) {
     // clear the form inputs
     event.target.reset();
     // dispatch a custom event which calls the display function and mirror to local storage!
-    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
 
@@ -153,13 +153,17 @@ function markComplete(id) {
     // is this doing anything?
     // checking/unchecking box is now done with an if statement in the dom.js function, if task is completed the checkbox is generated as checked and vice versa - display function kept overriding checked status
     console.log(checkbox);
-    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
 
 function editTask(id) {
-    // the modal needs to have the textContent from the task values
-    // then we update that object in the array with new values
-    // the new object should replace the content in the original object's position in the array
+    /* 
+    open a modal window with a form
+    the form fields should be populated from the task properties
+    when the form is saved the properties are overwritten
+    the id and objects array index are not affected
+    */
+
 }
 
 function handleClick(event) {
@@ -173,12 +177,13 @@ function handleClick(event) {
         // then check if the textContent is 'mode' or 'delete'
         if (event.target.textContent === 'mode') {
             console.log('edit task');
+            return editTask();
         } else if (event.target.textContent === 'delete') {
-            deleteTask(id);
+            return deleteTask(id);
         }
     } else if (event.target.matches('input[type=checkbox]')) {
         console.log('checkbox clicked');
-        markComplete(id);
+        return markComplete(id);
     }
 };
 
