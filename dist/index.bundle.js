@@ -231,34 +231,6 @@ function handleSubmit(event) {
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
-// when the form is submitted (task is added):
-function handleEditSubmit(event,id) {
-    console.log('calling handleEditSubmit()..');
-    console.log(event);
-    // stop the 'page refresh with data in the url' behaviour
-    event.preventDefault(); 
-
-    // get the task
-    let taskIndex = tasks.findIndex(task => task.id == id);
-    console.log(taskIndex);
-    // target the object with that index
-    let task = tasks[taskIndex]; // now we have reference to the task object
-    console.log(task);
-    // edit the first 4 task values and category if necessary
-    task.title = event.currentTarget.title.value;
-    task.taskNotes = event.currentTarget.taskNotes.value;
-    task.dueDate = event.currentTarget.dueDate.value;
-    task.priority = event.currentTarget.priority.value;
-    task.category = checkDueDate(task.dueDate);
-
-    console.log('task edited: ', task);
-
-    // clear the form inputs
-    event.target.reset();
-    // dispatch a custom event which calls the display function and mirror to local storage!
-    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
-}
-
 
 function displayTasks() {
     console.log('calling displayTasks()...');
@@ -372,17 +344,15 @@ function markComplete(id) {
 };
 
 function editTask(id) {
-    /* 
-    open a modal window with a form
-        modal is created in index.html with class="modal fade" and aria-hidden="true" 
-        on click aria-hidden="false" and ... how to reveal
-    the form fields should be populated from the task properties
-        target the inputs of the edit form in js
-        set the value based on the object id
-    when the form is saved the properties are overwritten
-    the id and objects array index are not affected
-     modal submit needs to be linked to the task id
-    */
+/*  open a modal
+    modal contains a form 
+        we cannot target an existing form unless we can pass it the id
+    access task object by id
+    set form input values to task object properties
+    on submit, overwrite selected task object properties from inputs
+        eg. task.title = input.value;
+    id must not change
+*/
 
     // find the object with matching id
     // find the index
@@ -391,7 +361,8 @@ function editTask(id) {
     // target the object with that index
     let task = tasks[taskIndex]; // now we have reference to the task object
     console.log(task);
-    // target all the edit form inputs
+
+    // target all the edit form inputs and set their values
     const titleEdit = document.querySelector('#titleEdit');
     console.log(titleEdit);
     titleEdit.value = task.title;
@@ -401,11 +372,56 @@ function editTask(id) {
     dueDateEdit.value = task.dueDate;
     const priorityEdit = document.querySelector('#priorityEdit');
     priorityEdit.value = task.priority;
-
+    // access the hidden field in the edit form 
+    const hiddenField = document.querySelector('#hiddenField');
+    // set its value to the task object id so we can access it from another function
+    hiddenField.value = id;
+    console.log(hiddenField.value);
     return console.log('Task title: ' + task.title);
+}
 
-    // we can open the modal and set its inputs to the task values
-    // still need to have reference to the id within the submit event somehow
+// when the form is submitted (task is to be edited):
+function handleEditSubmit(event) {
+    console.log('calling handleEditSubmit()..');
+    console.log(event);
+    // stop the 'page refresh with data in the url' behaviour
+    event.preventDefault(); 
+    
+    // get the ID of the task to be edited!
+    // access the hidden field in the edit form 
+    const hiddenField = document.querySelector('#hiddenField');
+    // store its value in a variable so it can be used within this form
+    let id = hiddenField.value;
+    console.log(id);
+    console.log(tasks);
+    // get the task
+    let taskIndex = tasks.findIndex(task => task.id == id);
+    console.log(taskIndex);
+    // target the object with that index
+    let task = tasks[taskIndex]; // now we have reference to the task object
+    console.log(task); // this shows the right task
+    // edit the first 4 task values and category if necessary
+    console.log(task.title); // this is right
+    // issues start here!
+    console.log(event.currentTarget); // this is the form
+    // we need to access all the inputs again?
+    const titleEdit = document.querySelector('#titleEdit');
+    const notesEdit = document.querySelector('#notesEdit');
+    const dueDateEdit = document.querySelector('#dueDateEdit');
+    const priorityEdit = document.querySelector('#priorityEdit');
+
+    task.title = titleEdit.value;
+    task.taskNotes = notesEdit.value;
+    task.dueDate = dueDateEdit.value;
+    task.priority = priorityEdit.value;
+    task.category = checkDueDate(task.dueDate);
+
+    console.log('task edited: ', task);
+
+    // DO NOT clear the form inputs
+    // event.target.reset();
+    // dispatch a custom event which calls the display function and mirror to local storage!
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
 function handleClick(event) {
@@ -435,7 +451,6 @@ function handleClick(event) {
 // when the form is submitted (a task is added), run the handleSubmit function
 form.addEventListener('submit', handleSubmit);
 
-// when the edit form is submitted (a task is to be edited), run the handleEditSubmit function
 editForm.addEventListener('submit', handleEditSubmit);
 
 // when the tasksUpdated custom event fires:
