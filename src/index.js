@@ -4,6 +4,7 @@ import { noTasks } from './dom.js';
 import './input.scss';
 
 const form = document.querySelector('#add-task-form');
+const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
 let tasks = [];
 
@@ -19,6 +20,7 @@ function showState() {
 // when the form is submitted (task is added):
 function handleSubmit(event) {
     console.log('calling handleSubmit()..');
+    console.log(event);
     // stop the 'page refresh with data in the url' behaviour
     event.preventDefault(); 
 
@@ -38,6 +40,34 @@ function handleSubmit(event) {
     // log the state of the tasks array
     console.log(`No. of tasks in state: ${tasks.length}`);
     console.log('view all tasks: ', tasks);
+    // clear the form inputs
+    event.target.reset();
+    // dispatch a custom event which calls the display function and mirror to local storage!
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
+}
+
+// when the form is submitted (task is added):
+function handleEditSubmit(event,id) {
+    console.log('calling handleEditSubmit()..');
+    console.log(event);
+    // stop the 'page refresh with data in the url' behaviour
+    event.preventDefault(); 
+
+    // get the task
+    let taskIndex = tasks.findIndex(task => task.id == id);
+    console.log(taskIndex);
+    // target the object with that index
+    let task = tasks[taskIndex]; // now we have reference to the task object
+    console.log(task);
+    // edit the first 4 task values and category if necessary
+    task.title = event.currentTarget.title.value;
+    task.taskNotes = event.currentTarget.taskNotes.value;
+    task.dueDate = event.currentTarget.dueDate.value;
+    task.priority = event.currentTarget.priority.value;
+    task.category = checkDueDate(task.dueDate);
+
+    console.log('task edited: ', task);
+
     // clear the form inputs
     event.target.reset();
     // dispatch a custom event which calls the display function and mirror to local storage!
@@ -159,11 +189,38 @@ function markComplete(id) {
 function editTask(id) {
     /* 
     open a modal window with a form
+        modal is created in index.html with class="modal fade" and aria-hidden="true" 
+        on click aria-hidden="false" and ... how to reveal
     the form fields should be populated from the task properties
+        target the inputs of the edit form in js
+        set the value based on the object id
     when the form is saved the properties are overwritten
     the id and objects array index are not affected
+     modal submit needs to be linked to the task id
     */
 
+    // find the object with matching id
+    // find the index
+    let taskIndex = tasks.findIndex(task => task.id == id);
+    console.log(taskIndex);
+    // target the object with that index
+    let task = tasks[taskIndex]; // now we have reference to the task object
+    console.log(task);
+    // target all the edit form inputs
+    const titleEdit = document.querySelector('#titleEdit');
+    console.log(titleEdit);
+    titleEdit.value = task.title;
+    const notesEdit = document.querySelector('#notesEdit');
+    notesEdit.value = task.taskNotes;
+    const dueDateEdit = document.querySelector('#dueDateEdit');
+    dueDateEdit.value = task.dueDate;
+    const priorityEdit = document.querySelector('#priorityEdit');
+    priorityEdit.value = task.priority;
+
+    return console.log('Task title: ' + task.title);
+
+    // we can open the modal and set its inputs to the task values
+    // still need to have reference to the id within the submit event somehow
 }
 
 function handleClick(event) {
@@ -177,7 +234,7 @@ function handleClick(event) {
         // then check if the textContent is 'mode' or 'delete'
         if (event.target.textContent === 'mode') {
             console.log('edit task');
-            return editTask();
+            return editTask(id);
         } else if (event.target.textContent === 'delete') {
             return deleteTask(id);
         }
@@ -192,6 +249,9 @@ function handleClick(event) {
 
 // when the form is submitted (a task is added), run the handleSubmit function
 form.addEventListener('submit', handleSubmit);
+
+// when the edit form is submitted (a task is to be edited), run the handleEditSubmit function
+editForm.addEventListener('submit', handleEditSubmit);
 
 // when the tasksUpdated custom event fires:
 // copy tasks to local storage
