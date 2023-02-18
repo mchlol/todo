@@ -169,7 +169,7 @@
 
             <!-- start add task modal trigger -->
             <button type="button" class="btn btn-danger rounded-circle m-1 fw-bold fs-6" data-bs-toggle="modal"
-                data-bs-target="#addTaskModal">
+                data-bs-target="#addTaskModal" aria-label="add task button">
                 +
             </button>
             <!-- end add task modal trigger -->
@@ -232,7 +232,8 @@
         <!-- end add task modal window -->
 
         <!-- start edit task modal window -->
-        <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -247,7 +248,7 @@
                             <!-- title -->
                             <label for="titleEdit" class="form-label w-100">Title
                                 <input type="text" name="titleEdit" id="titleEdit" maxlength="50" class="form-control"
-                                    placeholder="existing task title" required>
+                                    required>
                             </label>
 
                             <!-- notes -->
