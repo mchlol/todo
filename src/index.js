@@ -4,6 +4,7 @@ import { noTasks } from './dom.js';
 import './input.scss';
 
 const form = document.querySelector('#add-task-form');
+const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
 let tasks = [];
 
@@ -13,12 +14,13 @@ let tasks = [];
 function showState() {
     console.log('calling showState()...');
     console.table('tasks', tasks);
-    console.table('localStorage tasks', JSON.parse(localStorage.getItem('tasks')));
+    return console.table('localStorage tasks', JSON.parse(localStorage.getItem('tasks')));
 }
 
 // when the form is submitted (task is added):
 function handleSubmit(event) {
     console.log('calling handleSubmit()..');
+    console.log(event);
     // stop the 'page refresh with data in the url' behaviour
     event.preventDefault(); 
 
@@ -30,7 +32,7 @@ function handleSubmit(event) {
         priority: event.currentTarget.priority.value,
         id: Date.now(),
         completed: false,
-        // to do: assign task category
+        category: checkDueDate(dueDate)
     };
     console.log('task created: ', task);
     // add the new object to the array
@@ -41,7 +43,7 @@ function handleSubmit(event) {
     // clear the form inputs
     event.target.reset();
     // dispatch a custom event which calls the display function and mirror to local storage!
-    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
 
@@ -87,7 +89,8 @@ function restoreFromLocalStorage() {
     // get the data from local storage
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
     // check if any data was found
-    if (localStorageTasks.length === 0) { 
+    if (!localStorageTasks) { 
+        noTasks();
         return console.log('no tasks in localStorage yet')
     } else {
         // copy the data found in localStorage to the tasks array - this is how we make that data 'persist' between sessions!
@@ -137,8 +140,8 @@ function markComplete(id) {
     // now access the tasks array, find the task with matching id, and replace that task with taskRef
     const taskIndex = tasks.findIndex(task => task.id == id);
     console.log(taskIndex);
-    tasks[0] = taskRef;
-    console.log(tasks[0].completed);
+    tasks[taskIndex] = taskRef;
+    console.log(tasks[taskIndex].completed);
 
     // when a task is completed, the checkbox should appear checked
     // get reference to the list item with matching id
@@ -152,8 +155,92 @@ function markComplete(id) {
     // is this doing anything?
     // checking/unchecking box is now done with an if statement in the dom.js function, if task is completed the checkbox is generated as checked and vice versa - display function kept overriding checked status
     console.log(checkbox);
-    list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
+
+function editTask(id) {
+/*  open a modal
+    modal contains a form 
+        we cannot target an existing form unless we can pass it the id
+    access task object by id
+    set form input values to task object properties
+    on submit, overwrite selected task object properties from inputs
+        eg. task.title = input.value;
+    id must not change
+*/
+
+    // find the object with matching id
+    // find the index
+    let taskIndex = tasks.findIndex(task => task.id == id);
+    console.log(taskIndex);
+    // target the object with that index
+    let task = tasks[taskIndex]; // now we have reference to the task object
+    console.log(task);
+
+    // target all the edit form inputs and set their values
+    const titleEdit = document.querySelector('#titleEdit');
+    console.log(titleEdit);
+    titleEdit.value = task.title;
+    const notesEdit = document.querySelector('#notesEdit');
+    notesEdit.value = task.taskNotes;
+    const dueDateEdit = document.querySelector('#dueDateEdit');
+    dueDateEdit.value = task.dueDate;
+    const priorityEdit = document.querySelector('#priorityEdit');
+    priorityEdit.value = task.priority;
+    // access the hidden field in the edit form 
+    const hiddenField = document.querySelector('#hiddenField');
+    // set its value to the task object id so we can access it from another function
+    hiddenField.value = id;
+    console.log(hiddenField.value);
+    return console.log('Task title: ' + task.title);
+}
+
+// when the form is submitted (task is to be edited):
+function handleEditSubmit(event) {
+    console.log('calling handleEditSubmit()..');
+    console.log(event);
+    // stop the 'page refresh with data in the url' behaviour
+    event.preventDefault(); 
+    
+    // get the ID of the task to be edited!
+    // access the hidden field in the edit form 
+    const hiddenField = document.querySelector('#hiddenField');
+    // store its value in a variable so it can be used within this form
+    let id = hiddenField.value;
+    console.log(id);
+    console.log(tasks);
+    // get the task
+    let taskIndex = tasks.findIndex(task => task.id == id);
+    console.log(taskIndex);
+    // target the object with that index
+    let task = tasks[taskIndex]; // now we have reference to the task object
+    console.log(task); // this shows the right task
+    // edit the first 4 task values and category if necessary
+    console.log(task.title); // this is right
+    // issues start here!
+    console.log(event.currentTarget); // this is the form
+    // we need to access all the inputs again?
+    const titleEdit = document.querySelector('#titleEdit');
+    const notesEdit = document.querySelector('#notesEdit');
+    const dueDateEdit = document.querySelector('#dueDateEdit');
+    const priorityEdit = document.querySelector('#priorityEdit');
+
+    task.title = titleEdit.value;
+    task.taskNotes = notesEdit.value;
+    task.dueDate = dueDateEdit.value;
+    task.priority = priorityEdit.value;
+    task.category = checkDueDate(task.dueDate);
+
+    console.log('task edited: ', task);
+
+    // DO NOT clear the form inputs
+    // event.target.reset();
+
+    // we DO want to close the form on submit though
+
+    // dispatch a custom event which calls the display function and mirror to local storage!
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
+}
 
 function handleClick(event) {
     console.log('running handleClick()...');
@@ -165,13 +252,14 @@ function handleClick(event) {
     if (event.target.matches('span')) {
         // then check if the textContent is 'mode' or 'delete'
         if (event.target.textContent === 'mode') {
-            markComplete(id);
+            console.log('edit task');
+            return editTask(id);
         } else if (event.target.textContent === 'delete') {
-            deleteTask(id);
+            return deleteTask(id);
         }
     } else if (event.target.matches('input[type=checkbox]')) {
         console.log('checkbox clicked');
-        markComplete(id);
+        return markComplete(id);
     }
 };
 
@@ -180,6 +268,8 @@ function handleClick(event) {
 
 // when the form is submitted (a task is added), run the handleSubmit function
 form.addEventListener('submit', handleSubmit);
+
+editForm.addEventListener('submit', handleEditSubmit);
 
 // when the tasksUpdated custom event fires:
 // copy tasks to local storage
@@ -198,7 +288,7 @@ restoreFromLocalStorage(tasks);
 // ## modules? ## //
 
 // check task due date
-const checkDueDate = (date) => {
+function checkDueDate(date) {
     // create a variable to hold the current date
     const today = new Date();
     // convert that value to a date string
@@ -210,8 +300,12 @@ const checkDueDate = (date) => {
     // create a variable to hold the return value
     let showDueDay;
 
+    // if the date cannot be parsed e.g. there is no date input at all 
+    if (!Date.parse(date)) {
+        showDueDay = `Someday`;
+    } 
     // if the argument is the same as todays date
-    if (todayString === dateString) {
+    else if (todayString === dateString) {
         showDueDay = `Today`;
     } 
     // if the argument is less the todays date
@@ -219,13 +313,12 @@ const checkDueDate = (date) => {
         // here should also check if the task was already completed i.e. task == completed ? 'completed' : 'today, overdue warning'
         showDueDay = `Overdue`;
     } 
-    // if the date cannot be parsed e.g. there is no date input at all 
-    else if (!Date.parse(date)) {
-        showDueDay = `Someday`;
-    } 
     // if the date string is truthy but not today or less than todays date
     else if (dateString) {
         showDueDay = `Soon`;
+    }
+    else {
+        showDueDay = `???`;
     }
 
     return showDueDay;
