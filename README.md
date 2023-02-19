@@ -56,6 +56,7 @@ To create a task, the user clicks a button which brings up a modal window with a
 When the form is submitted, the input values are stored as properties on an object. Title, notes, due date, priority, completed status (false by default). There are two more special properties:  
 - `id` which is set to `Date.now()` to create a unique number.  
 - `category` which reads the due date the user input, and runs another function that compares the date to today's date and assigns a string like 'today' or 'overdue'.  
+
 Next, the object is pushed to a global array, `tasks`.  
 Finally a custom event fires on the `list` html element (my container for displaying tasks) - this will call the mirror to local storage function, and the function for actually displaying the tasks.   
 
