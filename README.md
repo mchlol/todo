@@ -24,12 +24,8 @@ Followed the [webpack project set up tutorial](https://webpack.js.org/guides/get
 Added sass and mini css extract plugin so sass is compiled to css into a file, instead of being injected into the head with style-loader.  
 Added a watch condition to my webpack config so I can run the build command once and it stays open, watching for changes.  
 
-### User interface 
-
-**Start by doing research.**  
-Go to Dribbble and Behance and look for To do list app projects to get inspiration and ideas.  
-
-Some ideas for features:  
+### Ideas of functionality
+ 
 - Tag tasks eg. work, family, community etc.
 - calendar view
 - lists
@@ -46,27 +42,29 @@ Some ideas for features:
 - task sorting and searching
 - login for persisting data e.g firebase
 
-## The Script
+## Steps
+
+### Build the basic html structure
+
+Create the containers, headings, task bar, forms and modals etc. I've used Bootstrap so it doesn't look totally barebones, but will come back and style it nicely once I get the app functionality down.   
 
 ### Create a module for DOM logic
 
-Select the unordered list element that will have each task as a list item.   
-**To create a list item (task):** Create a function that takes an object, creates a list item element, then creates all the inner html elements, assigns the css classes, sets the text content based on the object's values, appends all the various bits and pieces (checkbox, delete button, due date etc.) and returns a list item.   
-**To display the list of tasks:** Create another function that takes an array, removes all the content of the ul and then returns a forEach loop to call the above function on each list item (task) in the array (collection of tasks).  
-*The second function has closure over the first function so the module only needs to export the second function.*  
-**When there is only one task left:** Create a functio to display a special message when there's no tasks to show.  
-
+Build out the task item html to get an idea of how it should basically look, add the buttons etc., then convert this into a dom function where we can create elements, set classes, append etc.  
+Store this dom funtion in a module `dom.js` to be called into the `index.js` file.   
 
 ### Saving the data to local storage
 
-When a task is added (or edited, or deleted) this should be saved in local storage.  
-Local storage uses JSON which cannot store functions, so methods will need to be added after the data is retrieved.  
-I used Wes Bos' method of using a custom event to copy a task to local storage when it's created and display all the current tasks. However I am having an issue when one last task remains, deleting it does not remove it from the localstorage.  
+Local storage in the browser only stores JSON. So for this reason my task object creation does not contain any methods.  
+I learned custom events from one of Wes Bos' courses. I have a global array in my script called `tasks`. When a task is added, a custom event fires which mirrors any change to the `tasks` array to local storage, and refreshes the list of tasks on the page.  
+Displaying the list of tasks calls that data from local storage, not from `tasks`.  
 
 
 ### Task edit and delete buttons
 
-Starting with delete: add the functionality to remove a task from the array when the delete button for a specific task is clicked, and then refresh the display of the remaining tasks.  
+### Displaying the task dates 
+
+### Creating tasks in specific 'projects'
 
 
 
