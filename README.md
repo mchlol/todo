@@ -25,23 +25,18 @@ Followed the [webpack project set up tutorial](https://webpack.js.org/guides/get
 Added sass and mini css extract plugin so sass is compiled to css into a file, instead of being injected into the head with style-loader.  
 Added a watch condition to my webpack config so I can run the build command once and it stays open, watching for changes.  
 
-### Ideas of functionality
+### Ideas for functionality
  
+- Display the current date  
+- accessibility
 - Tag tasks eg. work, family, community etc.
-- calendar view
 - lists
-- stats 
-- set reminders
 - recurring tasks eg. 'every wednesday'
-- product landing page
 - braindump "quick note"
-- habit tracking
 - reschedule prior tasks - tasks from yesterday/earlier should appear in today's task view as 'overdue'
-- warning if too many tasks added for today - say 6 - when there's more than 6 tasks prompt user if they want to choose another category (lest they be overwhelmed)
+- warning if too many tasks added for today - say 6 - when there's more than 6 tasks prompt user if they want to choose another date or category (lest they be overwhelmed)
 - dark mode
-- mobile uses will probably prefer main activity kept to bottom of screen
 - task sorting and searching
-- login for persisting data e.g firebase
 
 ## Steps
 
@@ -75,13 +70,38 @@ Local storage in the browser only stores JSON. So for this reason my task object
 
 ### CRUD - read the tasks
 
-Displaying the list of tasks calls that data from local storage, which is mirrored from the global `tasks`.  This data is read by the `dom.js` module which returns a single `li` element, which itself is appended to the 'container' (`div` element).   
+First we'll check if there are actully any tasks to display. Check the global tasks array, then for good measure double check local storage too. Just in case.    
+Make sure the container is empty with `innerHTML = ""` then call the function `noTasks()` exported from `dom.js` - this appends some text to the container to advise the user that there's no tasks to display!  
+To display the tasks, clear anything from the container with `innerHTML = ""` then loop over each item in the tasks array and call the function (from `dom.js`) to create a list item element.  
+Store this in a variable and then return that variable at the end of the function.  
+  
+*Note: when retrieving data from local storage, it will be in JSON so must be parsed back into an object.*  
+ 
+
+```
+function displayTasks() {
+    if (tasks.length === 0) {
+        if (JSON.parse(localStorage.getItem('tasks')).length === 0) {
+            list.innerHTML = '';
+            return noTasks();
+        } else {
+            return console.log('the tasks array is empty but local storage is not');
+        }
+    } else {
+        list.innerHTML = '';
+        const html = tasks.forEach(
+        task => createLiElement(task)
+        );
+        return html;
+    }
+}
+```
   
 
 ### CRUD - update a task and delete a task
 
 First I create a click handler so when a checkbox, edit button, or delete button is clicked, the 'id' for that task is found from the list element `id` attribute, and then the relevant function is called.  
-The edit and delete buttons are actually spans, as I'm using material icons - 'mode' for edit, and 'delete' for delete.  
+The edit and delete buttons are actually spans, as I'm using Material Icons - 'mode' for edit, and 'delete' for delete.  
 
 ```
 function handleClick(event) {
@@ -135,7 +155,7 @@ let check = document.createElement('input');
 ```
 
 **Edit properties:**  
-There is a second modal with a form inside on the `index.html` file for editing a task. In that form, I included an input which is hidden:  
+There is a second modal with a form in the `index.html` file, for editing a task. In that form, I include an input which is hidden:  
 `<input type="hidden" id="hiddenField" name="id" value="" />`  
 When the edit function is called, the value of the hidden input value is set to the id of the task object.  
 In function editTask():  
@@ -150,22 +170,55 @@ const hiddenField = document.querySelector('#hiddenField');
 let id = hiddenField.value;
 ```
 
+The other important thing this function does is display all the current task object's properties in the form inputs.  
+I do this by accessing each input and setting its value, e.g.:  
+```
+    const titleEdit = document.querySelector('#titleEdit');
+    titleEdit.value = task.title;
+```
+
+**Delete a task:**  
   
+We can delete a task by filtering the array and leaving ONLY those that don't match the id. If there is only one task though, we can just empty the array entirely. The custom event will empty the local storage array too, so when the display function is called we'll get the 'no tasks' message.  
+Otherwise if there is more than one task, filter the array, then replace the global tasks array with the filtered array.  
 
-### Displaying the task dates 
+```
+function deleteTask(id) {
+if (tasks.length === 1) {
+        tasks = [];
+        list.dispatchEvent(new CustomEvent('tasksUpdated'));
+    } else {
+        let filteredTasks = tasks.filter(task => task.id != id);
+        tasks = filteredTasks;
+    }
 
-### Creating tasks in specific 'projects'
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
+}
+```
+
+
+###  Additional steps in this project yet to be tackled:  
+
+- Displaying the task dates 
+- Creating tasks in specific 'projects'
+
+## *Extra stuff*
+1. Besides projects, we could also have another section 'lists' where we can store something like a shopping list, or a list of movies the user wants to watch.  
+2. Dark mode toggle!  
 
 
 
-## Resources
-[Bootstrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
-[How to save data in localStorage using JavaScript](https://dev.to/michaelburrows/how-to-save-data-in-localstorage-using-javascript-994)  
-[Saving Form Data in Client-Side Storage](https://www.raymondcamden.com/2022/03/27/saving-form-data-in-client-side-storage)  
-[Storing and retrieving JavaScript objects in localStorage](https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/)  
-StackOverflow answer to ['Store form data in local storage using array and retrieving it on new page'](https://stackoverflow.com/a/49609944/17232226)  
-Wes Bos [Beginner JavaScript](https://beginnerjavascript.com/) exercise: 'Shopping Form with Custom Events, Delegation and localstorage'  
-[Get the closest element](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)  
-Stack Overflow answer to ['How can I send a variable to a form using this javascript function?'](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function) 
+## Resources  
+
+Links to some of the docs, tutorials, blog posts, or stack overflow answers I used while working on various parts of this project.  
+
+- [Bootstrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
+- [How to save data in localStorage using JavaScript](https://dev.to/michaelburrows/how-to-save-data-in-localstorage-using-javascript-994)  
+- [Saving Form Data in Client-Side Storage](https://www.raymondcamden.com/2022/03/27/saving-form-data-in-client-side-storage)  
+- [Storing and retrieving JavaScript objects in localStorage](https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/)  
+- StackOverflow answer to ['Store form data in local storage using array and retrieving it on new page'](https://stackoverflow.com/a/49609944/17232226)  
+- Wes Bos [Beginner JavaScript](https://beginnerjavascript.com/) exercise: 'Shopping Form with Custom Events, Delegation and localstorage'  
+- [Get the closest element](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)  
+- Stack Overflow answer to ['How can I send a variable to a form using this javascript function?'](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function) 
 
 
