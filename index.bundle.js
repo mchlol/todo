@@ -274,7 +274,7 @@ function restoreFromLocalStorage() {
     // get the data from local storage
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
     // check if any data was found
-    if (localStorageTasks.length === 0) { 
+    if (!localStorageTasks) { 
         (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.noTasks)();
         return console.log('no tasks in localStorage yet')
     } else {
@@ -420,6 +420,9 @@ function handleEditSubmit(event) {
 
     // DO NOT clear the form inputs
     // event.target.reset();
+
+    // we DO want to close the form on submit though
+
     // dispatch a custom event which calls the display function and mirror to local storage!
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
