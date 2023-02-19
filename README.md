@@ -52,7 +52,34 @@ Store this dom funtion in a module `dom.js` to be called into the `index.js` fil
 
 ### CRUD - create a task
 
-I have a global array in my script called `tasks`. When the user adds a task, the input values are stored with a specific id (using the `Date.now()` method as this is a small app).  
+To create a task, the user clicks a button which brings up a modal window with a form inside.  
+When the form is submitted, the input values are stored as properties on an object. Title, notes, due date, priority, completed status (false by default). There are two more special properties:  
+- `id` which is set to `Date.now()` to create a unique number.  
+- `category` which reads the due date the user input, and runs another function that compares the date to today's date and assigns a string like 'today' or 'overdue'.  
+Next, the object is pushed to a global array, `tasks`.  
+Finally a custom event fires on the `list` html element (my container for displaying tasks) - this will call the mirror to local storage function, and the function for actually displaying the tasks.   
+
+```
+function handleSubmit(event) {
+    event.preventDefault(); 
+
+    const task = {
+        title: event.currentTarget.title.value,
+        taskNotes: event.currentTarget.tasknotes.value,
+        dueDate: event.currentTarget.dueDate.value,
+        priority: event.currentTarget.priority.value,
+        id: Date.now(),
+        completed: false,
+        category: checkDueDate(dueDate)
+    };
+    
+    tasks.push(task); 
+    event.target.reset();
+    return list.dispatchEvent(new CustomEvent('tasksUpdated'));
+}
+```
+
+*The function also uses `event.preventDefault()` to stop the page refresh with data in the URL behaviour, and `event.target.reset();` which clears all the form inputs.*  
   
 
 ### Saving the data to local storage
@@ -199,12 +226,11 @@ if (tasks.length === 1) {
 
 ###  Additional steps in this project yet to be tackled:  
 
-- Displaying the task dates 
-- Creating tasks in specific 'projects'
+- change the task creation functionality so it uses a factory function or class.  
+- Creating separate view sections so the user can create projects to store tasks in, and switch between viewing project tasks and general tasks.  
+- Modify the way task due dates are displayed (only displayed, not stored) - eg "Sun 19 Feb 23" instead of "2023-02-19".  
+- Sort tasks by due date instead of pushing to the bottom.  
 
-## *Extra stuff*
-1. Besides projects, we could also have another section 'lists' where we can store something like a shopping list, or a list of movies the user wants to watch.  
-2. Dark mode toggle!  
 
 
 
