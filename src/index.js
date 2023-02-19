@@ -34,6 +34,7 @@ function handleSubmit(event) {
         completed: false,
         category: checkDueDate(dueDate)
     };
+    
     console.log('task created: ', task);
     // add the new object to the array
     tasks.push(task); 
