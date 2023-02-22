@@ -87,22 +87,11 @@ function createLiElement(task) {
     delBtn.innerHTML = `<span class="material-icons text-danger">delete</span>`;
 
     // append the elements
-    iconWrap.appendChild(editBtn);
-    iconWrap.appendChild(delBtn);
-
-    detailsRow.appendChild(dueDate);
-    detailsRow.appendChild(category);
-    detailsRow.appendChild(priority);
-    detailsRow.appendChild(iconWrap);
-
-    taskSecondaryWrap.appendChild(notes);
-    taskSecondaryWrap.appendChild(detailsRow);
-
-    taskPrimaryWrap.appendChild(check)
-    taskPrimaryWrap.appendChild(title);
-    
-    listItem.appendChild(taskPrimaryWrap);
-    listItem.appendChild(taskSecondaryWrap);
+    iconWrap.append(editBtn,delBtn);
+    detailsRow.append(dueDate,category,priority,iconWrap);
+    taskSecondaryWrap.append(notes,detailsRow);
+    taskPrimaryWrap.append(check,title)
+    listItem.append(taskPrimaryWrap,taskSecondaryWrap);
 
     // return the final li element appended to the ul element?
     return taskList.appendChild(listItem);
@@ -219,6 +208,7 @@ function handleSubmit(event) {
         completed: false,
         category: checkDueDate(dueDate)
     };
+    
     console.log('task created: ', task);
     // add the new object to the array
     tasks.push(task); 
