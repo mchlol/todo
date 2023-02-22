@@ -40,20 +40,21 @@ Added a watch condition to my webpack config so I can run the build command once
 
 ## Steps
 
-### Build the basic html structure
+### Build the basic html structure for the user interface
 
-Create the containers, headings, task bar, forms and modals etc. I've used Bootstrap so it doesn't look totally barebones, but will come back and style it nicely once I get the app functionality down.   
+Create the containers, headings, task bar, forms and modals etc. I've used Bootstrap so it doesn't look totally barebones, but will come back and style it nicely once I get the app functionality down.  
+On the page will be the form to add a task, which I've put in a modal so clicking on a button will open that modal, and the user will be able to fill out the form.  
+Select the form,  
+`const form = document.querySelector('#add-task-form');`  
+and add an event listener to run a function when the user submits the form.  
+`form.addEventListener('submit', handleSubmit);`  
 
-### Create a module for DOM logic
+We will do the same thing later with editing a task.  
 
-Build out the task item html to get an idea of how it should basically look, add the buttons etc., then convert this into a dom function where we can create elements, set classes, append etc.  
-Store this dom funtion in a module `dom.js` to be called into the `index.js` file.   
-  
 
 ### CRUD - create a task
 
-To create a task, the user clicks a button which brings up a modal window with a form inside.  
-When the form is submitted, the input values are stored as properties on an object. Title, notes, due date, priority, completed status (false by default). There are two more special properties:  
+When the above mentioned form is submitted, the input values are stored as properties on an object. Title, notes, due date, priority, completed status (false by default). There are two more special properties:  
 - `id` which is set to `Date.now()` to create a unique number.  
 - `category` which reads the due date the user input, and runs another function that compares the date to today's date and assigns a string like 'today' or 'overdue'.  
 
@@ -123,6 +124,62 @@ function displayTasks() {
         return html;
     }
 }
+```
+
+### Create a module for DOM logic
+
+Build out the task item html to get an idea of how it should basically look, add the buttons etc., then convert this into a function that will create elements, set the Bootstrap classes, append etc.  
+Store this dom funtion in a module `dom.js` to be called into the `index.js` file.  
+When the display function runs it will call this function in  a forEach to display all of the tasks. [View that part of the code here](#crud---read-the-tasks).
+
+When the list item is created, assign the id from the object to the `id` attribute of the element.  
+```
+    let listItem = document.createElement('li');
+    listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-1')
+    listItem.setAttribute('id', task.id);
+```
+
+Most importantly, this function will display the values of the task object.  
+```
+    let title = document.createElement('span');
+    title.classList.add('fw-bold', 'm-1')
+    title.textContent = task.title;
+```
+Aside from just creating the html elements etc., we also need to check a couple of things to make sure the correct info is displayed:
+
+#### The checkbox 
+
+If a task object has a `completed` key with a value of `true`, the checkbox on the DOM element will appear checked.  
+```
+let check = document.createElement('input');
+    check.type = 'checkbox';
+    check.classList.add('form-check-input', 'm-1')
+    if (task.completed) {
+        check.checked = true;
+    };
+```
+##### The due date
+
+Check the value of the task dueDate, to handle the case where the user did not select any date.  
+```
+if (!task.dueDate) {
+        dueDate.textContent = 'No due date';
+    }  else dueDate.textContent = `Due ${task.dueDate}`;
+```
+
+After all the elements have been created, they need to be appended to any containers that have also been created, such as the 'details row' that will hold the due date, priority, and the edit and delete buttons.  
+``` 
+    iconWrap.append(editBtn,delBtn);
+    detailsRow.append(dueDate,category,priority,iconWrap);
+    taskSecondaryWrap.append(notes,detailsRow);
+    taskPrimaryWrap.append(check,title)
+    listItem.append(taskPrimaryWrap,taskSecondaryWrap);
+```
+*By using `append` instead of `appendChild` we can append multiple elements at once.*  
+
+Finally at the end of the function, after appending all the containers to the list element, return that list element.  
+```
+return taskList.appendChild(listItem);
 ```
   
 
@@ -227,7 +284,7 @@ if (tasks.length === 1) {
 
 ###  Additional steps in this project yet to be tackled:  
 
-- change the task creation functionality so it uses a factory function or class.  
+- Refactor the code to use classes or factory functions to create the objects.   
 - Creating separate view sections so the user can create projects to store tasks in, and switch between viewing project tasks and general tasks.  
 - Modify the way task due dates are displayed (only displayed, not stored) - eg "Sun 19 Feb 23" instead of "2023-02-19".  
 - Sort tasks by due date instead of pushing to the bottom.  
@@ -247,5 +304,6 @@ Links to some of the docs, tutorials, blog posts, or stack overflow answers I us
 - Wes Bos [Beginner JavaScript](https://beginnerjavascript.com/) exercise: 'Shopping Form with Custom Events, Delegation and localstorage'  
 - [Get the closest element](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)  
 - Stack Overflow answer to ['How can I send a variable to a form using this javascript function?'](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function) 
+- [Anchors in Markdown](https://gist.github.com/asabaylus/3071099)  
 
 
