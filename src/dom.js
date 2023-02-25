@@ -1,3 +1,13 @@
+// installed date-fns with npm
+const {format} = require('date-fns');
+
+// ## test date fns
+
+function dateHandler(date) {
+    return format(date,'EEE dd MMM yyyy');
+};
+
+
 const taskList = document.querySelector('#task-list');
 
 function createLiElement(task) {
@@ -34,7 +44,10 @@ function createLiElement(task) {
     dueDate.classList.add('small','m-1');
     if (!task.dueDate) {
         dueDate.textContent = 'No due date';
-    }  else dueDate.textContent = `Due ${task.dueDate}`;
+    }  else {
+        let parsedDate = Date.parse(task.dueDate);
+        dueDate.textContent = dateHandler(parsedDate);
+    }
 
     let category = document.createElement('span');
     category.classList.add('small', 'm-1');
