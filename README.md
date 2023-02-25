@@ -167,17 +167,18 @@ if (!task.dueDate) {
     }  else dueDate.textContent = `Due ${task.dueDate}`;
 ```
 
-After all the elements have been created, they need to be appended to any containers that have also been created, such as the 'details row' that will hold the due date, priority, and the edit and delete buttons.  
+After all the elements have been created, they need to be appended to any containers that have also been created and then to the list item element.  
 ``` 
     iconWrap.append(editBtn,delBtn);
     detailsRow.append(dueDate,category,priority,iconWrap);
     taskSecondaryWrap.append(notes,detailsRow);
     taskPrimaryWrap.append(check,title)
+
     listItem.append(taskPrimaryWrap,taskSecondaryWrap);
 ```
-*By using `append` instead of `appendChild` we can append multiple elements at once.*  
+*`appendChild` can only append one element at a time. By using `append` instead, we can append multiple elements at once.*  
 
-Finally at the end of the function, after appending all the containers to the list element, return that list element.  
+Finally at the end of the function, return that list element.  
 ```
 return taskList.appendChild(listItem);
 ```
