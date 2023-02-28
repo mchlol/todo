@@ -3,6 +3,10 @@ import { createLiElement } from './dom.js';
 import { noTasks } from './dom.js';
 import './input.scss';
 
+
+
+// ### 
+
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
@@ -34,7 +38,7 @@ function handleSubmit(event) {
         completed: false,
         category: checkDueDate(dueDate)
     };
-    
+
     console.log('task created: ', task);
     // add the new object to the array
     tasks.push(task); 
@@ -326,15 +330,7 @@ function checkDueDate(date) {
 };
 
 
-// convert date to human readable format
-const dateHandler = (date) => {
-    let dayOfWeek = date.getDay();
-    let dayOfMonth = date.getDate();
-    let month = date.getMonth();
-    let year = date.getYear();
-    let string = `${dayOfWeek} ${dayOfMonth} ${month} ${year}`;
-    return string;
-}
+
 
     // task class
     // could creating a task also be a module?

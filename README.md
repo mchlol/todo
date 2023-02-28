@@ -282,12 +282,30 @@ if (tasks.length === 1) {
 }
 ```
 
+### Date formatting
+
+I installed [date-fns](https://date-fns.org/) with npm, but I found the docs were not so beginner friendly. I used [this tutorial](https://www.section.io/engineering-education/javascript-dates-manipulation-with-date-fns/) to help me work out how to use it.  
+What I want to do, is display a short date in a human-readable format on each task. I don't want to change the date on the object in any way, just the way it's displayed. So I put the below code into my dom.js module:
+```
+const {format} = require('date-fns');
+function dateHandler(date) {
+    return format(date,'EEE dd MMM yyyy');
+};
+```
+And within my createLiElement function, at the part where a span is created to hold the task due date:
+```
+    let parsedDate = Date.parse(task.dueDate);
+    dueDate.textContent = dateHandler(parsedDate);
+```
+So we take the date the user input from the date picker in the form, run it through the function with the help of date-fns, and show a date that's easier to read.  
+
 
 ###  Additional steps in this project yet to be tackled:  
 
-- Refactor the code to use classes or factory functions to create the objects.   
-- Creating separate view sections so the user can create projects to store tasks in, and switch between viewing project tasks and general tasks.  
-- Modify the way task due dates are displayed (only displayed, not stored) - eg "Sun 19 Feb 23" instead of "2023-02-19".  
+- Refactor the code to use classes or factory functions to create the objects.  
+- Refactor to make better use of modules 
+- Creating separate view sections so the user can create projects with separate tasks, and switch between viewing project tasks and general tasks.  
+- Show priority levels in different colours.  
 - Sort tasks by due date instead of pushing to the bottom.  
 
 
