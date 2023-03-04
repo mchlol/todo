@@ -157,23 +157,11 @@ function markComplete(id) {
     console.log(checkbox);
     // toggle the checkbox
     checkbox.checked = !checkbox.checked;
-    // is this doing anything?
-    // checking/unchecking box is now done with an if statement in the dom.js function, if task is completed the checkbox is generated as checked and vice versa - display function kept overriding checked status
     console.log(checkbox);
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
 
 function editTask(id) {
-/*  open a modal
-    modal contains a form 
-        we cannot target an existing form unless we can pass it the id
-    access task object by id
-    set form input values to task object properties
-    on submit, overwrite selected task object properties from inputs
-        eg. task.title = input.value;
-    id must not change
-*/
-
     // find the object with matching id
     // find the index
     let taskIndex = tasks.findIndex(task => task.id == id);
@@ -330,38 +318,3 @@ function checkDueDate(date) {
 };
 
 
-
-
-    // task class
-    // could creating a task also be a module?
-    // class Task {
-    //     constructor(title,notes,dueDate,priority,category) {
-    //     this.title = title;
-    //     this.notes = notes;
-    //     this.dueDate = dueDate;
-    //     this.priority = priority;
-    //     this.taskId = Date.now();
-    //     this.section = checkDueDate(dueDate); // check name if module
-    //     this.category = category; // ie 'tasks' or 'projectName'
-    //     }
-    // };
-
-/* TO DO:
-default view is today
-user can change view to soon, someday, or completed
-user clicks button to add task
-modal window opens
-user inputs info into the form
-on submit the form data is stored as an object
-task objects are kept in localstorage
-user can categorise tasks
-if dueDate is today it goes into today tasklist
-if dueDate exists but is not today it goes into soon tasklist
-if no dueDate exists it goes into someday tasklist
-user can edit all task info
-user can delete a task
-user can 'check' off a task
-  when checked a task is moved eg from 'today' to 'completed'
-when task is added it appears in the list
-ordered by priority, then date added
-*/
