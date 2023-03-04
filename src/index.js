@@ -2,7 +2,10 @@
 import { createLiElement } from './dom.js';
 import { noTasks } from './dom.js';
 import './input.scss';
-const {format} = require('date-fns');
+import isValid from 'date-fns/isValid';
+import isAfter from 'date-fns/isAfter';
+import isBefore from 'date-fns/isBefore'
+
 
 
 // ### 
@@ -286,6 +289,8 @@ function checkDueDate(date) {
     // Date.parse(input) converts that input into a number (of milliseconds from epoch)
     // OR new Date(input) converts the input into a date object
 
+    // create a variable to hold the string we will return
+    let showDueDate;
     // get the input date and convert it to a date object
     let input = new Date(date);
     // set the input date to midight
@@ -295,6 +300,20 @@ function checkDueDate(date) {
     // set the time to midnight
     today.setHours(0,0,0,0);
 
+    if (!isValid(input)) {
+        // check if no date was input - we can use the arg as is, as we cant set hours on an invalid date anyway
+        showDueDate = "No due date";
+    } else if (isEqual(input,today)) {
+        // check if the input date and today are the same
+        showDueDate = "Today";
+    } else if (isBefore(input,today)) {
+        showDueDate = "Overdue";
+    } else if (isAfter(input,today)) {
+        showDueDate = "Soon";
+    } else {
+        showDueDate = "???";
+    }
+    return showDueDate;
 
 
     // compare to todays date - day, month, and year only not time
