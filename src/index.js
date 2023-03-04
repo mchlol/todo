@@ -282,39 +282,35 @@ restoreFromLocalStorage(tasks);
 
 // check task due date
 function checkDueDate(date) {
-    // create a variable to hold the current date
-    const today = new Date();
-    // convert that value to a date string
-    const todayString = today.toDateString();
-    // create a variable to hold the date from the argument
-    const dateInput = new Date(date);
-    // convert that to a date string too
-    const dateString = dateInput.toDateString();
-    // create a variable to hold the return value
-    let showDueDay;
+    // the object gets the date from a date picker which returns a string "yyyy-mm-dd"
+    // Date.parse(input) converts that input into a number (of milliseconds from epoch)
+    // OR new Date(input) converts the input into a date object
 
-    // if the date cannot be parsed e.g. there is no date input at all 
-    if (!Date.parse(date)) {
-        showDueDay = `Someday`;
-    } 
-    // if the argument is the same as todays date
-    else if (todayString === dateString) {
-        showDueDay = `Today`;
-    } 
-    // if the argument is less the todays date
-    else if (Date.parse(date) < today) {
-        // here should also check if the task was already completed i.e. task == completed ? 'completed' : 'today, overdue warning'
-        showDueDay = `Overdue`;
-    } 
-    // if the date string is truthy but not today or less than todays date
-    else if (dateString) {
-        showDueDay = `Soon`;
-    }
-    else {
-        showDueDay = `???`;
-    }
+    // get the input date and convert it to a date object
+    let input = new Date(date);
+    // set the input date to midight
+    input.setHours(0,0,0,0); // set time to 00:00:00 sharp
+    // get todays date for comparison
+    let today = new Date();
+    // set the time to midnight
+    today.setHours(0,0,0,0);
 
-    return showDueDay;
+
+
+    // compare to todays date - day, month, and year only not time
+    // getDay() will return the day of the week as a number
+    // getDate() will return the day of the month
+    // getMonth() returns the month of the year as a number (0 based so 0 is Jan, 1 is Feb etc)
+    // getFullYear() returns the year as a four digit number (getYear() is deprecated)
+
+    // if there is no date input at all / date is invalid "Someday"
+    // ### setHours on invalid date returns NaN ###
+    // if the input is the same as todays date "Today"
+    // if the input is the day after todays date "Tomorrow"
+    // if the input is less than todays date "Overdue"
+    // if the date input is after todays date "Soon"
+
+    // convert the input to a date object
 };
 
 
