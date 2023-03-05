@@ -24,24 +24,29 @@ function checkDueDate(date) {
     let showDueDate;
     // get the input date and convert it to a date object
     let input = new Date(date);
-    // set the input date to midight
+    // set the input date to midight for more accurate comparison
     input.setHours(0,0,0,0); // set time to 00:00:00 sharp
+    // ### setHours on invalid date returns NaN ###
+
     // get todays date for comparison
     let today = new Date();
-    // set the time to midnight
+    // set the time to midnight for more accurate comparison
     today.setHours(0,0,0,0);
 
     if (!isValid(input)) {
-        // check if the date input is valid (or if no date was input) 
+        // check if the date input is NOT valid (or if no date was input) 
         showDueDate = "Someday";
     } else if (isEqual(input,today)) {
         // check if the input date and today are the same
         showDueDate = "Today";
     } else if (isBefore(input,today)) {
+        // check if the input date is before today's date
         showDueDate = "Overdue";
     } else if (isAfter(input,today)) {
+        // check if the input date is in the future
         showDueDate = "Soon";
     } else {
+        // edge case in case something went wrong
         showDueDate = "???";
     }
     return showDueDate;
