@@ -299,6 +299,35 @@ And within my createLiElement function, at the part where a span is created to h
 ```
 So we take the date the user input from the date picker in the form, run it through the function with the help of date-fns, and show a date that's easier to read.  
 
+I also realised that the 'soon, 'someday' etc display of a task was being assigned when the task was created. This means when we come back on a different day those categories were not updating with the passing of time.  
+I moved this function into the dom.js module and refactored the display function slightly, so this category is now assigned when the task is displayed, NOT created.  
+I used date-fns for this too.  
+```
+function checkDueDate(date) {
+    let showDueDate;
+    let input = new Date(date);
+    input.setHours(0,0,0,0); // set time to 00:00:00 sharp
+
+    let today = new Date();
+    today.setHours(0,0,0,0);
+
+    if (!isValid(input)) { 
+        showDueDate = "Someday";
+    } else if (isEqual(input,today)) {
+        showDueDate = "Today";
+    } else if (isBefore(input,today)) {
+        showDueDate = "Overdue";
+    } else if (isAfter(input,today)) {
+        showDueDate = "Soon";
+    } else {
+        showDueDate = "???";
+    }
+    return showDueDate;
+};
+```
+So you can see above we get the date input from the date-picker as a string, so this needs to be converted into a date object. Get today's date as well so we can compare if the date is in the past or future etc. and set both times to midnight, so the time won't throw off our comparison.  
+Then use a simple if/else to assign the category based on the result of the date-fns function i.e. isBefore will show if the input date is before today's date, etc.  
+
 
 ###  Additional steps in this project yet to be tackled:  
 

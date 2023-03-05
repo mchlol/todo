@@ -3,10 +3,6 @@ import { createLiElement } from './dom.js';
 import { noTasks } from './dom.js';
 import './input.scss';
 
-
-
-// ### 
-
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
@@ -36,7 +32,7 @@ function handleSubmit(event) {
         priority: event.currentTarget.priority.value,
         id: Date.now(),
         completed: false,
-        category: checkDueDate(dueDate)
+        category: "",
     };
 
     console.log('task created: ', task);
@@ -222,7 +218,7 @@ function handleEditSubmit(event) {
     task.taskNotes = notesEdit.value;
     task.dueDate = dueDateEdit.value;
     task.priority = priorityEdit.value;
-    task.category = checkDueDate(task.dueDate);
+    task.category = "";
 
     console.log('task edited: ', task);
 
@@ -280,41 +276,6 @@ restoreFromLocalStorage(tasks);
 
 // ## modules? ## //
 
-// check task due date
-function checkDueDate(date) {
-    // create a variable to hold the current date
-    const today = new Date();
-    // convert that value to a date string
-    const todayString = today.toDateString();
-    // create a variable to hold the date from the argument
-    const dateInput = new Date(date);
-    // convert that to a date string too
-    const dateString = dateInput.toDateString();
-    // create a variable to hold the return value
-    let showDueDay;
 
-    // if the date cannot be parsed e.g. there is no date input at all 
-    if (!Date.parse(date)) {
-        showDueDay = `Someday`;
-    } 
-    // if the argument is the same as todays date
-    else if (todayString === dateString) {
-        showDueDay = `Today`;
-    } 
-    // if the argument is less the todays date
-    else if (Date.parse(date) < today) {
-        // here should also check if the task was already completed i.e. task == completed ? 'completed' : 'today, overdue warning'
-        showDueDay = `Overdue`;
-    } 
-    // if the date string is truthy but not today or less than todays date
-    else if (dateString) {
-        showDueDay = `Soon`;
-    }
-    else {
-        showDueDay = `???`;
-    }
-
-    return showDueDay;
-};
 
 
