@@ -2,13 +2,6 @@
 import { createLiElement } from './dom.js';
 import { noTasks } from './dom.js';
 import './input.scss';
-import isValid from 'date-fns/isValid';
-import isAfter from 'date-fns/isAfter';
-import isBefore from 'date-fns/isBefore'
-
-
-
-// ### 
 
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
@@ -39,7 +32,7 @@ function handleSubmit(event) {
         priority: event.currentTarget.priority.value,
         id: Date.now(),
         completed: false,
-        category: checkDueDate(dueDate)
+        category: "",
     };
 
     console.log('task created: ', task);
@@ -225,7 +218,7 @@ function handleEditSubmit(event) {
     task.taskNotes = notesEdit.value;
     task.dueDate = dueDateEdit.value;
     task.priority = priorityEdit.value;
-    task.category = checkDueDate(task.dueDate);
+    task.category = "";
 
     console.log('task edited: ', task);
 
@@ -283,53 +276,6 @@ restoreFromLocalStorage(tasks);
 
 // ## modules? ## //
 
-// check task due date
-function checkDueDate(date) {
-    // the object gets the date from a date picker which returns a string "yyyy-mm-dd"
-    // Date.parse(input) converts that input into a number (of milliseconds from epoch)
-    // OR new Date(input) converts the input into a date object
 
-    // create a variable to hold the string we will return
-    let showDueDate;
-    // get the input date and convert it to a date object
-    let input = new Date(date);
-    // set the input date to midight
-    input.setHours(0,0,0,0); // set time to 00:00:00 sharp
-    // get todays date for comparison
-    let today = new Date();
-    // set the time to midnight
-    today.setHours(0,0,0,0);
-
-    if (!isValid(input)) {
-        // check if no date was input - we can use the arg as is, as we cant set hours on an invalid date anyway
-        showDueDate = "No due date";
-    } else if (isEqual(input,today)) {
-        // check if the input date and today are the same
-        showDueDate = "Today";
-    } else if (isBefore(input,today)) {
-        showDueDate = "Overdue";
-    } else if (isAfter(input,today)) {
-        showDueDate = "Soon";
-    } else {
-        showDueDate = "???";
-    }
-    return showDueDate;
-
-
-    // compare to todays date - day, month, and year only not time
-    // getDay() will return the day of the week as a number
-    // getDate() will return the day of the month
-    // getMonth() returns the month of the year as a number (0 based so 0 is Jan, 1 is Feb etc)
-    // getFullYear() returns the year as a four digit number (getYear() is deprecated)
-
-    // if there is no date input at all / date is invalid "Someday"
-    // ### setHours on invalid date returns NaN ###
-    // if the input is the same as todays date "Today"
-    // if the input is the day after todays date "Tomorrow"
-    // if the input is less than todays date "Overdue"
-    // if the date input is after todays date "Soon"
-
-    // convert the input to a date object
-};
 
 
