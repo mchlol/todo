@@ -22055,13 +22055,73 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
 /* harmony export */   "noTasks": () => (/* binding */ noTasks)
 /* harmony export */ });
+/* harmony import */ var date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/isValid */ "./node_modules/date-fns/esm/isValid/index.js");
+/* harmony import */ var date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/isEqual */ "./node_modules/date-fns/esm/isEqual/index.js");
+/* harmony import */ var date_fns_isAfter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns/isAfter */ "./node_modules/date-fns/esm/isAfter/index.js");
+/* harmony import */ var date_fns_isBefore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns/isBefore */ "./node_modules/date-fns/esm/isBefore/index.js");
 // installed date-fns with npm
+// assing formatting function to a variable 
 const {format} = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+
+// import all the functions required for check due date
+
+
+
+
 
 // ## test date fns
 
 function dateHandler(date) {
     return format(date,'EEE dd MMM yyyy');
+};
+
+// check task due date
+function checkDueDate(date) {
+    // the object gets the date from a date picker which returns a string "yyyy-mm-dd"
+    // Date.parse(input) converts that input into a number (of milliseconds from epoch)
+    // OR new Date(input) converts the input into a date object
+
+    // create a variable to hold the string we will return
+    let showDueDate;
+    // get the input date and convert it to a date object
+    let input = new Date(date);
+    // set the input date to midight
+    input.setHours(0,0,0,0); // set time to 00:00:00 sharp
+    // get todays date for comparison
+    let today = new Date();
+    // set the time to midnight
+    today.setHours(0,0,0,0);
+
+    if (!(0,date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__["default"])(input)) {
+        // check if the date input is valid (or if no date was input) 
+        showDueDate = "Someday";
+    } else if ((0,date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__["default"])(input,today)) {
+        // check if the input date and today are the same
+        showDueDate = "Today";
+    } else if ((0,date_fns_isBefore__WEBPACK_IMPORTED_MODULE_2__["default"])(input,today)) {
+        showDueDate = "Overdue";
+    } else if ((0,date_fns_isAfter__WEBPACK_IMPORTED_MODULE_3__["default"])(input,today)) {
+        showDueDate = "Soon";
+    } else {
+        showDueDate = "???";
+    }
+    return showDueDate;
+
+
+    // compare to todays date - day, month, and year only not time
+    // getDay() will return the day of the week as a number
+    // getDate() will return the day of the month
+    // getMonth() returns the month of the year as a number (0 based so 0 is Jan, 1 is Feb etc)
+    // getFullYear() returns the year as a four digit number (getYear() is deprecated)
+
+    // if there is no date input at all / date is invalid "Someday"
+    // ### setHours on invalid date returns NaN ###
+    // if the input is the same as todays date "Today"
+    // if the input is the day after todays date "Tomorrow"
+    // if the input is less than todays date "Overdue"
+    // if the date input is after todays date "Soon"
+
+    // convert the input to a date object
 };
 
 
@@ -22108,6 +22168,7 @@ function createLiElement(task) {
 
     let category = document.createElement('span');
     category.classList.add('small', 'm-1');
+    task.category = checkDueDate(task.dueDate);
     category.textContent = task.category;
 
     let priority = document.createElement('span');
