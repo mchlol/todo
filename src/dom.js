@@ -117,6 +117,13 @@ function createLiElement(task) {
 
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
+    if (task.priority === "High") {
+        priority.classList.add('text-danger');
+    } else if (task.priority === "Low") {
+        priority.classList.add('text-success');
+    } else if (task.priority === "Medium") {
+        priority.classList.add('text-warning');
+    }
     priority.textContent = task.priority + ' priority';
 
     let iconWrap = document.createElement('div');

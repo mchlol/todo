@@ -22041,24 +22041,29 @@ function checkDueDate(date) {
     let showDueDate;
     // get the input date and convert it to a date object
     let input = new Date(date);
-    // set the input date to midight
+    // set the input date to midight for more accurate comparison
     input.setHours(0,0,0,0); // set time to 00:00:00 sharp
+    // ### setHours on invalid date returns NaN ###
+
     // get todays date for comparison
     let today = new Date();
-    // set the time to midnight
+    // set the time to midnight for more accurate comparison
     today.setHours(0,0,0,0);
 
     if (!(0,date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__["default"])(input)) {
-        // check if the date input is valid (or if no date was input) 
+        // check if the date input is NOT valid (or if no date was input) 
         showDueDate = "Someday";
     } else if ((0,date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__["default"])(input,today)) {
         // check if the input date and today are the same
         showDueDate = "Today";
     } else if ((0,date_fns_isBefore__WEBPACK_IMPORTED_MODULE_2__["default"])(input,today)) {
+        // check if the input date is before today's date
         showDueDate = "Overdue";
     } else if ((0,date_fns_isAfter__WEBPACK_IMPORTED_MODULE_3__["default"])(input,today)) {
+        // check if the input date is in the future
         showDueDate = "Soon";
     } else {
+        // edge case in case something went wrong
         showDueDate = "???";
     }
     return showDueDate;
@@ -22129,6 +22134,13 @@ function createLiElement(task) {
 
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
+    if (task.priority === "High") {
+        priority.classList.add('text-danger');
+    } else if (task.priority === "Low") {
+        priority.classList.add('text-success');
+    } else if (task.priority === "Medium") {
+        priority.classList.add('text-warning');
+    }
     priority.textContent = task.priority + ' priority';
 
     let iconWrap = document.createElement('div');
