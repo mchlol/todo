@@ -334,7 +334,6 @@ Then use a simple if/else to assign the category based on the result of the date
 - Refactor the code to use classes or factory functions to create the objects.  
 - Refactor to make better use of modules 
 - Creating separate view sections so the user can create projects with separate tasks, and switch between viewing project tasks and general tasks.  
-- Show priority levels in different colours.  
 - Sort tasks by due date instead of pushing to the bottom.  
 
 
