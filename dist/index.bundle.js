@@ -22091,7 +22091,7 @@ const taskList = document.querySelector('#task-list');
 function createLiElement(task) {
     // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
-    listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-1')
+    listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-2')
     listItem.setAttribute('id', task.id);
 
     let taskPrimaryWrap = document.createElement('div');
