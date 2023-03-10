@@ -68,6 +68,32 @@ nav {
   height: 60px;
 }
 
+.opacity {
+  opacity: 0.5;
+}
+
+.rad-grad-left, .rad-grad-right {
+  position: absolute;
+  width: 640px;
+  height: 640px;
+  top: -6rem;
+  left: -20%;
+  opacity: 0.15;
+  background-image: radial-gradient(50% 50% at 50% 50%, #0d6efd 0, hsla(0deg, 0%, 100%, 0) 100%);
+}
+
+.rad-grad-right {
+  left: auto;
+  top: auto;
+  bottom: 0rem;
+  right: -20%;
+  background-image: radial-gradient(50% 50% at 50% 50%, #db7029 0, hsla(0deg, 0%, 100%, 0) 100%);
+}
+
+#task-list {
+  box-shadow: #ddd 8px 5px 10px;
+}
+
 .task-item-wrapper {
   text-decoration: none;
   border: none;
@@ -86,6 +112,11 @@ nav {
 @media screen and (max-width: 840px) {
   #current-view-title {
     color: palevioletred;
+  }
+  .rad-grad-left,
+.rad-grad-right {
+    width: 400px;
+    height: 400px;
   }
 }
 @media screen and (min-width: 841px) {
