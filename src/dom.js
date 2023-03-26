@@ -117,14 +117,17 @@ function createLiElement(task) {
 
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
-    if (task.priority === "High") {
+    if (task.priority == 1) {
         priority.classList.add('text-danger');
-    } else if (task.priority === "Low") {
-        priority.classList.add('text-success');
-    } else if (task.priority === "Medium") {
+        priority.textContent = 'High priority';
+    } else if (task.priority == 2) {
         priority.classList.add('text-warning');
-    }
-    priority.textContent = task.priority + ' priority';
+        priority.textContent = 'Medium priority';
+    } else if (task.priority == 3) {
+        priority.classList.add('text-success');
+        priority.textContent = 'Low priority';
+    } 
+    console.log(task.priority);
 
     let iconWrap = document.createElement('div');
     iconWrap.classList.add('d-flex');
