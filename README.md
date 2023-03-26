@@ -346,7 +346,7 @@ A `sort()` function in JavaScript can make use of a compare function to sort val
 
 Currently when a task is created the user selects the priority from a dropdown list where 'low' is the default, but they can also choose 'high' or 'medium'. These values are stored on the task object as a string. However, to use a regular sort function the values will be sorted alphabetically which ends up as `['high', 'low', 'medium']`.  
 To get around this we can just change the value stored as a string to a numerical value instead - high is 1, medium is 2, and low is 3.  
-First we change the input values on the add task form. 
+First we change the input values on the add task form (and the edit task form).  
 
 index.html
 ```
@@ -364,19 +364,20 @@ Then in the display function we can check for numerical values instead of string
 ```
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
-    if (task.priority === "1") {
+    if (task.priority == 1) {
         priority.classList.add('text-danger');
         priority.textContent = 'High priority';
-    } else if (task.priority === "2") {
+    } else if (task.priority == 2) {
         priority.classList.add('text-warning');
         priority.textContent = 'Medium priority';
-    } else if (task.priority === "3") {
+    } else if (task.priority == 3) {
         priority.classList.add('text-success');
         priority.textContent = 'Low priority';
     } 
 ```
+*Note the value is created as a string e.g. "1" so we use loose equality here.*
 
-We will need to sort the tasks, then call the *sorted* array in the display function.  
+So we have stored priority levels as numerical values, used those values in a funciton to sort the tasks by priority, and finally we call that function when we copy the tasks array to local storage.  The display function calls the local storage values, so we can retain the original tasks (the local variable in index.js) and only display the sorted array from local storage.  
 
 
 
@@ -389,7 +390,7 @@ We will need to sort the tasks, then call the *sorted* array in the display func
 - Display checked tasks with strikethrough titles
 - Creating separate view sections so the user can create projects with separate tasks, and switch between viewing project tasks and general tasks.  
 - Sort tasks by due date instead of pushing to the bottom.  
-
+- Display the 'add task' button with text on larger screens and a plus sign on small screens.  
 
 
 
