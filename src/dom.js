@@ -127,7 +127,6 @@ function createLiElement(task) {
         priority.classList.add('text-success');
         priority.textContent = 'Low priority';
     } 
-    console.log(task.priority);
 
     let iconWrap = document.createElement('div');
     iconWrap.classList.add('d-flex');
