@@ -344,8 +344,39 @@ A `sort()` function in JavaScript can make use of a compare function to sort val
 >
 > *["How to sort an array of objects by a property value in JavaScript"](https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/) - Flavio Copes*
 
+Currently when a task is created the user selects the priority from a dropdown list where 'low' is the default, but they can also choose 'high' or 'medium'. These values are stored on the task object as a string. However, to use a regular sort function the values will be sorted alphabetically which ends up as `['high', 'low', 'medium']`.  
+To get around this we can just change the value stored as a string to a numerical value instead - high is 1, medium is 2, and low is 3.  
+First we change the input values on the add task form. 
 
-To change the order the tasks are displayed in, we need to access this in the display function.  
+index.html
+```
+<label for="priority">Priority
+    <select name="priority" id="priority" class="form-control form-select">
+        <option value="1">High</option>
+        <option value="2">Medium</option>
+        <option selected value="3">Low</option>
+    </select>
+</label>
+```
+
+Then in the display function we can check for numerical values instead of strings.  
+
+```
+    let priority = document.createElement('span');
+    priority.classList.add('small','m-1');
+    if (task.priority === "1") {
+        priority.classList.add('text-danger');
+        priority.textContent = 'High priority';
+    } else if (task.priority === "2") {
+        priority.classList.add('text-warning');
+        priority.textContent = 'Medium priority';
+    } else if (task.priority === "3") {
+        priority.classList.add('text-success');
+        priority.textContent = 'Low priority';
+    } 
+```
+
+We will need to sort the tasks, then call the *sorted* array in the display function.  
 
 
 
