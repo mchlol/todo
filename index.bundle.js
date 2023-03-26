@@ -22144,7 +22144,6 @@ function createLiElement(task) {
         priority.classList.add('text-success');
         priority.textContent = 'Low priority';
     } 
-    console.log(task.priority);
 
     let iconWrap = document.createElement('div');
     iconWrap.classList.add('d-flex');
@@ -22328,8 +22327,11 @@ function displayTasks() {
 
 function mirrorToLocalStorage() {
     console.log('calling mirrorToLocalStorage()...');
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    // sort the tasks before storing them
+    let sortedTasks = sortTasks(tasks);
+    localStorage.setItem('tasks', JSON.stringify(sortedTasks));
     console.log('tasks array mirrored to local storage');
+    console.log(sortedTasks);
     return showState();
     };
 
@@ -22529,10 +22531,9 @@ function sortTasks(array) {
     // high priority should be the higher value - we can change this from a string to a number which displays as a string
     arrayCopy.sort( (a, b) => (a.priority > b.priority) ? 1: (a.priority === b.priority) ? ( (a.dueDate > b.dueDate) ? 1 : -1) : -1 );
     // sort in this order - high priority, medium priority, low priority
+    console.log(arrayCopy);
     return arrayCopy;
 }
-
-console.log(sortTasks(tasks));
 
 
 
