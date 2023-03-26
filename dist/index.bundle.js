@@ -22134,14 +22134,17 @@ function createLiElement(task) {
 
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
-    if (task.priority === "High") {
+    if (task.priority == 1) {
         priority.classList.add('text-danger');
-    } else if (task.priority === "Low") {
-        priority.classList.add('text-success');
-    } else if (task.priority === "Medium") {
+        priority.textContent = 'High priority';
+    } else if (task.priority == 2) {
         priority.classList.add('text-warning');
-    }
-    priority.textContent = task.priority + ' priority';
+        priority.textContent = 'Medium priority';
+    } else if (task.priority == 3) {
+        priority.classList.add('text-success');
+        priority.textContent = 'Low priority';
+    } 
+    console.log(task.priority);
 
     let iconWrap = document.createElement('div');
     iconWrap.classList.add('d-flex');
@@ -22522,7 +22525,8 @@ restoreFromLocalStorage(tasks);
 function sortTasks(array) {
     // for testing purposes, make a deep copy of the array so we don't affect the original by changing any references
     let arrayCopy = JSON.parse(JSON.stringify(array));
-    // sort the array - is this sorting priority alphabetically?
+    // sort the array 
+    // high priority should be the higher value - we can change this from a string to a number which displays as a string
     arrayCopy.sort( (a, b) => (a.priority > b.priority) ? 1: (a.priority === b.priority) ? ( (a.dueDate > b.dueDate) ? 1 : -1) : -1 );
     // sort in this order - high priority, medium priority, low priority
     return arrayCopy;

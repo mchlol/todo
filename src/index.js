@@ -276,7 +276,8 @@ restoreFromLocalStorage(tasks);
 function sortTasks(array) {
     // for testing purposes, make a deep copy of the array so we don't affect the original by changing any references
     let arrayCopy = JSON.parse(JSON.stringify(array));
-    // sort the array - is this sorting priority alphabetically?
+    // sort the array 
+    // high priority should be the higher value - we can change this from a string to a number which displays as a string
     arrayCopy.sort( (a, b) => (a.priority > b.priority) ? 1: (a.priority === b.priority) ? ( (a.dueDate > b.dueDate) ? 1 : -1) : -1 );
     // sort in this order - high priority, medium priority, low priority
     return arrayCopy;
