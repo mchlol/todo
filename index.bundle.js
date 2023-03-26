@@ -22399,7 +22399,6 @@ function markComplete(id) {
     console.log(checkbox);
     // toggle the checkbox
     checkbox.checked = !checkbox.checked;
-    console.log(checkbox);
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
 
@@ -22520,8 +22519,16 @@ list.addEventListener('click', handleClick);
 restoreFromLocalStorage(tasks);
 
 
-// ## modules? ## //
+function sortTasks(array) {
+    // for testing purposes, make a deep copy of the array so we don't affect the original by changing any references
+    let arrayCopy = JSON.parse(JSON.stringify(array));
+    // sort the array - is this sorting priority alphabetically?
+    arrayCopy.sort( (a, b) => (a.priority > b.priority) ? 1: (a.priority === b.priority) ? ( (a.dueDate > b.dueDate) ? 1 : -1) : -1 );
+    // sort in this order - high priority, medium priority, low priority
+    return arrayCopy;
+}
 
+console.log(sortTasks(tasks));
 
 
 
