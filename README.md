@@ -299,7 +299,7 @@ And within my createLiElement function, at the part where a span is created to h
 ```
 So we take the date the user input from the date picker in the form, run it through the function with the help of date-fns, and show a date that's easier to read.  
 
-I also realised that the 'soon, 'someday' etc display of a task was being assigned when the task was created. This means when we come back on a different day those categories were not updating with the passing of time.  
+I also realised that the 'soon, 'someday' etc display of a task was being assigned when the task was created. This means those categories were not updating with the passing of time.  
 I moved this function into the dom.js module and refactored the display function slightly, so this category is now assigned when the task is displayed, NOT created.  
 I used date-fns for this too.  
 ```
@@ -325,14 +325,37 @@ function checkDueDate(date) {
     return showDueDate;
 };
 ```
-So you can see above we get the date input from the date-picker as a string, so this needs to be converted into a date object. Get today's date as well so we can compare if the date is in the past or future etc. and set both times to midnight, so the time won't throw off our comparison.  
-Then use a simple if/else to assign the category based on the result of the date-fns function i.e. isBefore will show if the input date is before today's date, etc.  
+The date input from the date-picker is a string, so this needs to be converted into a date object. Get today's date as well so we can compare if the date is in the past or future etc. and set both times to midnight, so the time won't throw off our comparison.  
+Then use an if/else to assign the category based on the result of the date-fns function i.e. `isBefore` will show if the input date is before today's date, etc.  
 
+### Sorting
+
+When we add a new task, it is added to the bottom of the list of tasks displayed. It would be better to have high priority tasks at the top - maybe also sorted by due date.  
+
+A `sort()` function in JavaScript can make use of a compare function to sort values in a way that isn't necessarily alphabetical or numerical.  
+
+>`list.sort((a, b) => (a.color > b.color) ? 1 : -1)`
+>
+> When we return 1, the function communicates to sort() that the object b takes precedence in sorting over the object a. Returning -1 would do the opposite.
+>
+> The callback function could calculate other properties too, to handle the case where the color is the same, and order by a secondary property as well:
+>
+>`list.sort((a, b) => (a.color > b.color) ? 1 : (a.color === b.color) ? ((a.size > b.size) ? 1 : -1) : -1 )`  
+>
+> *["How to sort an array of objects by a property value in JavaScript"](https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/) - Flavio Copes*
+
+
+To change the order the tasks are displayed in, we need to access this in the display function.  
+
+
+
+---
 
 ###  Additional steps in this project yet to be tackled:  
 
 - Refactor the code to use classes or factory functions to create the objects.  
 - Refactor to make better use of modules 
+- Display checked tasks with strikethrough titles
 - Creating separate view sections so the user can create projects with separate tasks, and switch between viewing project tasks and general tasks.  
 - Sort tasks by due date instead of pushing to the bottom.  
 
@@ -350,7 +373,8 @@ Links to some of the docs, tutorials, blog posts, or stack overflow answers I us
 - StackOverflow answer to ['Store form data in local storage using array and retrieving it on new page'](https://stackoverflow.com/a/49609944/17232226)  
 - Wes Bos [Beginner JavaScript](https://beginnerjavascript.com/) exercise: 'Shopping Form with Custom Events, Delegation and localstorage'  
 - [Get the closest element](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)  
-- Stack Overflow answer to ['How can I send a variable to a form using this javascript function?'](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function) 
+- Stack Overflow answer to ['How can I send a variable to a form using this javascript function?'](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function)  
+- [How to clone an array in JavaScript](https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/)
 - [Anchors in Markdown](https://gist.github.com/asabaylus/3071099)  
 
 
