@@ -379,6 +379,15 @@ Then in the display function we can check for numerical values instead of string
 
 So we have stored priority levels as numerical values, used those values in a funciton to sort the tasks by priority, and finally we call that function when we copy the tasks array to local storage.  The display function calls the local storage values, so we can retain the original tasks (the local variable in index.js) and only display the sorted array from local storage.  
 
+Next - when we edit the priority on a task - eg. from low to high - the tasks should change order without having to refresh the page.  
+Fix - change the local variable tasks to call from local storage tasks instead:  
+in `displayTasks()`:
+```
+const html = JSON.parse(localStorage.getItem('tasks')).forEach(
+        task => createLiElement(task)
+        );
+```
+
 
 
 ---
@@ -396,7 +405,7 @@ So we have stored priority levels as numerical values, used those values in a fu
 
 ## Resources  
 
-Links to some of the docs, tutorials, blog posts, or stack overflow answers I used while working on various parts of this project.  
+Links to some of the docs, tutorials, blog posts, stack overflow answers etc. that I used while working on various parts of this project.  
 
 - [Bootstrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
 - [How to save data in localStorage using JavaScript](https://dev.to/michaelburrows/how-to-save-data-in-localstorage-using-javascript-994)  
@@ -408,5 +417,7 @@ Links to some of the docs, tutorials, blog posts, or stack overflow answers I us
 - Stack Overflow answer to ['How can I send a variable to a form using this javascript function?'](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function)  
 - [How to clone an array in JavaScript](https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/)
 - [Anchors in Markdown](https://gist.github.com/asabaylus/3071099)  
+- Gradient background recreated from looking at [the Laravel website!](https://laravel.com/)  
+
 
 

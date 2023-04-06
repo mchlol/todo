@@ -22317,8 +22317,8 @@ function displayTasks() {
         console.log('clearing all list html');
         list.innerHTML = '';
         // loop over each item in the tasks array and call the dom module to create a list item element
-        console.log('populating html from tasks array');
-        const html = tasks.forEach(
+        console.log('populating html from local storage tasks array');
+        const html = JSON.parse(localStorage.getItem('tasks')).forEach(
         task => (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.createLiElement)(task)
         );
         return html;
@@ -22326,6 +22326,7 @@ function displayTasks() {
 }
 
 function mirrorToLocalStorage() {
+    // tasks should be stored in separate category arrays 
     console.log('calling mirrorToLocalStorage()...');
     // sort the tasks before storing them
     let sortedTasks = sortTasks(tasks);
