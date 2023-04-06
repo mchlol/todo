@@ -22134,14 +22134,16 @@ function createLiElement(task) {
 
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
-    if (task.priority === "High") {
+    if (task.priority == 1) {
         priority.classList.add('text-danger');
-    } else if (task.priority === "Low") {
-        priority.classList.add('text-success');
-    } else if (task.priority === "Medium") {
+        priority.textContent = 'High priority';
+    } else if (task.priority == 2) {
         priority.classList.add('text-warning');
-    }
-    priority.textContent = task.priority + ' priority';
+        priority.textContent = 'Medium priority';
+    } else if (task.priority == 3) {
+        priority.classList.add('text-success');
+        priority.textContent = 'Low priority';
+    } 
 
     let iconWrap = document.createElement('div');
     iconWrap.classList.add('d-flex');
@@ -22325,8 +22327,11 @@ function displayTasks() {
 
 function mirrorToLocalStorage() {
     console.log('calling mirrorToLocalStorage()...');
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    // sort the tasks before storing them
+    let sortedTasks = sortTasks(tasks);
+    localStorage.setItem('tasks', JSON.stringify(sortedTasks));
     console.log('tasks array mirrored to local storage');
+    console.log(sortedTasks);
     return showState();
     };
 
@@ -22399,7 +22404,6 @@ function markComplete(id) {
     console.log(checkbox);
     // toggle the checkbox
     checkbox.checked = !checkbox.checked;
-    console.log(checkbox);
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 };
 
@@ -22520,8 +22524,16 @@ list.addEventListener('click', handleClick);
 restoreFromLocalStorage(tasks);
 
 
-// ## modules? ## //
-
+function sortTasks(array) {
+    // for testing purposes, make a deep copy of the array so we don't affect the original by changing any references
+    let arrayCopy = JSON.parse(JSON.stringify(array));
+    // sort the array 
+    // high priority should be the higher value - we can change this from a string to a number which displays as a string
+    arrayCopy.sort( (a, b) => (a.priority > b.priority) ? 1: (a.priority === b.priority) ? ( (a.dueDate > b.dueDate) ? 1 : -1) : -1 );
+    // sort in this order - high priority, medium priority, low priority
+    console.log(arrayCopy);
+    return arrayCopy;
+}
 
 
 

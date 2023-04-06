@@ -299,7 +299,7 @@ And within my createLiElement function, at the part where a span is created to h
 ```
 So we take the date the user input from the date picker in the form, run it through the function with the help of date-fns, and show a date that's easier to read.  
 
-I also realised that the 'soon, 'someday' etc display of a task was being assigned when the task was created. This means when we come back on a different day those categories were not updating with the passing of time.  
+I also realised that the 'soon, 'someday' etc display of a task was being assigned when the task was created. This means those categories were not updating with the passing of time.  
 I moved this function into the dom.js module and refactored the display function slightly, so this category is now assigned when the task is displayed, NOT created.  
 I used date-fns for this too.  
 ```
@@ -325,17 +325,72 @@ function checkDueDate(date) {
     return showDueDate;
 };
 ```
-So you can see above we get the date input from the date-picker as a string, so this needs to be converted into a date object. Get today's date as well so we can compare if the date is in the past or future etc. and set both times to midnight, so the time won't throw off our comparison.  
-Then use a simple if/else to assign the category based on the result of the date-fns function i.e. isBefore will show if the input date is before today's date, etc.  
+The date input from the date-picker is a string, so this needs to be converted into a date object. Get today's date as well so we can compare if the date is in the past or future etc. and set both times to midnight, so the time won't throw off our comparison.  
+Then use an if/else to assign the category based on the result of the date-fns function i.e. `isBefore` will show if the input date is before today's date, etc.  
 
+### Sorting
+
+When we add a new task, it is added to the bottom of the list of tasks displayed. It would be better to have high priority tasks at the top - maybe also sorted by due date.  
+
+A `sort()` function in JavaScript can make use of a compare function to sort values in a way that isn't necessarily alphabetical or numerical.  
+
+>`list.sort((a, b) => (a.color > b.color) ? 1 : -1)`
+>
+> When we return 1, the function communicates to sort() that the object b takes precedence in sorting over the object a. Returning -1 would do the opposite.
+>
+> The callback function could calculate other properties too, to handle the case where the color is the same, and order by a secondary property as well:
+>
+>`list.sort((a, b) => (a.color > b.color) ? 1 : (a.color === b.color) ? ((a.size > b.size) ? 1 : -1) : -1 )`  
+>
+> *["How to sort an array of objects by a property value in JavaScript"](https://flaviocopes.com/how-to-sort-array-of-objects-by-property-javascript/) - Flavio Copes*
+
+Currently when a task is created the user selects the priority from a dropdown list where 'low' is the default, but they can also choose 'high' or 'medium'. These values are stored on the task object as a string. However, to use a regular sort function the values will be sorted alphabetically which ends up as `['high', 'low', 'medium']`.  
+To get around this we can just change the value stored as a string to a numerical value instead - high is 1, medium is 2, and low is 3.  
+First we change the input values on the add task form (and the edit task form).  
+
+index.html
+```
+<label for="priority">Priority
+    <select name="priority" id="priority" class="form-control form-select">
+        <option value="1">High</option>
+        <option value="2">Medium</option>
+        <option selected value="3">Low</option>
+    </select>
+</label>
+```
+
+Then in the display function we can check for numerical values instead of strings.  
+
+```
+    let priority = document.createElement('span');
+    priority.classList.add('small','m-1');
+    if (task.priority == 1) {
+        priority.classList.add('text-danger');
+        priority.textContent = 'High priority';
+    } else if (task.priority == 2) {
+        priority.classList.add('text-warning');
+        priority.textContent = 'Medium priority';
+    } else if (task.priority == 3) {
+        priority.classList.add('text-success');
+        priority.textContent = 'Low priority';
+    } 
+```
+*Note the value is created as a string e.g. "1" so we use loose equality here.*
+
+So we have stored priority levels as numerical values, used those values in a funciton to sort the tasks by priority, and finally we call that function when we copy the tasks array to local storage.  The display function calls the local storage values, so we can retain the original tasks (the local variable in index.js) and only display the sorted array from local storage.  
+
+
+
+---
 
 ###  Additional steps in this project yet to be tackled:  
 
 - Refactor the code to use classes or factory functions to create the objects.  
 - Refactor to make better use of modules 
+- Display checked tasks with strikethrough titles
 - Creating separate view sections so the user can create projects with separate tasks, and switch between viewing project tasks and general tasks.  
 - Sort tasks by due date instead of pushing to the bottom.  
-
+- Display the 'add task' button with text on larger screens and a plus sign on small screens.  
 
 
 
@@ -350,7 +405,8 @@ Links to some of the docs, tutorials, blog posts, or stack overflow answers I us
 - StackOverflow answer to ['Store form data in local storage using array and retrieving it on new page'](https://stackoverflow.com/a/49609944/17232226)  
 - Wes Bos [Beginner JavaScript](https://beginnerjavascript.com/) exercise: 'Shopping Form with Custom Events, Delegation and localstorage'  
 - [Get the closest element](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)  
-- Stack Overflow answer to ['How can I send a variable to a form using this javascript function?'](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function) 
+- Stack Overflow answer to ['How can I send a variable to a form using this javascript function?'](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function)  
+- [How to clone an array in JavaScript](https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/)
 - [Anchors in Markdown](https://gist.github.com/asabaylus/3071099)  
 
 
