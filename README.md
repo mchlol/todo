@@ -405,7 +405,7 @@ const html = JSON.parse(localStorage.getItem('tasks')).forEach(
 
 ## Resources  
 
-Links to some of the docs, tutorials, blog posts, or stack overflow answers I used while working on various parts of this project.  
+Links to some of the docs, tutorials, blog posts, stack overflow answers etc. that I used while working on various parts of this project.  
 
 - [Bootstrap 4 modal is not working in sticky-top navbar](https://stackoverflow.com/questions/53315398/bootsrap-4-modal-is-not-working-in-sticky-top-navbar)  
 - [How to save data in localStorage using JavaScript](https://dev.to/michaelburrows/how-to-save-data-in-localstorage-using-javascript-994)  
