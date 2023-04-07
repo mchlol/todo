@@ -388,7 +388,13 @@ const html = JSON.parse(localStorage.getItem('tasks')).forEach(
         );
 ```
 
+## Thoughts
 
+**Separation of concerns**  
+In the display function, we are checking a couple of conditions and changing the display based on those conditions.  
+If the task object has a completed property set to true, the checkbox for that task will be checked.  
+The task due status ('soon', 'someday', etc) changes based on the duedate of the task object.  
+I am thinking this may be bad practice as the function is technically doing things outside 'display' related things. Or is it? Either way, a way around it might be to pass these properties to check against as arguments to the display function somehow.  
 
 ---
 
@@ -398,7 +404,6 @@ const html = JSON.parse(localStorage.getItem('tasks')).forEach(
 - Refactor to make better use of modules 
 - Display checked tasks with strikethrough titles
 - Creating separate view sections so the user can create projects with separate tasks, and switch between viewing project tasks and general tasks.  
-- Sort tasks by due date instead of pushing to the bottom.  
 - Display the 'add task' button with text on larger screens and a plus sign on small screens.  
 
 
