@@ -389,21 +389,40 @@ const html = JSON.parse(localStorage.getItem('tasks')).forEach(
         );
 ```
 
-## Separate Views
+## "Projects" views
 
 I saved this part for last as it feels quite overwhelming to me.  
-So we have one array that holds all of our tasks. When a task is created it goes straight into that array and that is displayed by default when we open the app.  
-What we need to do now is give the user the option to change the 'project' that a task goes into.  
-- This could be done when the user creates the task - say by choosing from a dropdown.  
-- Or the user can create a project at the same time they create a task.  
+So we have one array that holds all of our tasks. When a task is created it goes straight into that array and the info in that array is displayed by default when we open the app. This is 'daily tasks'.  
+What we need to do now is give the user the option to create project sections and add tasks specifically to those projects.  
 
-## Thoughts
+In Todoist, the user can create a task and assign it to a section from **pre-created** projects. So creating a project and adding a task are two separate actions.  
+
+When the user creates a project section, it needs to be added to the `index.html` in the 'projects' drop up list. We'll do this in the `dom.js` file.  
+
+So here is what I'd like to end up with:  
+
+- daily tasks
+- pre created project 1
+- pre created project 2  
+
+
+### Building
+
+Create an empty array called `projects` within which will be nested arrays for each set of tasks. We'll make the default `dailyTasks` and allow the user to add more sections to it.  
+There will need to be another modal form where the user can create a new project. Whatever they add here will create an array nested within `projects`.  
+In the section where the task object is created, we'll add another property `project`. In the form, we'll add another part where the user can leave the task in 'daily tasks' or add it to a specific project.  
+
+
+## Other Thoughts
 
 **Separation of concerns**  
 In the display function, we are checking a couple of conditions and changing the display based on those conditions.  
 If the task object has a completed property set to true, the checkbox for that task will be checked and the title will have a line-through style. 
 The task due status ('soon', 'someday', etc) changes based on the duedate of the task object.  
 I am thinking this may be bad practice as the function is technically doing things outside 'display' related things. Or is it? Either way, a way around it might be to pass these properties to check against as arguments to the display function somehow.  
+
+**Duplicating code**  
+The html file contains a lot of repeated code but *slightly* different, for creating the three forms and their modal triggers. There must be a more concise way to create these without having to rewrite all the forms for their specific purposes.  
 
 ---
 
