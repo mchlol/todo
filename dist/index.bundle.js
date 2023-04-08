@@ -22096,17 +22096,18 @@ function createLiElement(task) {
 
     let taskPrimaryWrap = document.createElement('div');
     taskPrimaryWrap.classList.add('task-text-primary')
+    
+    let title = document.createElement('span');
+    title.classList.add('fw-bold', 'm-1')
+    title.textContent = task.title;
 
     let check = document.createElement('input');
     check.type = 'checkbox';
     check.classList.add('form-check-input', 'm-1')
     if (task.completed) {
+        title.style.textDecoration = 'line-through';
         check.checked = true;
     };
-    
-    let title = document.createElement('span');
-    title.classList.add('fw-bold', 'm-1')
-    title.textContent = task.title;
 
     let taskSecondaryWrap = document.createElement('div');
     taskSecondaryWrap.classList.add('task-text-secondary', 'text-muted', 'small');
