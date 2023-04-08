@@ -2,6 +2,7 @@
 
 Time to tackle the ol' to do list app. 
 This project is part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list) curriculum.  
+The code for this project does contain a lot of comments and console logs. As this is a beginner project, at this point I plan to leave them *for my own reference*.  
 
 ## Technologies & tools
 
@@ -377,7 +378,7 @@ Then in the display function we can check for numerical values instead of string
 ```
 *Note the value is created as a string e.g. "1" so we use loose equality here.*
 
-So we have stored priority levels as numerical values, used those values in a funciton to sort the tasks by priority, and finally we call that function when we copy the tasks array to local storage.  The display function calls the local storage values, so we can retain the original tasks (the local variable in index.js) and only display the sorted array from local storage.  
+So we have stored priority levels as numerical values, used those values in a function to sort the tasks by priority, and finally we call that function when we copy the tasks array to local storage.  The display function calls the local storage values, so we can retain the original tasks (the local variable in index.js) and only display the sorted array from local storage.  
 
 Next - when we edit the priority on a task - eg. from low to high - the tasks should change order without having to refresh the page.  
 Fix - change the local variable tasks to call from local storage tasks instead:  
@@ -392,7 +393,7 @@ const html = JSON.parse(localStorage.getItem('tasks')).forEach(
 
 **Separation of concerns**  
 In the display function, we are checking a couple of conditions and changing the display based on those conditions.  
-If the task object has a completed property set to true, the checkbox for that task will be checked.  
+If the task object has a completed property set to true, the checkbox for that task will be checked and the title will have a line-through style. 
 The task due status ('soon', 'someday', etc) changes based on the duedate of the task object.  
 I am thinking this may be bad practice as the function is technically doing things outside 'display' related things. Or is it? Either way, a way around it might be to pass these properties to check against as arguments to the display function somehow.  
 
@@ -402,7 +403,6 @@ I am thinking this may be bad practice as the function is technically doing thin
 
 - Refactor the code to use classes or factory functions to create the objects.  
 - Refactor to make better use of modules 
-- Display checked tasks with strikethrough titles
 - Creating separate view sections so the user can create projects with separate tasks, and switch between viewing project tasks and general tasks.  
 - Display the 'add task' button with text on larger screens and a plus sign on small screens.  
 
