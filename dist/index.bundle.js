@@ -22256,6 +22256,7 @@ const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
 let tasks = [];
+let projects = [];
 
 // every time the tasks array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
 
@@ -22282,6 +22283,7 @@ function handleSubmit(event) {
         id: Date.now(),
         completed: false,
         category: "",
+        project: "",
     };
 
     console.log('task created: ', task);

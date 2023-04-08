@@ -79,33 +79,6 @@
                 <!-- start dropdown buttons -->
                 <div class="btn-group dropup">
 
-                    <!-- lists button -->
-                    <button class="btn btn-sm btn-outline-primary dropdown-toggle m-1" type="button"
-                        id="dropdownMenuButtonLists" data-bs-toggle="dropdown" aria-expanded="false">
-                        Lists
-                    </button>
-
-                    <!-- start lists list -->
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li>
-                            <a href="#" class="dropdown-item">
-                                Groceries
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-item">
-                                Books to read
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-item">
-                                Movies to watch
-                            </a>
-                        </li>
-
-                    </ul>
-                    <!-- end projects list -->
-
 
                     <!-- projects button -->
                     <button class="btn btn-sm btn-outline-primary dropdown-toggle m-1" type="button"
@@ -133,36 +106,7 @@
                     </ul>
                     <!-- end projects list -->
 
-                    <!-- tasks button -->
-                    <button class="btn btn-sm btn-outline-primary dropdown-toggle m-1" type="button"
-                        id="dropdownMenuButtonTasks" data-bs-toggle="dropdown" aria-expanded="false">
-                        Tasks
-                    </button>
 
-                    <!-- start tasks list -->
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li>
-                            <a href="#" class="dropdown-item active">
-                                Today
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-item">
-                                Soon
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-item">
-                                Someday
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-item">
-                                Completed
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- end tasks list -->
 
                 </div>
                 <!-- end dropdown buttons -->
@@ -173,9 +117,17 @@
 
 
             <!-- start add task modal trigger -->
-            <button type="button" class="btn btn-danger rounded-circle m-1 fw-bold fs-6" data-bs-toggle="modal"
+            <!-- 'rounded-circle' is the bootstrap class to make a circle button -->
+            <button type="button" class="btn btn-danger m-1 fw-bold fs-6" data-bs-toggle="modal"
                 data-bs-target="#addTaskModal" aria-label="add task button">
-                +
+                Add Task
+            </button>
+            <!-- end add task modal trigger -->
+
+            <!-- start add task modal trigger -->
+            <button type="button" class="btn btn-info m-1 fw-bold fs-6" data-bs-toggle="modal"
+                data-bs-target="#addProjectModal" aria-label="add project button">
+                Add Project
             </button>
             <!-- end add task modal trigger -->
 
@@ -190,7 +142,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Add a new task</h5>
+                        <h5 class="modal-title" id="modalAddTaskLabel">Add a new task</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -243,7 +195,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Edit task</h5>
+                        <h5 class="modal-title" id="modalEditLabel">Edit task</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -285,12 +237,53 @@
                     </div>
 
                     </form>
-                    <!-- end add new form -->
+                    <!-- end edit task form -->
 
                 </div>
             </div>
         </div>
-        <!-- end modal window -->
+        <!-- end edit task modal window -->
+
+        <!-- start add project modal window -->
+        <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAddProjectLabel">Add a new task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- start add new form -->
+                    <div class="modal-body">
+                        <form id="add-project-form">
+                            <!-- title -->
+                            <label for="title" class="form-label w-100">Project Title
+                                <input type="text" name="title" id="projectTitle" maxlength="50" class="form-control"
+                                    placeholder="New project" required>
+                            </label>
+
+                            <!-- notes -->
+                            <label for="notes" class="form-label w-100">Description
+                                <textarea name="tasknotes" id="projectDescription" placeholder="Notes or comments"
+                                    rows="2" maxlength="125" style="resize: none" class="form-control"></textarea>
+                            </label>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="save-project-btn" class="btn btn-primary">Save </button>
+                    </div>
+
+                    </form>
+                    <!-- end add project form -->
+
+                </div>
+            </div>
+        </div>
+        <!-- end add project modal window -->
 
 
     </main>
