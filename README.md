@@ -389,6 +389,14 @@ const html = JSON.parse(localStorage.getItem('tasks')).forEach(
         );
 ```
 
+## Separate Views
+
+I saved this part for last as it feels quite overwhelming to me.  
+So we have one array that holds all of our tasks. When a task is created it goes straight into that array and that is displayed by default when we open the app.  
+What we need to do now is give the user the option to change the 'project' that a task goes into.  
+- This could be done when the user creates the task - say by choosing from a dropdown.  
+- Or the user can create a project at the same time they create a task.  
+
 ## Thoughts
 
 **Separation of concerns**  
@@ -403,8 +411,8 @@ I am thinking this may be bad practice as the function is technically doing thin
 
 - Refactor the code to use classes or factory functions to create the objects.  
 - Refactor to make better use of modules 
-- Creating separate view sections so the user can create projects with separate tasks, and switch between viewing project tasks and general tasks.  
-- Display the 'add task' button with text on larger screens and a plus sign on small screens.  
+- Creating separate sections so the user can create projects with separate tasks in them, and switch between viewing project tasks and general tasks.  
+- Display the 'add task' button with text on larger screens, and as a circle with a plus sign on small screens. The button element itself can be changed with a css class, but we have to change the content of the element as well.  
 
 
 
