@@ -18,9 +18,9 @@ function showState() {
     return console.table('localStorage tasks', JSON.parse(localStorage.getItem('tasks')));
 }
 
-// when the form is submitted (task is added):
-function handleSubmit(event) {
-    console.log('calling handleSubmit()..');
+// handle ADD TASK form submit
+function handleAddTaskSubmit(event) {
+    console.log('calling handleAddTaskSubmit()..');
     console.log(event);
     // stop the 'page refresh with data in the url' behaviour
     event.preventDefault(); 
@@ -236,6 +236,7 @@ function handleEditSubmit(event) {
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
+// this function listens for a click on any edit or delete button, or a checkbox
 function handleClick(event) {
     console.log('running handleClick()...');
     // get the id of the closest list element
@@ -260,8 +261,8 @@ function handleClick(event) {
 
 // ## EVENT LISTENERS ##
 
-// when the form is submitted (a task is added), run the handleSubmit function
-form.addEventListener('submit', handleSubmit);
+// when the form is submitted (a task is added), run the handleAddTaskSubmit function
+form.addEventListener('submit', handleAddTaskSubmit);
 
 editForm.addEventListener('submit', handleEditSubmit);
 
