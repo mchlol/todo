@@ -22145,6 +22145,7 @@ function createLiElement(task) {
         priority.classList.add('text-success');
         priority.textContent = 'Low priority';
     } 
+    
 
     let iconWrap = document.createElement('div');
     iconWrap.classList.add('d-flex');
@@ -22255,10 +22256,16 @@ __webpack_require__.r(__webpack_exports__);
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
-let tasks = [];
-let projects = [];
+let tasks = []; // we wont need this anymore
+let projects = [ // initialise with one project that's where our default tasks will go
+    {
+        title: "Daily Tasks",
+        description: "Daily tasks",
+        tasks: [],
+    },
+];
 
-// every time the tasks array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
+// every time the tasks - now projects - array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
 
 // ## DEBUGGING FUNCTION ##
 function showState() {
@@ -22271,7 +22278,6 @@ function showState() {
 function handleAddTaskSubmit(event) {
     console.log('calling handleAddTaskSubmit()..');
     console.log(event);
-    // stop the 'page refresh with data in the url' behaviour
     event.preventDefault(); 
 
     // create the task in an object
@@ -22283,11 +22289,13 @@ function handleAddTaskSubmit(event) {
         id: Date.now(),
         completed: false,
         category: "",
-        project: "",
+        project: "", // this will be assigned in the form select element, not input as text by the user
     };
 
+    // we need to do some handling here based on the selected project
+
     console.log('task created: ', task);
-    // add the new object to the array
+    // add the new object to the specified projects array
     tasks.push(task); 
     // log the state of the tasks array
     console.log(`No. of tasks in state: ${tasks.length}`);
@@ -22296,6 +22304,20 @@ function handleAddTaskSubmit(event) {
     event.target.reset();
     // dispatch a custom event which calls the display function and mirror to local storage!
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
+}
+
+// handle ADD PROJECT form submit
+function handleAddProjectSubmit(event) {
+    event.preventDefault();
+    // create the project as an object which will have an empty array  
+    const project = {
+        title: event.currentTarget.projectTitle.value,
+        description: event.currentTarget.projectDescription.value,
+        tasks: [],
+    };
+    projects.push(project);
+    event.target.reset();
+    return console.log(projects);
 }
 
 
@@ -22515,6 +22537,8 @@ form.addEventListener('submit', handleAddTaskSubmit);
 
 editForm.addEventListener('submit', handleEditSubmit);
 
+addProjectForm.addEventListener('submit', handleAddProjectSubmit);
+
 // when the tasksUpdated custom event fires:
 // copy tasks to local storage
 list.addEventListener('tasksUpdated', mirrorToLocalStorage);
@@ -22528,7 +22552,7 @@ list.addEventListener('click', handleClick);
 
 restoreFromLocalStorage(tasks);
 
-
+// could be a module
 function sortTasks(array) {
     // for testing purposes, make a deep copy of the array so we don't affect the original by changing any references
     let arrayCopy = JSON.parse(JSON.stringify(array));

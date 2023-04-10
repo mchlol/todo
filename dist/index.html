@@ -88,21 +88,14 @@
 
                     <!-- start projects list -->
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <!-- projects will be added with js in the following format:
                         <li>
                             <a href="#" class="dropdown-item">
-                                Italy trip
+                                Project
                             </a>
                         </li>
-                        <li>
-                            <a href="#" class="dropdown-item">
-                                Decluttering
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-item">
-                                App build
-                            </a>
-                        </li>
+                    -->
+
                     </ul>
                     <!-- end projects list -->
 
@@ -168,6 +161,15 @@
                                     <option value="High">High</option>
                                     <option value="Medium">Medium</option>
                                     <option selected value="Low">Low</option>
+                                </select>
+                            </label>
+
+                            <!-- project -->
+                            <label for="project">Project
+                                <select name="project" id="project" class="form-control form-select">
+                                    <!-- project selections come from the projects array titles 
+                                    <option value="projectTitle">textContent = projectTitle</option>
+                                    -->
                                 </select>
                             </label>
                     </div>
@@ -248,23 +250,24 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalAddProjectLabel">Add a new task</h5>
+                        <h5 class="modal-title" id="modalAddProjectLabel">Create a new project</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <!-- start add new form -->
+                    <!-- start add new project form -->
                     <div class="modal-body">
                         <form id="add-project-form">
                             <!-- title -->
                             <label for="title" class="form-label w-100">Project Title
-                                <input type="text" name="title" id="projectTitle" maxlength="50" class="form-control"
-                                    placeholder="New project" required>
+                                <input type="text" name="projectTitle" id="projectTitle" maxlength="50"
+                                    class="form-control" placeholder="New project" required>
                             </label>
 
                             <!-- notes -->
-                            <label for="notes" class="form-label w-100">Description
-                                <textarea name="tasknotes" id="projectDescription" placeholder="Notes or comments"
-                                    rows="2" maxlength="125" style="resize: none" class="form-control"></textarea>
+                            <label for="description" class="form-label w-100">Description
+                                <textarea name="projectDescription" id="projectDescription"
+                                    placeholder="Notes or comments" rows="2" maxlength="125" style="resize: none"
+                                    class="form-control"></textarea>
                             </label>
 
                     </div>
