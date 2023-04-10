@@ -429,6 +429,13 @@ I am thinking this may be bad practice as the function is technically doing thin
 **Duplicating code**  
 The html file contains a lot of repeated code but *slightly* different, for creating the three forms and their modal triggers. There must be a more concise way to create these without having to rewrite all the forms for their specific purposes.  
 
+**Modules**  
+Creating projects  
+Creating tasks  
+Editing tasks  
+Marking tasks as complete  
+Sorting tasks  
+
 ---
 
 ###  Additional steps in this project yet to be tackled:  
