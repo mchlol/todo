@@ -244,6 +244,7 @@ let check = document.createElement('input');
 **Edit properties:**  
 There is a second modal with a form in the `index.html` file, for editing a task. In that form, I include an input which is hidden:  
 `<input type="hidden" id="hiddenField" name="id" value="" />`  
+(The idea for this came from the answers to [this stack overflow question](https://stackoverflow.com/questions/4855430/how-can-i-send-a-variable-to-a-form-using-this-javascript-function)).  
 When the edit function is called, the value of the hidden input value is set to the id of the task object.  
 In function editTask():  
 ```
@@ -262,7 +263,8 @@ I do this by accessing each input and setting its value, e.g.:
 ```
     const titleEdit = document.querySelector('#titleEdit');
     titleEdit.value = task.title;
-```
+``` 
+
 
 **Delete a task:**  
   
@@ -405,12 +407,15 @@ So here is what I'd like to end up with:
 - pre created project 1
 - pre created project 2  
 
+When the user attempts to delete a project that contains tasks, we should have an alert prompting the user to confirm they want to delete.  
+
 
 ### Building
 
 Create an empty array called `projects` within which will be nested arrays for each set of tasks. We'll make the default `dailyTasks` and allow the user to add more sections to it.  
 There will need to be another modal form where the user can create a new project. Whatever they add here will create an array nested within `projects`.  
 In the section where the task object is created, we'll add another property `project`. In the form, we'll add another part where the user can leave the task in 'daily tasks' or add it to a specific project.  
+When the task is created it goes into the `tasks` array. We need to use the task objects `projects` property to change the array that the task object goes into. The project titles from the `projects` array populate the `option` elements.  
 
 
 ## Other Thoughts
