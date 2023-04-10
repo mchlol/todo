@@ -67,6 +67,19 @@ function handleAddProjectSubmit(event) {
     };
     projects.push(project);
     event.target.reset();
+
+    // we can move this into a module later but for now lets get it to work: target the select element in the add task form and put our project titles in the option elements.
+    let addTaskFormSelect = document.querySelector('#projectSelect');
+    console.log(addTaskFormSelect);
+    let projectOption = document.createElement('option');
+    projectOption.value = project.title;
+    projectOption.textContent = project.title;
+    addTaskFormSelect.appendChild(projectOption);
+    // NOTE: option VALUE has to be camelCase or it will break the element!
+
+    /* 
+    <option value="projectTitle">textContent = projectTitle</option>
+    */
     return console.log(projects);
 }
 
@@ -111,6 +124,10 @@ function mirrorToLocalStorage() {
     return showState();
     };
 
+function mirrorProjectsToLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(projects));
+    return console.log('project added to storage');
+};
 
 function restoreFromLocalStorage() {
     console.log('calling restoreFromLocalStorage...');
@@ -292,6 +309,7 @@ addProjectForm.addEventListener('submit', handleAddProjectSubmit);
 // when the tasksUpdated custom event fires:
 // copy tasks to local storage
 list.addEventListener('tasksUpdated', mirrorToLocalStorage);
+list.addEventListener('tasksUpdated', mirrorProjectsToLocalStorage);
 // display tasks
 list.addEventListener('tasksUpdated', displayTasks);
 // OR use an anonymous function to pass an argument 

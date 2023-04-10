@@ -415,7 +415,9 @@ When the user attempts to delete a project that contains tasks, we should have a
 Create an empty array called `projects` within which will be nested arrays for each set of tasks. We'll make the default `dailyTasks` and allow the user to add more sections to it.  
 There will need to be another modal form where the user can create a new project. Whatever they add here will create an array nested within `projects`.  
 In the section where the task object is created, we'll add another property `project`. In the form, we'll add another part where the user can leave the task in 'daily tasks' or add it to a specific project.  
-When the task is created it goes into the `tasks` array. We need to use the task objects `projects` property to change the array that the task object goes into. The project titles from the `projects` array populate the `option` elements.  
+When the task is created it goes into the `tasks` array. We need to use the task objects `projects` property to change the array that the task object goes into. 
+  The project titles from the `projects` array populate the `option` elements.  
+  The edit form will not need this, as we won't give users the ability to change the project a task is in. At least, not yet.  
 
 
 ## Other Thoughts

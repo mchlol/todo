@@ -88,13 +88,13 @@
 
                     <!-- start projects list -->
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <!-- projects will be added with js in the following format:
+                        <!-- projects will be added with js in the following format: -->
                         <li>
                             <a href="#" class="dropdown-item">
-                                Project
+                                Daily tasks
                             </a>
                         </li>
-                    -->
+
 
                     </ul>
                     <!-- end projects list -->
@@ -166,10 +166,10 @@
 
                             <!-- project -->
                             <label for="project">Project
-                                <select name="project" id="project" class="form-control form-select">
-                                    <!-- project selections come from the projects array titles 
-                                    <option value="projectTitle">textContent = projectTitle</option>
-                                    -->
+                                <select name="project" id="projectSelect" class="form-control form-select">
+
+                                    <option value="dailyTasks">Daily tasks</option>
+
                                 </select>
                             </label>
                     </div>
@@ -256,7 +256,7 @@
 
                     <!-- start add new project form -->
                     <div class="modal-body">
-                        <form id="add-project-form">
+                        <form id="addProjectForm">
                             <!-- title -->
                             <label for="title" class="form-label w-100">Project Title
                                 <input type="text" name="projectTitle" id="projectTitle" maxlength="50"
