@@ -22175,7 +22175,7 @@ function createLiElement(task) {
 
 function noTasks() {
     let div = document.createElement('div');
-    div.textContent = "No tasks yet!";
+    div.textContent = `No tasks yet! Add a new task, create a project, or go play video games 😄`;
     return taskList.appendChild(div);
 }
 
@@ -22257,13 +22257,27 @@ const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
 let tasks = []; // we wont need this anymore
+
+// create a dummy task as an example
+let defaultTask = {
+    title: "Wash dishes",
+    taskNotes: "Empty dishwasher",
+    dueDate: "2023-04-16",
+    priority: "Medium",
+    id: 1681602708492,
+    completed: false,
+    project: "Daily tasks",
+};
+
 let projects = [ // initialise with one project that's where our default tasks will go
     {
         title: "Daily Tasks",
         description: "Daily tasks",
-        tasks: [],
+        tasks: [defaultTask],
     },
 ];
+
+
 
 // every time the tasks - now projects - array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
 
@@ -22318,14 +22332,15 @@ function handleAddProjectSubmit(event) {
     projects.push(project);
     event.target.reset();
 
-    // we can move this into a module later but for now lets get it to work: target the select element in the add task form and put our project titles in the option elements.
+    // we can move this into a module later but for now lets get it to work: target the select element in the add task form 
     let addTaskFormSelect = document.querySelector('#projectSelect');
     console.log(addTaskFormSelect);
+    // and put our project titles in the option elements.
     let projectOption = document.createElement('option');
     projectOption.value = project.title;
     projectOption.textContent = project.title;
     addTaskFormSelect.appendChild(projectOption);
-    // NOTE: option VALUE has to be camelCase or it will break the element!
+    // does option.value need to be camelCase?
 
     /* 
     <option value="projectTitle">textContent = projectTitle</option>
