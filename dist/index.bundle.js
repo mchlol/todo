@@ -22000,6 +22000,24 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/create.js":
+/*!***********************!*\
+  !*** ./src/create.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "create": () => (/* binding */ create)
+/* harmony export */ });
+function create() {
+    console.log('create things here');
+};
+
+
+
+/***/ }),
+
 /***/ "./src/dom.js":
 /*!********************!*\
   !*** ./src/dom.js ***!
@@ -22009,7 +22027,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
-/* harmony export */   "noTasks": () => (/* binding */ noTasks)
+/* harmony export */   "noTasks": () => (/* binding */ noTasks),
+/* harmony export */   "projectHeader": () => (/* binding */ projectHeader)
 /* harmony export */ });
 /* harmony import */ var date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/isValid */ "./node_modules/date-fns/esm/isValid/index.js");
 /* harmony import */ var date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/isEqual */ "./node_modules/date-fns/esm/isEqual/index.js");
@@ -22087,6 +22106,11 @@ function checkDueDate(date) {
 
 
 const taskList = document.querySelector('#task-list');
+
+function projectHeader(project) {
+    let header = document.querySelector('#projectHeader');
+    return header.textContent = project.title;
+}
 
 function createLiElement(task) {
     // create the elements and add class names and attributes where required
@@ -22247,12 +22271,16 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
-/* harmony import */ var _input_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./input.scss */ "./src/input.scss");
+/* harmony import */ var _create_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create.js */ "./src/create.js");
+/* harmony import */ var _input_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./input.scss */ "./src/input.scss");
 // import the modules first
 
 
 
 
+
+(0,_create_js__WEBPACK_IMPORTED_MODULE_1__.create)();
+ 
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
@@ -22295,6 +22323,7 @@ function handleAddTaskSubmit(event) {
     event.preventDefault(); 
 
     // create the task in an object
+    // change this to take in properties from a local storage item and pass them as args to a CONSTRUCTOR function
     const task = {
         title: event.currentTarget.title.value,
         taskNotes: event.currentTarget.tasknotes.value,
@@ -22352,6 +22381,9 @@ function handleAddProjectSubmit(event) {
 function displayTasks() {
     console.log('calling displayTasks()...');
     showState();
+    // first lets change the header
+    // projectHeader(projectTitle) - arg should be the currently viewed project title - how to access this?
+
     // if there are no tasks...
     if (tasks.length === 0) {
         console.log('no tasks');

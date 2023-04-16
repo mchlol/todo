@@ -1,8 +1,11 @@
 // import the modules first
-import { createLiElement } from './dom.js';
+import { createLiElement, projectHeader } from './dom.js';
 import { noTasks } from './dom.js';
+import { create } from './create.js';
 import './input.scss';
 
+create();
+ 
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
@@ -45,6 +48,7 @@ function handleAddTaskSubmit(event) {
     event.preventDefault(); 
 
     // create the task in an object
+    // change this to take in properties from a local storage item and pass them as args to a CONSTRUCTOR function
     const task = {
         title: event.currentTarget.title.value,
         taskNotes: event.currentTarget.tasknotes.value,
@@ -102,6 +106,9 @@ function handleAddProjectSubmit(event) {
 function displayTasks() {
     console.log('calling displayTasks()...');
     showState();
+    // first lets change the header
+    // projectHeader(projectTitle) - arg should be the currently viewed project title - how to access this?
+
     // if there are no tasks...
     if (tasks.length === 0) {
         console.log('no tasks');
