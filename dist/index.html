@@ -58,27 +58,27 @@
         <!-- start nav -->
         <nav class="p-2 mt-2 d-flex justify-content-between align-items-center fixed-bottom">
 
-            <!-- light/dark mode switch -->
-            <div class="form-check form-switch">
-                <!-- icon colour: off=grey & on=yellow-->
-                <label for="lightMode" class="form-check-label">
-                    <span class="material-icons">
-                        light_mode
-                    </span>
-                </label>
-
-                <input class="form-check-input" type="checkbox" id="lightMode">
-
-            </div>
+            <!-- start add project modal trigger -->
+            <button type="button" class="btn btn-sm btn-info m-1 fw-bold fs-6 text-white" data-bs-toggle="modal"
+                data-bs-target="#addProjectModal" aria-label="add project button">
+                Add Project
+            </button>
+            <!-- end add project modal trigger -->
 
 
+            <!-- start add task modal trigger -->
+            <!-- 'rounded-circle' is the bootstrap class to make a circle button -->
+            <button type="button" class="btn btn-sm btn-danger m-1 fw-bold fs-6" data-bs-toggle="modal"
+                data-bs-target="#addTaskModal" aria-label="add task button">
+                Add Task
+            </button>
+            <!-- end add task modal trigger -->
 
             <!-- start nav buttons -->
             <div class="d-flex justify-content-end align-items-center">
 
                 <!-- start dropdown buttons -->
                 <div class="btn-group dropup">
-
 
                     <!-- projects button -->
                     <button class="btn btn-sm btn-outline-primary dropdown-toggle m-1" type="button"
@@ -95,34 +95,14 @@
                             </a>
                         </li>
 
-
                     </ul>
                     <!-- end projects list -->
-
-
 
                 </div>
                 <!-- end dropdown buttons -->
 
             </div>
             <!-- end nav buttons -->
-
-
-            <!-- start add task modal trigger -->
-            <button type="button" class="btn btn-sm btn-info m-1 fw-bold fs-6 text-white" data-bs-toggle="modal"
-                data-bs-target="#addProjectModal" aria-label="add project button">
-                Add Project
-            </button>
-            <!-- end add task modal trigger -->
-
-            <!-- start add task modal trigger -->
-            <!-- 'rounded-circle' is the bootstrap class to make a circle button -->
-            <button type="button" class="btn btn-sm btn-danger m-1 fw-bold fs-6" data-bs-toggle="modal"
-                data-bs-target="#addTaskModal" aria-label="add task button">
-                Add Task
-            </button>
-            <!-- end add task modal trigger -->
-
         </nav>
         <!-- end nav -->
 
