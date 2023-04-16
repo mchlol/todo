@@ -22053,7 +22053,8 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
-/* harmony export */   "noTasks": () => (/* binding */ noTasks)
+/* harmony export */   "noTasks": () => (/* binding */ noTasks),
+/* harmony export */   "projectHeader": () => (/* binding */ projectHeader)
 /* harmony export */ });
 /* harmony import */ var date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/isValid */ "./node_modules/date-fns/esm/isValid/index.js");
 /* harmony import */ var date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/isEqual */ "./node_modules/date-fns/esm/isEqual/index.js");
@@ -22131,6 +22132,11 @@ function checkDueDate(date) {
 
 
 const taskList = document.querySelector('#task-list');
+
+function projectHeader(project) {
+    let header = document.querySelector('#projectHeader');
+    return header.textContent = project.title;
+}
 
 function createLiElement(task) {
     // create the elements and add class names and attributes where required
