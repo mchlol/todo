@@ -158,7 +158,7 @@ function createLiElement(task) {
 
 function noTasks() {
     let div = document.createElement('div');
-    div.textContent = "No tasks yet!";
+    div.textContent = `No tasks yet! Add a new task, create a project, or go play video games 😄`;
     return taskList.appendChild(div);
 }
 
