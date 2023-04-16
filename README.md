@@ -26,18 +26,49 @@ Followed the [webpack project set up tutorial](https://webpack.js.org/guides/get
 Added sass and mini css extract plugin so sass is compiled to css into a file, instead of being injected into the head with style-loader.  
 Added a watch condition to my webpack config so I can run the build command once and it stays open, watching for changes.  
 
-### Ideas for functionality
+### Basic functionality
  
-- Display the current date  
-- accessibility
-- Tag tasks eg. work, family, community etc.
-- lists
-- recurring tasks eg. 'every wednesday'
-- braindump "quick note"
-- reschedule prior tasks - tasks from yesterday/earlier should appear in today's task view as 'overdue'
-- warning if too many tasks added for today - say 6 - when there's more than 6 tasks prompt user if they want to choose another date or category (lest they be overwhelmed)
-- dark mode
-- task sorting and searching
+### User interface
+
+Display the following:  
+- A header with the title of the currently viewed project (daily tasks by default) . 
+- A list of the tasks the currently viewed project  
+- A nav bar with a button to add a project, a button to add a new task, and a drop up menu to select projects 
+- The drop up menu titles are populated from the local storage>projects titles  
+So by default, the user views the list of tasks in localStorage>projects>dailyTasks  
+If there are no tasks, the display will have a message telling the user there are no tasks.
+
+
+### User options: 
+
+- Click an icon on a task to interact with it (edit, delete, or mark complete)  
+- Click a button to add a new task  
+- Click a button to add a new project  
+- Click a drop down menu to view a different project  
+
+### Adding a task: 
+
+Click a button which opens a modal  
+Inside the modal is a form with fields the user can fill out about a task  
+When user submits the form, the task is added to the project currently being viewed in local storage  
+Eg localStorage>projects>dailyTasks = task object  
+
+
+### Adding a project:
+
+Click a button which opens a modal  
+Inside the modal is a form with fields the user can fill out about a project  
+When user submits the form, the project is added to local storage  
+e.g. localStorage>projects = project object
+
+
+### Changing current project view:  
+
+Click the drop up menu in the nav bar  
+A select menu opens with at least one option: dailyTasks  
+If the user clicks the name of of the project already being viewed nothing will happen  
+If the user clicks the name of another project, the view will change to that project - the page heading will change to that project title, and the tasks displayed will only be from that project.  
+
 
 ## Steps
 
