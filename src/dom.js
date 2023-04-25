@@ -167,8 +167,14 @@ function projectHeader(project) {
     return header.textContent = project.title;
 }
 
+function checkActiveProject() {
+    let header = document.querySelector('#projectHeader');
+    return header.textContent;
+}
+
 export {
     createLiElement,
     noTasks,
     projectHeader,
+    checkActiveProject,
 };

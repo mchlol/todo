@@ -1,7 +1,9 @@
 // import the modules first
-import { createLiElement, noTasks, projectHeader } from './dom.js';
+import { createLiElement, noTasks, projectHeader, checkActiveProject } from './dom.js';
 import { Task } from './create.js';
 import './input.scss';
+
+checkActiveProject();
  
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
@@ -87,19 +89,13 @@ function handleAddProjectSubmit(event) {
 
 
 function displayTasks() {
-    console.log('calling displayTasks()...');
-    // first lets change the header
-    // projectHeader(projectTitle) - arg should be the currently viewed project title - how to access this?
 
     // if there are no tasks...
     if (tasks.length === 0) {
         console.log('no tasks');
         // check local storage too
         if (JSON.parse(localStorage.getItem('tasks')).length === 0) {
-            console.log('no local tasks either');
-            console.log('clearing list html');
             list.innerHTML = '';
-            console.log('calling noTasks');
             return noTasks();
         } else {
             return console.log('the tasks array is empty but local storage is not');
@@ -111,7 +107,8 @@ function displayTasks() {
         // loop over each item in the tasks array and call the dom module to create a list item element
         console.log('populating html from local storage tasks array');
         // change this to pull data from active project tasks array
-        // what is the active project?
+        // what is the active project? 
+        // when the active project is CHANGED the page header also changes. so we could check that elements text content to find out the currently viewing project. what could go wrong?
         const html = JSON.parse(localStorage.getItem('tasks')).forEach(
         task => createLiElement(task)
         );
@@ -121,7 +118,6 @@ function displayTasks() {
 
 function mirrorToLocalStorage() {
     // tasks should be stored in separate category arrays 
-    console.log('calling mirrorToLocalStorage()...');
     // sort the tasks
     let sortedTasks = sortTasks(tasks);
     // ... THEN store them in localStorage under a key called 'tasks'...
@@ -323,11 +319,13 @@ list.addEventListener('tasksUpdated', displayTasks);
 // when a checkbox or edit/delete icon is clicked:
 list.addEventListener('click', handleClick);
 
+// ## FINAL FUNCTION CALL 
+
 restoreFromLocalStorage(tasks);
 
 // could be a module
 function sortTasks(array) {
-    // for testing purposes, make a deep copy of the array so we don't affect the original by changing any references
+    // for testing purposes, make a deep copy of the array by converting it to JSON and back - this is so we don't mutate the original array
     let arrayCopy = JSON.parse(JSON.stringify(array));
     // sort the array 
     // high priority should be the higher value - we can change this from a string to a number which displays as a string
