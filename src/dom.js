@@ -169,7 +169,9 @@ function projectHeader(project) {
 
 function checkActiveProject() {
     let header = document.querySelector('#projectHeader');
-    return header.textContent;
+    let headerContent = header.textContent;
+    console.log(headerContent);
+    return headerContent;
 }
 
 export {

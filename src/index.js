@@ -87,7 +87,7 @@ function handleAddProjectSubmit(event) {
     return console.log(projects);
 }
 
-
+// display tasks when the page is loaded OR the user selects a project from the drop up menu in the nav bar
 function displayTasks() {
 
     // if there are no tasks...
