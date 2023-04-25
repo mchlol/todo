@@ -71,11 +71,6 @@ function checkDueDate(date) {
 
 const taskList = document.querySelector('#task-list');
 
-function projectHeader(project) {
-    let header = document.querySelector('#projectHeader');
-    return header.textContent = project.title;
-}
-
 function createLiElement(task) {
     // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
@@ -165,6 +160,11 @@ function noTasks() {
     let div = document.createElement('div');
     div.textContent = `No tasks yet! Add a new task, create a project, or go play video games 😄`;
     return taskList.appendChild(div);
+}
+
+function projectHeader(project) {
+    let header = document.querySelector('#projectHeader');
+    return header.textContent = project.title;
 }
 
 export {
