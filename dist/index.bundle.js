@@ -22346,7 +22346,7 @@ function handleAddTaskSubmit(event) {
     event.preventDefault(); 
 
     // create the task in an object
-    // pass args to new Task
+    // pass args to new Task from create module
     const task = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Task(
         event.currentTarget.title.value,
         event.currentTarget.tasknotes.value,
@@ -22369,12 +22369,10 @@ function handleAddTaskSubmit(event) {
     // we need to do some handling here based on the selected project
 
     console.log('task created: ', task);
-    console.log('task from class: ',taskFromClass);
-    // add the new object to the specified projects array
-    tasks.push(task); 
-    // log the state of the tasks array
-    console.log(`No. of tasks in state: ${tasks.length}`);
-    console.log('view all tasks: ', tasks);
+    // add the task to the tasks array
+    tasks.push(task);
+    // add the new object to the specified projects array too
+    projects[0].tasks.push(task); 
     // clear the form inputs
     event.target.reset();
     // dispatch a custom event which calls the display function and mirror to local storage!
@@ -22393,7 +22391,7 @@ function handleAddProjectSubmit(event) {
     projects.push(project);
     event.target.reset();
 
-    // we can move this into a module later but for now lets get it to work: target the select element in the add task form 
+    // target the select element in the add task form 
     let addTaskFormSelect = document.querySelector('#projectSelect');
     console.log(addTaskFormSelect);
     // and put our project titles in the option elements.
@@ -22402,6 +22400,11 @@ function handleAddProjectSubmit(event) {
     projectOption.textContent = project.title;
     addTaskFormSelect.appendChild(projectOption);
     // does option.value need to be camelCase?
+    // test it out
+    let testProjectOption = document.createElement('option');
+    testProjectOption.value = "Test value";
+    testProjectOption.textContent = "Test textContent";
+    addTaskFormSelect.appendChild(testProjectOption);
 
     /* 
     <option value="projectTitle">textContent = projectTitle</option>
