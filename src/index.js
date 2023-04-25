@@ -32,20 +32,16 @@ let projects = [ // initialise with one project that's where our default tasks w
 ];
 
 // loop through the projects array to find something
-// eg projects[0].tasks[0].id returns the id of the first task in the first project in the projects array
 // projects[0] returns the first project in the projects array
 // projects[0].tasks returns the array of tasks in the first project in the projects array
-// projects.[0].tasks[0] returns the first task in the 
+// projects[0].tasks[0] returns the first task in the array of tasks in the first project in the projects array
+// projects[0].tasks[0].id returns the id of the first task in the first project in the projects array
 
 
 // every time the tasks - now projects - array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
+// UPDATE this needs to depend on which project is currently being displayed
 
-// ## DEBUGGING FUNCTION ##
-function showState() {
-    console.log('calling showState()...');
-    console.table('tasks', tasks);
-    return console.table('localStorage tasks', JSON.parse(localStorage.getItem('tasks')));
-}
+
 
 // handle ADD TASK form submit
 function handleAddTaskSubmit(event) {
