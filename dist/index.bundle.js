@@ -22127,11 +22127,6 @@ function checkDueDate(date) {
 
 const taskList = document.querySelector('#task-list');
 
-function projectHeader(project) {
-    let header = document.querySelector('#projectHeader');
-    return header.textContent = project.title;
-}
-
 function createLiElement(task) {
     // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
@@ -22223,6 +22218,11 @@ function noTasks() {
     return taskList.appendChild(div);
 }
 
+function projectHeader(project) {
+    let header = document.querySelector('#projectHeader');
+    return header.textContent = project.title;
+}
+
 
 
 /***/ })
@@ -22297,7 +22297,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
  
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
@@ -22306,18 +22305,18 @@ const list = document.querySelector('#task-list');
 let tasks = []; // we wont need this anymore as we'll use daily tasks array in projects array
 
 // create a dummy task as an example
-let testTaskClass = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Task("Vacuum","upstairs and downstairs","2023-04-25","Low","Daily Tasks");
+let testTaskClass = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Task("Vacuum","upstairs and downstairs","2023-04-25","Low","general");
 
 let projects = [ // initialise with one project that's where our default tasks will go
     {
-        title: "Daily Tasks",
-        description: "Daily tasks",
+        title: "General tasks",
+        description: "Life admin etc.",
         // could create a keyword using a camelCase function? eg "Daily Tasks" becomes "dailyTasks"
         tasks: [testTaskClass],
     },
 ];
 
-// loop through the projects array to find something
+// ## loop through the projects array to find something 
 // projects[0] returns the first project in the projects array
 // projects[0].tasks returns the array of tasks in the first project in the projects array
 // projects[0].tasks[0] returns the first task in the array of tasks in the first project in the projects array
@@ -22331,12 +22330,9 @@ let projects = [ // initialise with one project that's where our default tasks w
 
 // handle ADD TASK form submit
 function handleAddTaskSubmit(event) {
-    console.log('calling handleAddTaskSubmit()..');
-    console.log(event);
     event.preventDefault(); 
 
-    // create the task in an object
-    // pass args to new Task from create module
+    // create a new task from the Task class in create.js module
     const task = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Task(
         event.currentTarget.title.value,
         event.currentTarget.tasknotes.value,
@@ -22344,17 +22340,6 @@ function handleAddTaskSubmit(event) {
         event.currentTarget.priority.value,
         event.currentTarget.project.value
         );
-
-    // const task = {
-    //     title: event.currentTarget.title.value,
-    //     taskNotes: event.currentTarget.tasknotes.value,
-    //     dueDate: event.currentTarget.dueDate.value,
-    //     priority: event.currentTarget.priority.value,
-    //     id: Date.now(),
-    //     completed: false,
-    //     category: "",
-    //     project: "", // this will be assigned in the form select element, not input as text by the user
-    // };
 
     // we need to do some handling here based on the selected project
 
@@ -22428,11 +22413,12 @@ function displayTasks() {
 function mirrorToLocalStorage() {
     // tasks should be stored in separate category arrays 
     console.log('calling mirrorToLocalStorage()...');
-    // sort the tasks before storing them
+    // sort the tasks
     let sortedTasks = sortTasks(tasks);
+    // ... THEN store them in localStorage under a key called 'tasks'...
     localStorage.setItem('tasks', JSON.stringify(sortedTasks));
     console.log('tasks array mirrored to local storage');
-    
+    // returning the list of SORTED tasks
     return console.log(sortedTasks);
     };
 
@@ -22468,8 +22454,6 @@ function deleteTask(id) {
         console.log('clearing tasks array');
         tasks = [];
         list.dispatchEvent(new CustomEvent('tasksUpdated'));
-        console.log('deleteTask() calls showState()');
-        showState();
         // there was a task, but we deleted it so now there are no tasks!
     } else {
         console.log('filtering tasks array');
