@@ -127,7 +127,7 @@ nav {
     // task view should be in 1 column
 
     // test to make sure this media query is accessed
-    #current-view-title {
+    #projectHeader {
         color: palevioletred;
     }
 
@@ -143,7 +143,7 @@ nav {
 @media screen and (min-width: 841px) {
 
     // test to make sure this media query is accessed
-    #current-view-title {
+    #projectHeader {
         color: $primary;
     }
 
@@ -154,7 +154,7 @@ nav {
     // nav should be a burger menu
 
     // test to make sure this media query is accessed
-    #current-view-title {
+    #projectHeader {
         color: #0d6efd;
     }
 
