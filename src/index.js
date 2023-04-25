@@ -1,10 +1,8 @@
 // import the modules first
 import { createLiElement, projectHeader } from './dom.js';
 import { noTasks } from './dom.js';
-import { create } from './create.js';
+import { Task } from './create.js';
 import './input.scss';
-
-create();
  
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
@@ -23,11 +21,14 @@ let defaultTask = {
     project: "Daily tasks",
 };
 
+let testTaskClass = new Task("Vacuum","upstairs and downstairs","2023-04-25","Low","Daily Tasks");
+
 let projects = [ // initialise with one project that's where our default tasks will go
     {
         title: "Daily Tasks",
         description: "Daily tasks",
-        tasks: [defaultTask],
+        // could create a keyword using a camelCase function? eg "Daily Tasks" becomes "dailyTasks"
+        tasks: [defaultTask,testTaskClass],
     },
 ];
 
@@ -50,21 +51,30 @@ function handleAddTaskSubmit(event) {
     event.preventDefault(); 
 
     // create the task in an object
-    // change this to take in properties from a local storage item and pass them as args to a CONSTRUCTOR function
-    const task = {
-        title: event.currentTarget.title.value,
-        taskNotes: event.currentTarget.tasknotes.value,
-        dueDate: event.currentTarget.dueDate.value,
-        priority: event.currentTarget.priority.value,
-        id: Date.now(),
-        completed: false,
-        category: "",
-        project: "", // this will be assigned in the form select element, not input as text by the user
-    };
+    // pass args to new Task
+    const task = new Task(
+        event.currentTarget.title.value,
+        event.currentTarget.tasknotes.value,
+        event.currentTarget.dueDate.value,
+        event.currentTarget.priority.value,
+        event.currentTarget.project.value
+        );
+
+    // const task = {
+    //     title: event.currentTarget.title.value,
+    //     taskNotes: event.currentTarget.tasknotes.value,
+    //     dueDate: event.currentTarget.dueDate.value,
+    //     priority: event.currentTarget.priority.value,
+    //     id: Date.now(),
+    //     completed: false,
+    //     category: "",
+    //     project: "", // this will be assigned in the form select element, not input as text by the user
+    // };
 
     // we need to do some handling here based on the selected project
 
     console.log('task created: ', task);
+    console.log('task from class: ',taskFromClass);
     // add the new object to the specified projects array
     tasks.push(task); 
     // log the state of the tasks array
@@ -107,7 +117,6 @@ function handleAddProjectSubmit(event) {
 
 function displayTasks() {
     console.log('calling displayTasks()...');
-    showState();
     // first lets change the header
     // projectHeader(projectTitle) - arg should be the currently viewed project title - how to access this?
 
@@ -144,8 +153,8 @@ function mirrorToLocalStorage() {
     let sortedTasks = sortTasks(tasks);
     localStorage.setItem('tasks', JSON.stringify(sortedTasks));
     console.log('tasks array mirrored to local storage');
-    console.log(sortedTasks);
-    return showState();
+    
+    return console.log(sortedTasks);
     };
 
 function mirrorProjectsToLocalStorage() {

@@ -22008,11 +22008,31 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "create": () => (/* binding */ create)
+/* harmony export */   "Project": () => (/* binding */ Project),
+/* harmony export */   "Task": () => (/* binding */ Task)
 /* harmony export */ });
-function create() {
-    console.log('create things here');
-};
+class Task {
+    constructor(title,notes,dueDate,priority,project) {
+        this.title = title;
+        this.notes = notes;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.id = Date.now(); // unique identifier
+        this.completed = false; // by default
+        this.project = project;
+    }
+    //methods - toggle completed, set dueDate string value
+
+}
+
+class Project {
+    constructor(title,description) {
+        this.title = title;
+        this.description = description;
+        this.projects = []; // ready to store stuff!
+    }
+    // methods 
+}
 
 
 
@@ -22278,13 +22298,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-(0,_create_js__WEBPACK_IMPORTED_MODULE_1__.create)();
  
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
-let tasks = []; // we wont need this anymore
+
+let tasks = []; // we wont need this anymore as we'll use daily tasks array in projects array
 
 // create a dummy task as an example
 let defaultTask = {
@@ -22297,24 +22316,28 @@ let defaultTask = {
     project: "Daily tasks",
 };
 
+let testTaskClass = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Task("Vacuum","upstairs and downstairs","2023-04-25","Low","Daily Tasks");
+
 let projects = [ // initialise with one project that's where our default tasks will go
     {
         title: "Daily Tasks",
         description: "Daily tasks",
-        tasks: [defaultTask],
+        // could create a keyword using a camelCase function? eg "Daily Tasks" becomes "dailyTasks"
+        tasks: [defaultTask,testTaskClass],
     },
 ];
 
+// loop through the projects array to find something
+// projects[0] returns the first project in the projects array
+// projects[0].tasks returns the array of tasks in the first project in the projects array
+// projects[0].tasks[0] returns the first task in the array of tasks in the first project in the projects array
+// projects[0].tasks[0].id returns the id of the first task in the first project in the projects array
 
 
 // every time the tasks - now projects - array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
+// UPDATE this needs to depend on which project is currently being displayed
 
-// ## DEBUGGING FUNCTION ##
-function showState() {
-    console.log('calling showState()...');
-    console.table('tasks', tasks);
-    return console.table('localStorage tasks', JSON.parse(localStorage.getItem('tasks')));
-}
+
 
 // handle ADD TASK form submit
 function handleAddTaskSubmit(event) {
@@ -22323,21 +22346,30 @@ function handleAddTaskSubmit(event) {
     event.preventDefault(); 
 
     // create the task in an object
-    // change this to take in properties from a local storage item and pass them as args to a CONSTRUCTOR function
-    const task = {
-        title: event.currentTarget.title.value,
-        taskNotes: event.currentTarget.tasknotes.value,
-        dueDate: event.currentTarget.dueDate.value,
-        priority: event.currentTarget.priority.value,
-        id: Date.now(),
-        completed: false,
-        category: "",
-        project: "", // this will be assigned in the form select element, not input as text by the user
-    };
+    // pass args to new Task
+    const task = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Task(
+        event.currentTarget.title.value,
+        event.currentTarget.tasknotes.value,
+        event.currentTarget.dueDate.value,
+        event.currentTarget.priority.value,
+        event.currentTarget.project.value
+        );
+
+    // const task = {
+    //     title: event.currentTarget.title.value,
+    //     taskNotes: event.currentTarget.tasknotes.value,
+    //     dueDate: event.currentTarget.dueDate.value,
+    //     priority: event.currentTarget.priority.value,
+    //     id: Date.now(),
+    //     completed: false,
+    //     category: "",
+    //     project: "", // this will be assigned in the form select element, not input as text by the user
+    // };
 
     // we need to do some handling here based on the selected project
 
     console.log('task created: ', task);
+    console.log('task from class: ',taskFromClass);
     // add the new object to the specified projects array
     tasks.push(task); 
     // log the state of the tasks array
@@ -22380,7 +22412,6 @@ function handleAddProjectSubmit(event) {
 
 function displayTasks() {
     console.log('calling displayTasks()...');
-    showState();
     // first lets change the header
     // projectHeader(projectTitle) - arg should be the currently viewed project title - how to access this?
 
@@ -22417,8 +22448,8 @@ function mirrorToLocalStorage() {
     let sortedTasks = sortTasks(tasks);
     localStorage.setItem('tasks', JSON.stringify(sortedTasks));
     console.log('tasks array mirrored to local storage');
-    console.log(sortedTasks);
-    return showState();
+    
+    return console.log(sortedTasks);
     };
 
 function mirrorProjectsToLocalStorage() {
