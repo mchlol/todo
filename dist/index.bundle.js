@@ -22306,16 +22306,6 @@ const list = document.querySelector('#task-list');
 let tasks = []; // we wont need this anymore as we'll use daily tasks array in projects array
 
 // create a dummy task as an example
-let defaultTask = {
-    title: "Wash dishes",
-    taskNotes: "Empty dishwasher",
-    dueDate: "2023-04-16",
-    priority: "Medium",
-    id: 1681602708492,
-    completed: false,
-    project: "Daily tasks",
-};
-
 let testTaskClass = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Task("Vacuum","upstairs and downstairs","2023-04-25","Low","Daily Tasks");
 
 let projects = [ // initialise with one project that's where our default tasks will go
@@ -22323,7 +22313,7 @@ let projects = [ // initialise with one project that's where our default tasks w
         title: "Daily Tasks",
         description: "Daily tasks",
         // could create a keyword using a camelCase function? eg "Daily Tasks" becomes "dailyTasks"
-        tasks: [defaultTask,testTaskClass],
+        tasks: [testTaskClass],
     },
 ];
 
@@ -22399,16 +22389,7 @@ function handleAddProjectSubmit(event) {
     projectOption.value = project.title;
     projectOption.textContent = project.title;
     addTaskFormSelect.appendChild(projectOption);
-    // does option.value need to be camelCase?
-    // test it out
-    let testProjectOption = document.createElement('option');
-    testProjectOption.value = "Test value";
-    testProjectOption.textContent = "Test textContent";
-    addTaskFormSelect.appendChild(testProjectOption);
 
-    /* 
-    <option value="projectTitle">textContent = projectTitle</option>
-    */
     return console.log(projects);
 }
 
