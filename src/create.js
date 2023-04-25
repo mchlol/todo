@@ -8,7 +8,11 @@ class Task {
         this.completed = false; // by default
         this.project = project;
     }
-    //methods - toggle completed, set dueDate string value
+    // add methods - toggle completed, set dueDate string value
+    
+    // we need to add methods AFTER calling the data from localStorage 
+    // maybe we should be storing the data in localStorage first i.e. mirror FROM instead of TO
+    // add task -> data to localstorage -> mirror to app - > call display 
 
 }
 

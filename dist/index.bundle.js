@@ -22021,7 +22021,11 @@ class Task {
         this.completed = false; // by default
         this.project = project;
     }
-    //methods - toggle completed, set dueDate string value
+    // add methods - toggle completed, set dueDate string value
+    
+    // we need to add methods AFTER calling the data from localStorage 
+    // maybe we should be storing the data in localStorage first i.e. mirror FROM instead of TO
+    // add task -> data to localstorage -> mirror to app - > call display 
 
 }
 
@@ -22326,6 +22330,7 @@ let projects = [ // initialise with one project that's where our default tasks w
 // every time the tasks - now projects - array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
 // UPDATE this needs to depend on which project is currently being displayed
 
+// change header on page to match the active project
 
 
 // handle ADD TASK form submit
@@ -22366,7 +22371,8 @@ function handleAddProjectSubmit(event) {
     projects.push(project);
     event.target.reset();
 
-    // target the select element in the add task form 
+    // ## ADD THE PROJECT TITLE TO THE ADD TASK FORM so future tasks can be added to it
+    // target the select element 
     let addTaskFormSelect = document.querySelector('#projectSelect');
     console.log(addTaskFormSelect);
     // and put our project titles in the option elements.
@@ -22403,6 +22409,8 @@ function displayTasks() {
         list.innerHTML = '';
         // loop over each item in the tasks array and call the dom module to create a list item element
         console.log('populating html from local storage tasks array');
+        // change this to pull data from active project tasks array
+        // what is the active project?
         const html = JSON.parse(localStorage.getItem('tasks')).forEach(
         task => (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.createLiElement)(task)
         );
