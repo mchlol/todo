@@ -9,7 +9,8 @@ create();
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
-let tasks = []; // we wont need this anymore
+
+let tasks = []; // we wont need this anymore as we'll use daily tasks array in projects array
 
 // create a dummy task as an example
 let defaultTask = {
@@ -30,6 +31,11 @@ let projects = [ // initialise with one project that's where our default tasks w
     },
 ];
 
+// loop through the projects array to find something
+// eg projects[0].tasks[0].id returns the id of the first task in the first project in the projects array
+// projects[0] returns the first project in the projects array
+// projects[0].tasks returns the array of tasks in the first project in the projects array
+// projects.[0].tasks[0] returns the first task in the 
 
 
 // every time the tasks - now projects - array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
