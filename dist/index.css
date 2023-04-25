@@ -110,7 +110,7 @@ nav {
 }
 
 @media screen and (max-width: 840px) {
-  #current-view-title {
+  #projectHeader {
     color: palevioletred;
   }
   .rad-grad-left,
@@ -120,12 +120,12 @@ nav {
   }
 }
 @media screen and (min-width: 841px) {
-  #current-view-title {
+  #projectHeader {
     color: goldenrod;
   }
 }
 @media screen and (max-width: 400px) {
-  #current-view-title {
+  #projectHeader {
     color: #0d6efd;
   }
 }

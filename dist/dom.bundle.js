@@ -22052,6 +22052,7 @@ var __webpack_exports__ = {};
   \********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "checkActiveProject": () => (/* binding */ checkActiveProject),
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
 /* harmony export */   "noTasks": () => (/* binding */ noTasks),
 /* harmony export */   "projectHeader": () => (/* binding */ projectHeader)
@@ -22227,6 +22228,11 @@ function noTasks() {
 function projectHeader(project) {
     let header = document.querySelector('#projectHeader');
     return header.textContent = project.title;
+}
+
+function checkActiveProject() {
+    let header = document.querySelector('#projectHeader');
+    return header.textContent;
 }
 
 
