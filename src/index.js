@@ -4,6 +4,19 @@ import { Task } from './create.js';
 import './input.scss';
 
 checkActiveProject();
+
+// write a function to return a project with a specific title
+
+const getTasks = function(title) {
+    // retrieve the projects key from local storage
+    let getProjects = JSON.parse(localStorage.getItem('projects'));
+    // get the index of the project matching the title
+    const match = getProjects.find(item => item.title = title);
+    return match;
+};
+
+console.log(getTasks('General tasks'));
+
  
 const form = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
@@ -87,8 +100,9 @@ function handleAddProjectSubmit(event) {
     return console.log(projects);
 }
 
-// display tasks when the page is loaded OR the user selects a project from the drop up menu in the nav bar
+// display tasks when the page is loaded, or the user selects a project from the drop up menu in the nav bar
 function displayTasks() {
+    console.log('calling displayTasks')
 
     // if there are no tasks...
     if (tasks.length === 0) {
@@ -114,6 +128,7 @@ function displayTasks() {
         );
         return html;
     }
+    
 }
 
 function mirrorToLocalStorage() {
