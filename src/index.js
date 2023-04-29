@@ -1,13 +1,13 @@
 // import the modules first
 import { createLiElement, noTasks, projectHeader, checkActiveProject } from './dom.js';
-import { Task } from './create.js';
+import { Task, Project } from './create.js';
 import './input.scss';
 
 checkActiveProject();
 
 // write a function to find a project object in local storage and return that project's tasks array
 
-const getTasks = function(title) { // parameter is the project title
+const getProjectTasks = function(title) { // parameter is the project title
     // retrieve the projects key from local storage
     let getProjects = JSON.parse(localStorage.getItem('projects'));
     // log the list of projects
@@ -19,11 +19,23 @@ const getTasks = function(title) { // parameter is the project title
 };
 
 // get the project by its title and look at its tasks array
-console.table(getTasks('General tasks'));
+console.table(getProjectTasks('General tasks'));
+
+// add a method to a project
+
+let testProjectInherit = getProjectTasks('General tasks');
+console.log(typeof testProjectInherit);
+testProjectInherit.talk = function() {
+    alert('hello');
+};
+// testProjectInherit.talk();
+
+
 
  
 const addTaskForm = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
+const addProjectForm = document.querySelector('#addProjectForm');
 const list = document.querySelector('#task-list');
 
 let tasks = []; // we wont need this anymore as we'll use daily tasks array in projects array
@@ -71,6 +83,10 @@ function handleAddTaskSubmit(event) {
     console.log('task created: ', task);
     // add the task to the tasks array
     tasks.push(task);
+    // get the project to add the task to
+    let taskProject = task.project;
+    console.log('task added to ' + taskProject);
+
     // add the new object to the specified projects array too
     projects[0].tasks.push(task); 
     // clear the form inputs
@@ -80,18 +96,25 @@ function handleAddTaskSubmit(event) {
 }
 
 // handle ADD PROJECT form submit
+
+// when we add a project, the project object is created 
+// the project object is added to local storage under the projects key
+// the project title is added to the add task form select options
+// the project title is added to the navbar drop up menu
+
 function handleAddProjectSubmit(event) {
     event.preventDefault();
-    // create the project as an object which will have an empty array  
-    const project = {
-        title: event.currentTarget.projectTitle.value,
-        description: event.currentTarget.projectDescription.value,
-        tasks: [],
-    };
+    // create the project from the Project class
+    const project = new Project(
+        event.currentTarget.projectTitle.value,
+        event.currentTarget.projectDescription.value,
+    );
+
     projects.push(project);
     event.target.reset();
 
     // ## ADD THE PROJECT TITLE TO THE ADD TASK FORM so future tasks can be added to it
+    // this is a DOM action so should be part of that module
     // target the select element 
     let addTaskFormSelect = document.querySelector('#projectSelect');
     console.log(addTaskFormSelect);
@@ -100,6 +123,9 @@ function handleAddProjectSubmit(event) {
     projectOption.value = project.title;
     projectOption.textContent = project.title;
     addTaskFormSelect.appendChild(projectOption);
+
+    //## ADD THE PROJECT TITLE TO THE NAV BAR DROP UP MENU
+    // this is a DOM action so should be part of that module
 
     return console.log(projects);
 }

@@ -22060,7 +22060,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var date_fns_isAfter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns/isAfter */ "./node_modules/date-fns/esm/isAfter/index.js");
 /* harmony import */ var date_fns_isBefore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns/isBefore */ "./node_modules/date-fns/esm/isBefore/index.js");
 // installed date-fns with npm
-// assing formatting function to a variable 
+// assign formatting function to a variable 
 const {format} = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
 
 // import all the functions required for check due date
@@ -22219,7 +22219,7 @@ function createLiElement(task) {
 
 function noTasks() {
     let div = document.createElement('div');
-    div.textContent = `No tasks yet! Add a new task, create a project, or go play video games 😄`;
+    div.textContent = `No tasks yet! Add a new task, or create a project.`;
     return taskList.appendChild(div);
 }
 
@@ -22231,7 +22231,7 @@ function projectHeader(project) {
 function checkActiveProject() {
     let header = document.querySelector('#projectHeader');
     let headerContent = header.textContent;
-    console.log(headerContent);
+    console.info(headerContent);
     return headerContent;
 }
 
@@ -22314,7 +22314,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // write a function to find a project object in local storage and return that project's tasks array
 
-const getTasks = function(title) { // parameter is the project title
+const getProjectTasks = function(title) { // parameter is the project title
     // retrieve the projects key from local storage
     let getProjects = JSON.parse(localStorage.getItem('projects'));
     // log the list of projects
@@ -22326,11 +22326,23 @@ const getTasks = function(title) { // parameter is the project title
 };
 
 // get the project by its title and look at its tasks array
-console.table(getTasks('General tasks'));
+console.table(getProjectTasks('General tasks'));
+
+// add a method to a project
+
+let testProjectInherit = getProjectTasks('General tasks');
+console.log(typeof testProjectInherit);
+testProjectInherit.talk = function() {
+    alert('hello');
+};
+// testProjectInherit.talk();
+
+
 
  
 const addTaskForm = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
+const addProjectForm = document.querySelector('#addProjectForm');
 const list = document.querySelector('#task-list');
 
 let tasks = []; // we wont need this anymore as we'll use daily tasks array in projects array
@@ -22378,6 +22390,10 @@ function handleAddTaskSubmit(event) {
     console.log('task created: ', task);
     // add the task to the tasks array
     tasks.push(task);
+    // get the project to add the task to
+    let taskProject = task.project;
+    console.log('task added to ' + taskProject);
+
     // add the new object to the specified projects array too
     projects[0].tasks.push(task); 
     // clear the form inputs
@@ -22387,18 +22403,25 @@ function handleAddTaskSubmit(event) {
 }
 
 // handle ADD PROJECT form submit
+
+// when we add a project, the project object is created 
+// the project object is added to local storage under the projects key
+// the project title is added to the add task form select options
+// the project title is added to the navbar drop up menu
+
 function handleAddProjectSubmit(event) {
     event.preventDefault();
-    // create the project as an object which will have an empty array  
-    const project = {
-        title: event.currentTarget.projectTitle.value,
-        description: event.currentTarget.projectDescription.value,
-        tasks: [],
-    };
+    // create the project from the Project class
+    const project = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Project(
+        event.currentTarget.projectTitle.value,
+        event.currentTarget.projectDescription.value,
+    );
+
     projects.push(project);
     event.target.reset();
 
     // ## ADD THE PROJECT TITLE TO THE ADD TASK FORM so future tasks can be added to it
+    // this is a DOM action so should be part of that module
     // target the select element 
     let addTaskFormSelect = document.querySelector('#projectSelect');
     console.log(addTaskFormSelect);
