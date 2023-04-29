@@ -1,5 +1,5 @@
 // installed date-fns with npm
-// assing formatting function to a variable 
+// assign formatting function to a variable 
 const {format} = require('date-fns');
 
 // import all the functions required for check due date
@@ -158,7 +158,7 @@ function createLiElement(task) {
 
 function noTasks() {
     let div = document.createElement('div');
-    div.textContent = `No tasks yet! Add a new task, create a project, or go play video games 😄`;
+    div.textContent = `No tasks yet! Add a new task, or create a project.`;
     return taskList.appendChild(div);
 }
 
@@ -170,7 +170,7 @@ function projectHeader(project) {
 function checkActiveProject() {
     let header = document.querySelector('#projectHeader');
     let headerContent = header.textContent;
-    console.log(headerContent);
+    console.info(headerContent);
     return headerContent;
 }
 
