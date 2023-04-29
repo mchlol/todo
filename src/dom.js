@@ -162,21 +162,45 @@ function noTasks() {
     return taskList.appendChild(div);
 }
 
+// changes the page header based on the project passed in
 function projectHeader(project) {
     let header = document.querySelector('#projectHeader');
     return header.textContent = project.title;
 }
 
+// returns the title currently displayed in the page header
 function checkActiveProject() {
     let header = document.querySelector('#projectHeader');
     let headerContent = header.textContent;
-    console.info(headerContent);
+    console.log(headerContent);
     return headerContent;
 }
+
+function projectTitles() {
+    // get the select element from the add task form
+    const addTaskForm = document.querySelector('#add-task-form');
+    let addTaskFormSelect = addTaskForm.querySelector('#projectSelect');
+    let projectMenu = document.querySelector('#projectMenu');
+    // get the array of projects from local storage
+    let projects = JSON.parse(localStorage.getItem('projects'));
+
+    // for each project; create an options element, add its title to the add task form select
+    projects.forEach(project => {
+        let projectOption = document.createElement('option');
+        projectOption.value = project.title;
+        projectOption.textContent = project.title;
+        addTaskFormSelect.appendChild(projectOption);
+        let projectListItem = document.createElement('li');
+        projectListItem.textContent = project.title;
+        projectListItem.classList.add('dropdown-item');
+        projectMenu.appendChild(projectListItem);
+    })
+ };
 
 export {
     createLiElement,
     noTasks,
     projectHeader,
     checkActiveProject,
+    projectTitles,
 };

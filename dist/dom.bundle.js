@@ -22055,7 +22055,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "checkActiveProject": () => (/* binding */ checkActiveProject),
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
 /* harmony export */   "noTasks": () => (/* binding */ noTasks),
-/* harmony export */   "projectHeader": () => (/* binding */ projectHeader)
+/* harmony export */   "projectHeader": () => (/* binding */ projectHeader),
+/* harmony export */   "projectTitles": () => (/* binding */ projectTitles)
 /* harmony export */ });
 /* harmony import */ var date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/isValid */ "./node_modules/date-fns/esm/isValid/index.js");
 /* harmony import */ var date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/isEqual */ "./node_modules/date-fns/esm/isEqual/index.js");
@@ -22225,17 +22226,40 @@ function noTasks() {
     return taskList.appendChild(div);
 }
 
+// changes the page header based on the project passed in
 function projectHeader(project) {
     let header = document.querySelector('#projectHeader');
     return header.textContent = project.title;
 }
 
+// returns the title currently displayed in the page header
 function checkActiveProject() {
     let header = document.querySelector('#projectHeader');
     let headerContent = header.textContent;
-    console.info(headerContent);
+    console.log(headerContent);
     return headerContent;
 }
+
+function projectTitles() {
+    // get the select element from the add task form
+    const addTaskForm = document.querySelector('#add-task-form');
+    let addTaskFormSelect = addTaskForm.querySelector('#projectSelect');
+    let projectMenu = document.querySelector('#projectMenu');
+    // get the array of projects from local storage
+    let projects = JSON.parse(localStorage.getItem('projects'));
+
+    // for each project; create an options element, add its title to the add task form select
+    projects.forEach(project => {
+        let projectOption = document.createElement('option');
+        projectOption.value = project.title;
+        projectOption.textContent = project.title;
+        addTaskFormSelect.appendChild(projectOption);
+        let projectListItem = document.createElement('li');
+        projectListItem.textContent = project.title;
+        projectListItem.classList.add('dropdown-item');
+        projectMenu.appendChild(projectListItem);
+    })
+ };
 
 
 })();

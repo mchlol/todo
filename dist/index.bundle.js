@@ -22053,7 +22053,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "checkActiveProject": () => (/* binding */ checkActiveProject),
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
 /* harmony export */   "noTasks": () => (/* binding */ noTasks),
-/* harmony export */   "projectHeader": () => (/* binding */ projectHeader)
+/* harmony export */   "projectHeader": () => (/* binding */ projectHeader),
+/* harmony export */   "projectTitles": () => (/* binding */ projectTitles)
 /* harmony export */ });
 /* harmony import */ var date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/isValid */ "./node_modules/date-fns/esm/isValid/index.js");
 /* harmony import */ var date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/isEqual */ "./node_modules/date-fns/esm/isEqual/index.js");
@@ -22223,17 +22224,40 @@ function noTasks() {
     return taskList.appendChild(div);
 }
 
+// changes the page header based on the project passed in
 function projectHeader(project) {
     let header = document.querySelector('#projectHeader');
     return header.textContent = project.title;
 }
 
+// returns the title currently displayed in the page header
 function checkActiveProject() {
     let header = document.querySelector('#projectHeader');
     let headerContent = header.textContent;
-    console.info(headerContent);
+    console.log(headerContent);
     return headerContent;
 }
+
+function projectTitles() {
+    // get the select element from the add task form
+    const addTaskForm = document.querySelector('#add-task-form');
+    let addTaskFormSelect = addTaskForm.querySelector('#projectSelect');
+    let projectMenu = document.querySelector('#projectMenu');
+    // get the array of projects from local storage
+    let projects = JSON.parse(localStorage.getItem('projects'));
+
+    // for each project; create an options element, add its title to the add task form select
+    projects.forEach(project => {
+        let projectOption = document.createElement('option');
+        projectOption.value = project.title;
+        projectOption.textContent = project.title;
+        addTaskFormSelect.appendChild(projectOption);
+        let projectListItem = document.createElement('li');
+        projectListItem.textContent = project.title;
+        projectListItem.classList.add('dropdown-item');
+        projectMenu.appendChild(projectListItem);
+    })
+ };
 
 
 
@@ -22305,39 +22329,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
 /* harmony import */ var _create_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create.js */ "./src/create.js");
 /* harmony import */ var _input_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./input.scss */ "./src/input.scss");
-// import the modules first
+// import dom functions
+
+// import classes
 
 
 
-
+// logs the title from the page header to the console
 (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.checkActiveProject)();
 
-// write a function to find a project object in local storage and return that project's tasks array
+// get the project by its title
+const getProject = function(title) {
+    let array = JSON.parse(localStorage.getItem('projects'));
+    const match = array.find(project => project.title === title);
+    return match;
+}
 
-const getProjectTasks = function(title) { // parameter is the project title
-    // retrieve the projects key from local storage
-    let getProjects = JSON.parse(localStorage.getItem('projects'));
-    // log the list of projects
-    console.table(getProjects);
-    // get the index of the project matching the title
-    const match = getProjects.find(project => project.title === title);
-    // return the tasks array for that project
-    return match.tasks;
-};
+console.table(getProject('General tasks'));
 
 // get the project by its title and look at its tasks array
-console.table(getProjectTasks('General tasks'));
+console.table(getProject('General tasks').tasks);
 
 // add a method to a project
 
-let testProjectInherit = getProjectTasks('General tasks');
+let testProjectInherit = getProject('General tasks');
 console.log(typeof testProjectInherit);
 testProjectInherit.talk = function() {
     alert('hello');
 };
 // testProjectInherit.talk();
-
-
 
  
 const addTaskForm = document.querySelector('#add-task-form');
@@ -22358,6 +22378,11 @@ let projects = [ // initialise with one project that's where our default tasks w
         tasks: [testTaskClass],
     },
 ];
+
+// ### DOM STUFF - put in module
+// loop through the project titles and put them in the add task form select element as options, and in the drop up menu list of tasks
+
+(0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.projectTitles)();
 
 // ## loop through the projects array to find something 
 // projects[0] returns the first project in the projects array
@@ -22420,17 +22445,6 @@ function handleAddProjectSubmit(event) {
     projects.push(project);
     event.target.reset();
 
-    // ## ADD THE PROJECT TITLE TO THE ADD TASK FORM so future tasks can be added to it
-    // this is a DOM action so should be part of that module
-    // target the select element 
-    let addTaskFormSelect = document.querySelector('#projectSelect');
-    console.log(addTaskFormSelect);
-    // and put our project titles in the option elements.
-    let projectOption = document.createElement('option');
-    projectOption.value = project.title;
-    projectOption.textContent = project.title;
-    addTaskFormSelect.appendChild(projectOption);
-
     return console.log(projects);
 }
 
@@ -22477,7 +22491,10 @@ function mirrorToLocalStorage() {
     };
 
 function mirrorProjectsToLocalStorage() {
+    // access the projects key in local storage and set it to the contents of the projects array
     localStorage.setItem('projects', JSON.stringify(projects));
+    // call the custom event that state is updated
+    list.dispatchEvent(new CustomEvent('tasks updated'));
     return console.log('project added to storage');
 };
 
@@ -22559,7 +22576,7 @@ function editTask(id) {
     let task = tasks[taskIndex]; // now we have reference to the task object
     console.log(task);
 
-    // target all the edit form inputs and set their values
+    // target all the edit form inputs and set their values based on the task being edited
     const titleEdit = document.querySelector('#titleEdit');
     console.log(titleEdit);
     titleEdit.value = task.title;
@@ -22651,19 +22668,14 @@ function handleClick(event) {
 
 // when the form is submitted (a task is added), run the handleAddTaskSubmit function
 addTaskForm.addEventListener('submit', handleAddTaskSubmit);
-
 editForm.addEventListener('submit', handleEditSubmit);
-
 addProjectForm.addEventListener('submit', handleAddProjectSubmit);
 
 // when the tasksUpdated custom event fires:
 // copy tasks to local storage
 list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 list.addEventListener('tasksUpdated', mirrorProjectsToLocalStorage);
-// display tasks
 list.addEventListener('tasksUpdated', displayTasks);
-// OR use an anonymous function to pass an argument 
-// list.addEventListener('tasksUpdated', () => { mirrorToLocalStorage(tasks) });
 
 // when a checkbox or edit/delete icon is clicked:
 list.addEventListener('click', handleClick);
@@ -22671,6 +22683,7 @@ list.addEventListener('click', handleClick);
 // ## FINAL FUNCTION CALL 
 
 restoreFromLocalStorage(tasks);
+
 
 // could be a module
 function sortTasks(array) {
