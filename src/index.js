@@ -5,20 +5,24 @@ import './input.scss';
 
 checkActiveProject();
 
-// write a function to return a project with a specific title
+// write a function to find a project object in local storage and return that project's tasks array
 
-const getTasks = function(title) {
+const getTasks = function(title) { // parameter is the project title
     // retrieve the projects key from local storage
     let getProjects = JSON.parse(localStorage.getItem('projects'));
+    // log the list of projects
+    console.table(getProjects);
     // get the index of the project matching the title
-    const match = getProjects.find(item => item.title = title);
-    return match;
+    const match = getProjects.find(project => project.title === title);
+    // return the tasks array for that project
+    return match.tasks;
 };
 
-console.log(getTasks('General tasks'));
+// get the project by its title and look at its tasks array
+console.table(getTasks('General tasks'));
 
  
-const form = document.querySelector('#add-task-form');
+const addTaskForm = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const list = document.querySelector('#task-list');
 
@@ -316,7 +320,7 @@ function handleClick(event) {
 // ## EVENT LISTENERS ##
 
 // when the form is submitted (a task is added), run the handleAddTaskSubmit function
-form.addEventListener('submit', handleAddTaskSubmit);
+addTaskForm.addEventListener('submit', handleAddTaskSubmit);
 
 editForm.addEventListener('submit', handleEditSubmit);
 
