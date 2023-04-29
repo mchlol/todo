@@ -22062,7 +22062,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var date_fns_isAfter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns/isAfter */ "./node_modules/date-fns/esm/isAfter/index.js");
 /* harmony import */ var date_fns_isBefore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns/isBefore */ "./node_modules/date-fns/esm/isBefore/index.js");
 // installed date-fns with npm
-// assing formatting function to a variable 
+// assign formatting function to a variable 
 const {format} = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
 
 // import all the functions required for check due date
@@ -22221,7 +22221,7 @@ function createLiElement(task) {
 
 function noTasks() {
     let div = document.createElement('div');
-    div.textContent = `No tasks yet! Add a new task, create a project, or go play video games 😄`;
+    div.textContent = `No tasks yet! Add a new task, or create a project.`;
     return taskList.appendChild(div);
 }
 
@@ -22233,7 +22233,7 @@ function projectHeader(project) {
 function checkActiveProject() {
     let header = document.querySelector('#projectHeader');
     let headerContent = header.textContent;
-    console.log(headerContent);
+    console.info(headerContent);
     return headerContent;
 }
 
