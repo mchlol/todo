@@ -1,5 +1,5 @@
 // import dom functions
-import { createLiElement, noTasks, projectHeader, checkActiveProject, projectTitles } from './dom.js';
+import { createLiElement, noTasks, changeProjectHeader, checkActiveProject, projectTitles } from './dom.js';
 // import classes
 import { Task, Project } from './create.js';
 import './input.scss';
@@ -48,7 +48,6 @@ let projects = [ // initialise with one project that's where our default tasks w
     },
 ];
 
-// ### DOM STUFF - put in module
 // loop through the project titles and put them in the add task form select element as options, and in the drop up menu list of tasks
 
 projectTitles();

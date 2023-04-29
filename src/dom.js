@@ -163,7 +163,7 @@ function noTasks() {
 }
 
 // changes the page header based on the project passed in
-function projectHeader(project) {
+function changeProjectHeader(project) {
     let header = document.querySelector('#projectHeader');
     return header.textContent = project.title;
 }
