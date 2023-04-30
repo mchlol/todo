@@ -22234,7 +22234,6 @@ function changeProjectHeader(project) {
 function checkActiveProject() {
     let header = document.querySelector('#projectHeader');
     let headerContent = header.textContent;
-    console.log(headerContent);
     return headerContent;
 }
 
@@ -22351,12 +22350,8 @@ const getProjectIndex = function(title) {
     return index;
 }
 
-console.log(getProjectIndex('General tasks'));
-
 // set the active project by choosing it from the nav drop up menu
-const activeProject = getProject('General tasks');
-
-console.table(activeProject);
+const activeProject = getProject('General tasks'); // temporary
 
 // get the project by its title and look at its tasks array
 console.table(activeProject.tasks);
@@ -22381,9 +22376,6 @@ let projects = [ // initialise with one project that's where our default tasks w
     },
 ];
 
-// call the DOM function that populates the nav menu and add task form select
-(0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.projectTitles)();
-
 
 // handle ADD TASK form submit
 function handleAddTaskSubmit(event) {
@@ -22400,14 +22392,17 @@ function handleAddTaskSubmit(event) {
     // get the project to add the task to
     let taskProject = task.project;
     console.log(taskProject);
-    getProject(taskProject);
     // get the index of the project
+    let projectIndex = getProjectIndex(taskProject); 
+    console.log(projectIndex);
 
     // add the new object to the specified projects array too
     projects[projectIndex].tasks.push(task); 
-    // clear the form inputs
+    console.info(projects);
+    console.info(JSON.parse(localStorage.getItem('projects')));
+    // this works but it needs to copy to local storage..
+
     event.target.reset();
-    // dispatch a custom event which calls the display function and mirror to local storage!
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
@@ -22428,8 +22423,10 @@ function handleAddProjectSubmit(event) {
 
     projects.push(project);
     event.target.reset();
+    
+    console.table(projects);
 
-    return console.log(projects);
+    return list.dispatchEvent(new CustomEvent('tasks updated'));
 }
 
 // display tasks when the page is loaded, or the user selects a project from the drop up menu in the nav bar
@@ -22463,6 +22460,7 @@ function displayTasks() {
     
 }
 
+
 function mirrorToLocalStorage() {
     // tasks should be stored in separate category arrays 
     // sort the tasks
@@ -22475,28 +22473,25 @@ function mirrorToLocalStorage() {
     };
 
 function mirrorProjectsToLocalStorage() {
-    // access the projects key in local storage and set it to the contents of the projects array
     localStorage.setItem('projects', JSON.stringify(projects));
-    // call the custom event that state is updated
-    list.dispatchEvent(new CustomEvent('tasks updated'));
-    return console.log('project added to storage');
+    console.log('project added to storage');
+    return list.dispatchEvent(new CustomEvent('tasks updated'));
 };
 
 function restoreFromLocalStorage() {
     console.log('calling restoreFromLocalStorage...');
     // get the data from local storage
     let activeProject = (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.checkActiveProject)();
-    console.log(activeProject);
+    console.log('active project: ' + activeProject);
 
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
+    
     // check if any data was found
     if (!localStorageTasks) { 
         (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.noTasks)();
         return console.log('no tasks in localStorage yet')
     } else {
-        // copy the data found in localStorage to the tasks array - this is how we make that data 'persist' between sessions!
         tasks = localStorageTasks;
-        // from here the display tasks will run but mirror will also run again...
         return list.dispatchEvent(new CustomEvent('tasksUpdated'));
     }
 }
@@ -22663,13 +22658,22 @@ addProjectForm.addEventListener('submit', handleAddProjectSubmit);
 list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 list.addEventListener('tasksUpdated', mirrorProjectsToLocalStorage);
 list.addEventListener('tasksUpdated', displayTasks);
+list.addEventListener('tasksUpdated', addProjectsToDOM);
 
 // when a checkbox or edit/delete icon is clicked:
 list.addEventListener('click', handleClick);
 
-// ## FINAL FUNCTION CALL 
+function addProjectsToDOM() {
+    // retrieve the projects from local storage
+    let projectsFromStorage = JSON.parse(localStorage.getItem('projects'));
+    console.log(projectsFromStorage);
+    return (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.projectTitles)();
+}
 
+// ## FINAL FUNCTION CALLS
+// populate the list...
 restoreFromLocalStorage(tasks);
+
 
 
 
