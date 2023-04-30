@@ -195,12 +195,14 @@ function projectTitles() {
         projectListItem.classList.add('dropdown-item');
         projectMenu.appendChild(projectListItem);
     })
+    // should this function return something?
+    // is it bad design to have this one function do two DOM things?
  };
 
 export {
     createLiElement,
     noTasks,
-    projectHeader,
+    changeProjectHeader,
     checkActiveProject,
     projectTitles,
 };
