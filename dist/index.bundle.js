@@ -22050,10 +22050,10 @@ class Project {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "changeProjectHeader": () => (/* binding */ changeProjectHeader),
 /* harmony export */   "checkActiveProject": () => (/* binding */ checkActiveProject),
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
 /* harmony export */   "noTasks": () => (/* binding */ noTasks),
-/* harmony export */   "projectHeader": () => (/* binding */ projectHeader),
 /* harmony export */   "projectTitles": () => (/* binding */ projectTitles)
 /* harmony export */ });
 /* harmony import */ var date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/isValid */ "./node_modules/date-fns/esm/isValid/index.js");
@@ -22225,7 +22225,7 @@ function noTasks() {
 }
 
 // changes the page header based on the project passed in
-function projectHeader(project) {
+function changeProjectHeader(project) {
     let header = document.querySelector('#projectHeader');
     return header.textContent = project.title;
 }
@@ -22257,6 +22257,8 @@ function projectTitles() {
         projectListItem.classList.add('dropdown-item');
         projectMenu.appendChild(projectListItem);
     })
+    // should this function return something?
+    // is it bad design to have this one function do two DOM things?
  };
 
 
@@ -22335,9 +22337,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// logs the title from the page header to the console
-(0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.checkActiveProject)();
-
 // get the project by its title
 const getProject = function(title) {
     let array = JSON.parse(localStorage.getItem('projects'));
@@ -22345,21 +22344,24 @@ const getProject = function(title) {
     return match;
 }
 
-console.table(getProject('General tasks'));
+// get the index of a project with a specified title
+const getProjectIndex = function(title) {
+    let array = JSON.parse(localStorage.getItem('projects'));
+    const index = array.findIndex(project => project.title);
+    return index;
+}
+
+console.log(getProjectIndex('General tasks'));
+
+// set the active project by choosing it from the nav drop up menu
+const activeProject = getProject('General tasks');
+
+console.table(activeProject);
 
 // get the project by its title and look at its tasks array
-console.table(getProject('General tasks').tasks);
+console.table(activeProject.tasks);
 
-// add a method to a project
-
-let testProjectInherit = getProject('General tasks');
-console.log(typeof testProjectInherit);
-testProjectInherit.talk = function() {
-    alert('hello');
-};
-// testProjectInherit.talk();
-
- 
+// set variables for the forms and the list in the display container
 const addTaskForm = document.querySelector('#add-task-form');
 const editForm = document.querySelector('#edit-task-form');
 const addProjectForm = document.querySelector('#addProjectForm');
@@ -22379,48 +22381,30 @@ let projects = [ // initialise with one project that's where our default tasks w
     },
 ];
 
-// ### DOM STUFF - put in module
-// loop through the project titles and put them in the add task form select element as options, and in the drop up menu list of tasks
-
+// call the DOM function that populates the nav menu and add task form select
 (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.projectTitles)();
-
-// ## loop through the projects array to find something 
-// projects[0] returns the first project in the projects array
-// projects[0].tasks returns the array of tasks in the first project in the projects array
-// projects[0].tasks[0] returns the first task in the array of tasks in the first project in the projects array
-// projects[0].tasks[0].id returns the id of the first task in the first project in the projects array
-
-
-// every time the tasks - now projects - array is changed in any way, those changes are mirrored to local storage and the new tasks are displayed.
-// UPDATE this needs to depend on which project is currently being displayed
-
-// change header on page to match the active project
 
 
 // handle ADD TASK form submit
 function handleAddTaskSubmit(event) {
     event.preventDefault(); 
 
-    // create a new task from the Task class in create.js module
     const task = new _create_js__WEBPACK_IMPORTED_MODULE_1__.Task(
         event.currentTarget.title.value,
         event.currentTarget.tasknotes.value,
         event.currentTarget.dueDate.value,
         event.currentTarget.priority.value,
-        event.currentTarget.project.value
+        event.currentTarget.project.value // sets the project property
         );
 
-    // we need to do some handling here based on the selected project
-
-    console.log('task created: ', task);
-    // add the task to the tasks array
-    tasks.push(task);
     // get the project to add the task to
     let taskProject = task.project;
-    console.log('task added to ' + taskProject);
+    console.log(taskProject);
+    getProject(taskProject);
+    // get the index of the project
 
     // add the new object to the specified projects array too
-    projects[0].tasks.push(task); 
+    projects[projectIndex].tasks.push(task); 
     // clear the form inputs
     event.target.reset();
     // dispatch a custom event which calls the display function and mirror to local storage!
@@ -22501,6 +22485,9 @@ function mirrorProjectsToLocalStorage() {
 function restoreFromLocalStorage() {
     console.log('calling restoreFromLocalStorage...');
     // get the data from local storage
+    let activeProject = (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.checkActiveProject)();
+    console.log(activeProject);
+
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
     // check if any data was found
     if (!localStorageTasks) { 
@@ -22683,6 +22670,7 @@ list.addEventListener('click', handleClick);
 // ## FINAL FUNCTION CALL 
 
 restoreFromLocalStorage(tasks);
+
 
 
 // could be a module
