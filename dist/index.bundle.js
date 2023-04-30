@@ -22338,27 +22338,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// get the project by its title
-const getProject = function(title) {
-    let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
-    const match = projectsInStorage.find(project => project.title === title);
-    return match;
-}
 
-// get the index of a project with a specified title
-const getProjectIndex = function(title) {
-    let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
-    const index = projectsInStorage.findIndex(project => project.title);
-    return index;
-}
-
-// set the active project to default project
-const activeProject = getProject('General tasks');
-(0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.changeProjectHeader)(activeProject); 
-
-// get the project by its title and look at its tasks array
-console.table(activeProject.tasks);
-console.log('index of current project: ' + getProjectIndex(activeProject));
 
 // set variables for the forms and the list in the display container
 const addTaskForm = document.querySelector('#add-task-form');
@@ -22427,6 +22407,9 @@ function handleAddProjectSubmit(event) {
 // display tasks when the page is loaded, or the user selects a project from the drop up menu in the nav bar
 function displayTasks() {
     console.log('calling displayTasks...')
+
+    // get the array of tasks from the active project in local storage
+
     // // if there are no tasks...
     // if (tasks.length === 0) {
     //     console.log('no tasks');
@@ -22439,13 +22422,34 @@ function displayTasks() {
     //     }
     // } else {
 
-        list.innerHTML = '';
-        // get the active project
-        console.log('displayTasks on project: ' + activeProject);
-        // const html = JSON.parse(localStorage.getItem('projects')).forEach(
-        // project => createLiElement(project.tasks)
+    // get the project by its title
+    const getProject = function(title) {
+        let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
+        const match = projectsInStorage.find(project => project.title === title);
+        return match;
+        }
+
+    // get the index of a project with a specified title
+    const getProjectIndex = function(title) {
+        let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
+        const index = projectsInStorage.findIndex(project => project.title === title);
+        return index;
+    }
+
+    // set the active project to default project
+    const activeProject = getProject('General tasks');
+    console.log(activeProject);
+    (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.changeProjectHeader)(activeProject); 
+    // get the project by its title and look at its tasks array
+    console.table(activeProject.tasks);
+    console.log(getProjectIndex(activeProject.title));
+
+    list.innerHTML = ''; 
+
+    const html = activeProject.tasks.forEach(
+    task => (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.createLiElement)(task));
         
-        return html;
+    return console.log('return something from displayTasks()');
     }
 
 
@@ -22468,12 +22472,14 @@ function mirrorProjectsToLocalStorage() {
 };
 
 function restoreFromLocalStorage() {
-    console.log('calling restoreFromLocalStorage...');
     // get the data from local storage
-    // let activeProject = checkActiveProject();
-    // console.log('active project: ' + activeProject);
+    let activeProject = (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.checkActiveProject)();
+    console.log('active project: ' + activeProject);
 
-    const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
+
+    const projects = JSON.parse(localStorage.getItem('projects'));
+    const localStorageTasks = projects;
+    console.log(localStorageTasks);
     
     // check if any data was found
     if (!localStorageTasks) { 
@@ -22482,7 +22488,7 @@ function restoreFromLocalStorage() {
     } else {
         tasks = localStorageTasks;
         return list.dispatchEvent(new CustomEvent('tasksUpdated'));
-    }
+    };
 }
 
 // find the item in the tasks array with the corresponding id from the element and remove it from the array, then call the function to display the new array. 
@@ -22655,13 +22661,12 @@ list.addEventListener('click', handleClick);
 function addProjectsToDOM() {
     // retrieve the projects from local storage
     let projectsFromStorage = JSON.parse(localStorage.getItem('projects'));
-    console.log(projectsFromStorage);
     return (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.projectTitles)();
 }
 
 // ## FINAL FUNCTION CALLS
 // populate the list...
-restoreFromLocalStorage(tasks);
+restoreFromLocalStorage();
 
 
 
@@ -22677,9 +22682,6 @@ function sortTasks(array) {
     console.log(arrayCopy);
     return arrayCopy;
 }
-
-
-
 
 })();
 
