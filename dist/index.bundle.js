@@ -22404,39 +22404,27 @@ function handleAddProjectSubmit(event) {
     return list.dispatchEvent(new CustomEvent('tasks updated'));
 }
 
+// ## could these two checking function be a module?
+
+// get the project by its title
+const getProject = function(title) {
+    let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
+    const match = projectsInStorage.find(project => project.title === title);
+    return match;
+    }
+
+// get the index of a project with a specified title
+const getProjectIndex = function(title) {
+    let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
+    const index = projectsInStorage.findIndex(project => project.title ===title);
+    return index;
+}
+
 // display tasks when the page is loaded, or the user selects a project from the drop up menu in the nav bar
 function displayTasks() {
     console.log('calling displayTasks...')
 
-    // get the array of tasks from the active project in local storage
-
-    // // if there are no tasks...
-    // if (tasks.length === 0) {
-    //     console.log('no tasks');
-    //     // check local storage too
-    //     if (JSON.parse(localStorage.getItem('tasks')).length === 0) {
-    //         list.innerHTML = '';
-    //         return noTasks();
-    //     } else {
-    //         return console.log('the tasks array is empty but local storage is not');
-    //     }
-    // } else {
-
-    // get the project by its title
-    const getProject = function(title) {
-        let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
-        const match = projectsInStorage.find(project => project.title === title);
-        return match;
-        }
-
-    // get the index of a project with a specified title
-    const getProjectIndex = function(title) {
-        let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
-        const index = projectsInStorage.findIndex(project => project.title === title);
-        return index;
-    }
-
-    // set the active project to default project
+    // set the active project to default project ## FOR NOW ##
     const activeProject = getProject('General tasks');
     console.log(activeProject);
     (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.changeProjectHeader)(activeProject); 
@@ -22444,13 +22432,17 @@ function displayTasks() {
     console.table(activeProject.tasks);
     console.log(getProjectIndex(activeProject.title));
 
-    list.innerHTML = ''; 
-
-    const html = activeProject.tasks.forEach(
-    task => (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.createLiElement)(task));
-        
-    return console.log('return something from displayTasks()');
+    // if there are no tasks in the active project
+    if (activeProject.tasks.length === 0) {
+        console.log('no tasks');
+        list.innerHTML = '';
+        return (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.noTasks)();
+    } else {
+        list.innerHTML = ''; 
+        const html = activeProject.tasks.forEach(task => (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.createLiElement)(task));
+        return console.log('return something from displayTasks()');
     }
+}
 
 
 
