@@ -6,23 +6,25 @@ import './input.scss';
 
 // get the project by its title
 const getProject = function(title) {
-    let array = JSON.parse(localStorage.getItem('projects'));
-    const match = array.find(project => project.title === title);
+    let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
+    const match = projectsInStorage.find(project => project.title === title);
     return match;
 }
 
 // get the index of a project with a specified title
 const getProjectIndex = function(title) {
-    let array = JSON.parse(localStorage.getItem('projects'));
-    const index = array.findIndex(project => project.title);
+    let projectsInStorage = JSON.parse(localStorage.getItem('projects'));
+    const index = projectsInStorage.findIndex(project => project.title);
     return index;
 }
 
-// set the active project by choosing it from the nav drop up menu
-const activeProject = getProject('General tasks'); // temporary
+// set the active project to default project
+const activeProject = getProject('General tasks');
+changeProjectHeader(activeProject); 
 
 // get the project by its title and look at its tasks array
 console.table(activeProject.tasks);
+console.log('index of current project: ' + getProjectIndex(activeProject));
 
 // set variables for the forms and the list in the display container
 const addTaskForm = document.querySelector('#add-task-form');
@@ -57,18 +59,9 @@ function handleAddTaskSubmit(event) {
         event.currentTarget.project.value // sets the project property
         );
 
-    // get the project to add the task to
-    let taskProject = task.project;
-    console.log(taskProject);
-    // get the index of the project
-    let projectIndex = getProjectIndex(taskProject); 
-    console.log(projectIndex);
+    let projectIndex = getProjectIndex(task.project); 
 
-    // add the new object to the specified projects array too
     projects[projectIndex].tasks.push(task); 
-    console.info(projects);
-    console.info(JSON.parse(localStorage.getItem('projects')));
-    // this works but it needs to copy to local storage..
 
     event.target.reset();
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
@@ -83,7 +76,7 @@ function handleAddTaskSubmit(event) {
 
 function handleAddProjectSubmit(event) {
     event.preventDefault();
-    // create the project from the Project class
+
     const project = new Project(
         event.currentTarget.projectTitle.value,
         event.currentTarget.projectDescription.value,
@@ -99,34 +92,28 @@ function handleAddProjectSubmit(event) {
 
 // display tasks when the page is loaded, or the user selects a project from the drop up menu in the nav bar
 function displayTasks() {
-    console.log('calling displayTasks')
+    console.log('calling displayTasks...')
+    // // if there are no tasks...
+    // if (tasks.length === 0) {
+    //     console.log('no tasks');
+    //     // check local storage too
+    //     if (JSON.parse(localStorage.getItem('tasks')).length === 0) {
+    //         list.innerHTML = '';
+    //         return noTasks();
+    //     } else {
+    //         return console.log('the tasks array is empty but local storage is not');
+    //     }
+    // } else {
 
-    // if there are no tasks...
-    if (tasks.length === 0) {
-        console.log('no tasks');
-        // check local storage too
-        if (JSON.parse(localStorage.getItem('tasks')).length === 0) {
-            list.innerHTML = '';
-            return noTasks();
-        } else {
-            return console.log('the tasks array is empty but local storage is not');
-        }
-    } else {
-        // clear all the innerHTML of the ul element
-        console.log('clearing all list html');
         list.innerHTML = '';
-        // loop over each item in the tasks array and call the dom module to create a list item element
-        console.log('populating html from local storage tasks array');
-        // change this to pull data from active project tasks array
-        // what is the active project? 
-        // when the active project is CHANGED the page header also changes. so we could check that elements text content to find out the currently viewing project. what could go wrong?
-        const html = JSON.parse(localStorage.getItem('tasks')).forEach(
-        task => createLiElement(task)
-        );
+        // get the active project
+        console.log('displayTasks on project: ' + activeProject);
+        // const html = JSON.parse(localStorage.getItem('projects')).forEach(
+        // project => createLiElement(project.tasks)
+        
         return html;
     }
-    
-}
+
 
 
 function mirrorToLocalStorage() {
@@ -137,7 +124,7 @@ function mirrorToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(sortedTasks));
     console.log('tasks array mirrored to local storage');
     // returning the list of SORTED tasks
-    return console.log(sortedTasks);
+    return list.dispatchEvent(new CustomEvent('tasks updated'));
     };
 
 function mirrorProjectsToLocalStorage() {
@@ -149,8 +136,8 @@ function mirrorProjectsToLocalStorage() {
 function restoreFromLocalStorage() {
     console.log('calling restoreFromLocalStorage...');
     // get the data from local storage
-    let activeProject = checkActiveProject();
-    console.log('active project: ' + activeProject);
+    // let activeProject = checkActiveProject();
+    // console.log('active project: ' + activeProject);
 
     const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
     
