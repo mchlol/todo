@@ -165,7 +165,9 @@ function noTasks() {
 // changes the page header based on the project passed in
 function changeProjectHeader(project) {
     let header = document.querySelector('#projectHeader');
-    return header.textContent = project.title;
+    header.textContent = project.title;
+    let p = document.querySelector('#projectDescription')
+    return p.textContent = project.description;
 }
 
 // returns the title currently displayed in the page header
