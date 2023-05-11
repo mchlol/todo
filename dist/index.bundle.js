@@ -22134,6 +22134,7 @@ function checkDueDate(date) {
 const taskList = document.querySelector('#task-list');
 
 function createLiElement(task) {
+    console.table(task);
     // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
     listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-2')
@@ -22144,6 +22145,7 @@ function createLiElement(task) {
     
     let title = document.createElement('span');
     title.classList.add('fw-bold', 'm-1')
+    console.log(task.title);
     title.textContent = task.title;
 
     let check = document.createElement('input');
@@ -22425,7 +22427,7 @@ function displayTasks() {
     console.log('calling displayTasks...')
 
     // set the active project to default project ## FOR NOW ##
-    const activeProject = getProject('General tasks');
+    const activeProject = getProject('General tasks'); // retrieve from local storage
     console.log(activeProject);
     (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.changeProjectHeader)(activeProject); 
     // get the project by its title and look at its tasks array
@@ -22439,8 +22441,10 @@ function displayTasks() {
         return (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.noTasks)();
     } else {
         list.innerHTML = ''; 
+        console.log(activeProject.tasks);
         const html = activeProject.tasks.forEach(task => (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.createLiElement)(task));
-        return console.log('return something from displayTasks()');
+        console.table(html);
+        return html;
     }
 }
 

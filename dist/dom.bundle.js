@@ -22136,6 +22136,7 @@ function checkDueDate(date) {
 const taskList = document.querySelector('#task-list');
 
 function createLiElement(task) {
+    console.table(task);
     // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
     listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-2')
@@ -22146,6 +22147,7 @@ function createLiElement(task) {
     
     let title = document.createElement('span');
     title.classList.add('fw-bold', 'm-1')
+    console.log(task.title);
     title.textContent = task.title;
 
     let check = document.createElement('input');

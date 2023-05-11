@@ -91,7 +91,7 @@ function displayTasks() {
     console.log('calling displayTasks...')
 
     // set the active project to default project ## FOR NOW ##
-    const activeProject = getProject('General tasks');
+    const activeProject = getProject('General tasks'); // retrieve from local storage
     console.log(activeProject);
     changeProjectHeader(activeProject); 
     // get the project by its title and look at its tasks array
@@ -105,8 +105,10 @@ function displayTasks() {
         return noTasks();
     } else {
         list.innerHTML = ''; 
+        console.log(activeProject.tasks);
         const html = activeProject.tasks.forEach(task => createLiElement(task));
-        return console.log('return something from displayTasks()');
+        console.table(html);
+        return html;
     }
 }
 
