@@ -22340,6 +22340,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/* ##  STATUS
+    new tasks are not saving to local storage
+    using addProjectTitlesToDOM on a custom event means the forEach function wont work in the dom.js module because it thinks the array passed in is a custom event. can we use 'this' somehow instead?
+*/
 
 
 // set variables for the forms and the list in the display container
@@ -22649,6 +22653,7 @@ list.addEventListener('tasksUpdated', mirrorProjectsToLocalStorage);
 list.addEventListener('tasksUpdated', displayTasks);
 // add any new project titles to the DOM
 // list.addEventListener('tasksUpdated', addProjectTitlesToDOM);
+   list.addEventListener('tasksUpdated', _dom_js__WEBPACK_IMPORTED_MODULE_0__.addProjectTitlesToDOM);    
 
 // when a checkbox or edit/delete icon is clicked:
 list.addEventListener('click', handleClick);
