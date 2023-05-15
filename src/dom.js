@@ -72,7 +72,6 @@ function checkDueDate(date) {
 const taskList = document.querySelector('#task-list');
 
 function createLiElement(task) {
-    console.table(task);
     // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
     listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-2')
@@ -179,16 +178,17 @@ function checkActiveProject() {
     return headerContent;
 }
 
-function projectTitles() {
+function addProjectTitlesToDOM(array) {
     // get the select element from the add task form
     const addTaskForm = document.querySelector('#add-task-form');
     let addTaskFormSelect = addTaskForm.querySelector('#projectSelect');
     let projectMenu = document.querySelector('#projectMenu');
     // get the array of projects from local storage
-    let projects = JSON.parse(localStorage.getItem('projects'));
+    // let projects = JSON.parse(localStorage.getItem('projects'));
+    console.log(array); // returns a custom event when custom event is active
+    // for each project; create an option element, add its title to the add task form select
 
-    // for each project; create an options element, add its title to the add task form select
-    projects.forEach(project => {
+    array.forEach(project => {
         let projectOption = document.createElement('option');
         projectOption.value = project.title;
         projectOption.textContent = project.title;
@@ -197,9 +197,9 @@ function projectTitles() {
         projectListItem.textContent = project.title;
         projectListItem.classList.add('dropdown-item');
         projectMenu.appendChild(projectListItem);
-    })
-    // should this function return something?
-    // is it bad design to have this one function do two DOM things?
+    });
+
+// where this function is called from a custom event it the above function thinks we are calling a custom event instead of an array
  };
 
 export {
@@ -207,5 +207,5 @@ export {
     noTasks,
     changeProjectHeader,
     checkActiveProject,
-    projectTitles,
+    addProjectTitlesToDOM
 };

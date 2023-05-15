@@ -22033,7 +22033,7 @@ class Project {
     constructor(title,description) {
         this.title = title;
         this.description = description;
-        this.projects = []; // ready to store stuff!
+        this.tasks = []; // ready to store stuff!
     }
     // methods 
 }
@@ -22050,11 +22050,11 @@ class Project {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addProjectTitlesToDOM": () => (/* binding */ addProjectTitlesToDOM),
 /* harmony export */   "changeProjectHeader": () => (/* binding */ changeProjectHeader),
 /* harmony export */   "checkActiveProject": () => (/* binding */ checkActiveProject),
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
-/* harmony export */   "noTasks": () => (/* binding */ noTasks),
-/* harmony export */   "projectTitles": () => (/* binding */ projectTitles)
+/* harmony export */   "noTasks": () => (/* binding */ noTasks)
 /* harmony export */ });
 /* harmony import */ var date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/isValid */ "./node_modules/date-fns/esm/isValid/index.js");
 /* harmony import */ var date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/isEqual */ "./node_modules/date-fns/esm/isEqual/index.js");
@@ -22134,7 +22134,6 @@ function checkDueDate(date) {
 const taskList = document.querySelector('#task-list');
 
 function createLiElement(task) {
-    console.table(task);
     // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
     listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-2')
@@ -22241,16 +22240,17 @@ function checkActiveProject() {
     return headerContent;
 }
 
-function projectTitles() {
+function addProjectTitlesToDOM(array) {
     // get the select element from the add task form
     const addTaskForm = document.querySelector('#add-task-form');
     let addTaskFormSelect = addTaskForm.querySelector('#projectSelect');
     let projectMenu = document.querySelector('#projectMenu');
     // get the array of projects from local storage
-    let projects = JSON.parse(localStorage.getItem('projects'));
+    // let projects = JSON.parse(localStorage.getItem('projects'));
+    console.log(array); // returns a custom event when custom event is active
+    // for each project; create an option element, add its title to the add task form select
 
-    // for each project; create an options element, add its title to the add task form select
-    projects.forEach(project => {
+    array.forEach(project => {
         let projectOption = document.createElement('option');
         projectOption.value = project.title;
         projectOption.textContent = project.title;
@@ -22259,9 +22259,9 @@ function projectTitles() {
         projectListItem.textContent = project.title;
         projectListItem.classList.add('dropdown-item');
         projectMenu.appendChild(projectListItem);
-    })
-    // should this function return something?
-    // is it bad design to have this one function do two DOM things?
+    });
+
+// where this function is called from a custom event it the above function thinks we are calling a custom event instead of an array
  };
 
 
@@ -22448,8 +22448,7 @@ function displayTasks() {
     }
 }
 
-
-
+// copy the state of the tasks array to local storage
 function mirrorToLocalStorage() {
     // tasks should be stored in separate category arrays 
     // sort the tasks
@@ -22461,28 +22460,27 @@ function mirrorToLocalStorage() {
     return list.dispatchEvent(new CustomEvent('tasks updated'));
     };
 
+    // copy the state of the projects array to local storage
 function mirrorProjectsToLocalStorage() {
     localStorage.setItem('projects', JSON.stringify(projects));
     console.log('project added to storage');
     return list.dispatchEvent(new CustomEvent('tasks updated'));
 };
 
+ // get the data from local storage
 function restoreFromLocalStorage() {
-    // get the data from local storage
     let activeProject = (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.checkActiveProject)();
     console.log('active project: ' + activeProject);
-
-
-    const projects = JSON.parse(localStorage.getItem('projects'));
-    const localStorageTasks = projects;
-    console.log(localStorageTasks);
-    
+    let localStorageTasks = JSON.parse(localStorage.getItem('projects'));
     // check if any data was found
     if (!localStorageTasks) { 
-        (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.noTasks)();
-        return console.log('no tasks in localStorage yet')
+        // if the localStorageTasks variable is falsy it's empty
+        console.log('no tasks in localStorage yet');
+        return (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.noTasks)();
     } else {
-        tasks = localStorageTasks;
+        // if there is no data
+        const localStorageTasks = JSON.parse(localStorage.getItem('projects'));
+        console.log(localStorageTasks);
         return list.dispatchEvent(new CustomEvent('tasksUpdated'));
     };
 }
@@ -22639,7 +22637,6 @@ function handleClick(event) {
 
 // ## EVENT LISTENERS ##
 
-// when the form is submitted (a task is added), run the handleAddTaskSubmit function
 addTaskForm.addEventListener('submit', handleAddTaskSubmit);
 editForm.addEventListener('submit', handleEditSubmit);
 addProjectForm.addEventListener('submit', handleAddProjectSubmit);
@@ -22648,22 +22645,22 @@ addProjectForm.addEventListener('submit', handleAddProjectSubmit);
 // copy tasks to local storage
 list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 list.addEventListener('tasksUpdated', mirrorProjectsToLocalStorage);
+// call the display tasks function
 list.addEventListener('tasksUpdated', displayTasks);
-list.addEventListener('tasksUpdated', addProjectsToDOM);
+// add any new project titles to the DOM
+// list.addEventListener('tasksUpdated', addProjectTitlesToDOM);
 
 // when a checkbox or edit/delete icon is clicked:
 list.addEventListener('click', handleClick);
 
-function addProjectsToDOM() {
-    // retrieve the projects from local storage
-    let projectsFromStorage = JSON.parse(localStorage.getItem('projects'));
-    return (0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.projectTitles)();
-}
+
 
 // ## FINAL FUNCTION CALLS
 // populate the list...
+mirrorProjectsToLocalStorage();
 restoreFromLocalStorage();
-
+// add the titles of the projects in state to the drop up menu and add task form select options
+(0,_dom_js__WEBPACK_IMPORTED_MODULE_0__.addProjectTitlesToDOM)(projects); // not from local storage
 
 
 

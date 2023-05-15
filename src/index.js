@@ -1,5 +1,5 @@
 // import dom functions
-import { createLiElement, noTasks, changeProjectHeader, checkActiveProject, projectTitles } from './dom.js';
+import { createLiElement, noTasks, changeProjectHeader, checkActiveProject, addProjectTitlesToDOM } from './dom.js';
 // import classes
 import { Task, Project } from './create.js';
 import './input.scss';
@@ -112,8 +112,7 @@ function displayTasks() {
     }
 }
 
-
-
+// copy the state of the tasks array to local storage
 function mirrorToLocalStorage() {
     // tasks should be stored in separate category arrays 
     // sort the tasks
@@ -125,28 +124,27 @@ function mirrorToLocalStorage() {
     return list.dispatchEvent(new CustomEvent('tasks updated'));
     };
 
+    // copy the state of the projects array to local storage
 function mirrorProjectsToLocalStorage() {
     localStorage.setItem('projects', JSON.stringify(projects));
     console.log('project added to storage');
     return list.dispatchEvent(new CustomEvent('tasks updated'));
 };
 
+ // get the data from local storage
 function restoreFromLocalStorage() {
-    // get the data from local storage
     let activeProject = checkActiveProject();
     console.log('active project: ' + activeProject);
-
-
-    const projects = JSON.parse(localStorage.getItem('projects'));
-    const localStorageTasks = projects;
-    console.log(localStorageTasks);
-    
+    let localStorageTasks = JSON.parse(localStorage.getItem('projects'));
     // check if any data was found
     if (!localStorageTasks) { 
-        noTasks();
-        return console.log('no tasks in localStorage yet')
+        // if the localStorageTasks variable is falsy it's empty
+        console.log('no tasks in localStorage yet');
+        return noTasks();
     } else {
-        tasks = localStorageTasks;
+        // if there is no data
+        const localStorageTasks = JSON.parse(localStorage.getItem('projects'));
+        console.log(localStorageTasks);
         return list.dispatchEvent(new CustomEvent('tasksUpdated'));
     };
 }
@@ -303,7 +301,6 @@ function handleClick(event) {
 
 // ## EVENT LISTENERS ##
 
-// when the form is submitted (a task is added), run the handleAddTaskSubmit function
 addTaskForm.addEventListener('submit', handleAddTaskSubmit);
 editForm.addEventListener('submit', handleEditSubmit);
 addProjectForm.addEventListener('submit', handleAddProjectSubmit);
@@ -312,22 +309,22 @@ addProjectForm.addEventListener('submit', handleAddProjectSubmit);
 // copy tasks to local storage
 list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 list.addEventListener('tasksUpdated', mirrorProjectsToLocalStorage);
+// call the display tasks function
 list.addEventListener('tasksUpdated', displayTasks);
-list.addEventListener('tasksUpdated', addProjectsToDOM);
+// add any new project titles to the DOM
+// list.addEventListener('tasksUpdated', addProjectTitlesToDOM);
 
 // when a checkbox or edit/delete icon is clicked:
 list.addEventListener('click', handleClick);
 
-function addProjectsToDOM() {
-    // retrieve the projects from local storage
-    let projectsFromStorage = JSON.parse(localStorage.getItem('projects'));
-    return projectTitles();
-}
+
 
 // ## FINAL FUNCTION CALLS
 // populate the list...
+mirrorProjectsToLocalStorage();
 restoreFromLocalStorage();
-
+// add the titles of the projects in state to the drop up menu and add task form select options
+addProjectTitlesToDOM(projects); // not from local storage
 
 
 

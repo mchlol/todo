@@ -20,7 +20,7 @@ class Project {
     constructor(title,description) {
         this.title = title;
         this.description = description;
-        this.projects = []; // ready to store stuff!
+        this.tasks = []; // ready to store stuff!
     }
     // methods 
 }

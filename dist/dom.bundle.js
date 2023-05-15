@@ -22052,11 +22052,11 @@ var __webpack_exports__ = {};
   \********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addProjectTitlesToDOM": () => (/* binding */ addProjectTitlesToDOM),
 /* harmony export */   "changeProjectHeader": () => (/* binding */ changeProjectHeader),
 /* harmony export */   "checkActiveProject": () => (/* binding */ checkActiveProject),
 /* harmony export */   "createLiElement": () => (/* binding */ createLiElement),
-/* harmony export */   "noTasks": () => (/* binding */ noTasks),
-/* harmony export */   "projectTitles": () => (/* binding */ projectTitles)
+/* harmony export */   "noTasks": () => (/* binding */ noTasks)
 /* harmony export */ });
 /* harmony import */ var date_fns_isValid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns/isValid */ "./node_modules/date-fns/esm/isValid/index.js");
 /* harmony import */ var date_fns_isEqual__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/isEqual */ "./node_modules/date-fns/esm/isEqual/index.js");
@@ -22136,7 +22136,6 @@ function checkDueDate(date) {
 const taskList = document.querySelector('#task-list');
 
 function createLiElement(task) {
-    console.table(task);
     // create the elements and add class names and attributes where required
     let listItem = document.createElement('li');
     listItem.classList.add('list-group-item', 'task-item-wrapper', 'p-2')
@@ -22243,16 +22242,17 @@ function checkActiveProject() {
     return headerContent;
 }
 
-function projectTitles() {
+function addProjectTitlesToDOM(array) {
     // get the select element from the add task form
     const addTaskForm = document.querySelector('#add-task-form');
     let addTaskFormSelect = addTaskForm.querySelector('#projectSelect');
     let projectMenu = document.querySelector('#projectMenu');
     // get the array of projects from local storage
-    let projects = JSON.parse(localStorage.getItem('projects'));
+    // let projects = JSON.parse(localStorage.getItem('projects'));
+    console.log(array); // returns a custom event when custom event is active
+    // for each project; create an option element, add its title to the add task form select
 
-    // for each project; create an options element, add its title to the add task form select
-    projects.forEach(project => {
+    array.forEach(project => {
         let projectOption = document.createElement('option');
         projectOption.value = project.title;
         projectOption.textContent = project.title;
@@ -22261,9 +22261,9 @@ function projectTitles() {
         projectListItem.textContent = project.title;
         projectListItem.classList.add('dropdown-item');
         projectMenu.appendChild(projectListItem);
-    })
-    // should this function return something?
-    // is it bad design to have this one function do two DOM things?
+    });
+
+// where this function is called from a custom event it the above function thinks we are calling a custom event instead of an array
  };
 
 
