@@ -5,8 +5,9 @@ import { Task, Project } from './create.js';
 import './input.scss';
 
 /* ##  STATUS
-    new tasks are not saving to local storage - when the page is refreshed the code runs again which overwrites the contents of projects array
-    using addProjectTitlesToDOM on a custom event means the forEach function wont work in the dom.js module because it thinks the array passed in is a custom event. can we use 'this' somehow instead?
+    projects are not being saved at all
+    new tasks are not saving to local storage - when the page is refreshed projects array is overwritten
+    priority status is not displaying on tasks
 */
 
 
@@ -16,12 +17,14 @@ const editForm = document.querySelector('#edit-task-form');
 const addProjectForm = document.querySelector('#addProjectForm');
 const list = document.querySelector('#task-list');
 
-let tasks = []; // we wont need this anymore as we'll use daily tasks array in projects array
+// let tasks = []; // we wont need this anymore as we'll use daily tasks array in projects array
+// initialise the projects array
+let projects = [];
 
 // create a dummy task as an example
 let testTaskClass = new Task("Vacuum","upstairs and downstairs","2023-04-25","Low","general");
 
-let projects = [ // initialise with one project that's where our default tasks will go
+projects = [ // initialise with one project that's where our default tasks will go
     {
         title: "General tasks",
         description: "Life admin etc.",
@@ -44,6 +47,7 @@ function handleAddTaskSubmit(event) {
         );
 
     let projectIndex = getProjectIndex(task.project); 
+    console.log(projects);
 
     projects[projectIndex].tasks.push(task); 
 
@@ -99,7 +103,7 @@ function displayTasks() {
     changeProjectHeader(activeProject); 
 
     // if there are no tasks in the active project
-    if (activeProject.tasks.length === 0) {
+    if (!activeProject.tasks) {
         console.log('no tasks');
         list.innerHTML = '';
         return noTasks();
@@ -124,8 +128,8 @@ function displayTasks() {
 
     // copy the state of the projects array to local storage
 function mirrorProjectsToLocalStorage() {
+    console.log('calling mirror projects to local storage');
     localStorage.setItem('projects', JSON.stringify(projects));
-    console.log('project added to storage');
     return list.dispatchEvent(new CustomEvent('tasks updated'));
 };
 
@@ -318,7 +322,7 @@ list.addEventListener('click', handleClick);
 
 // ## FINAL FUNCTION CALLS
 // populate the list...
-mirrorProjectsToLocalStorage();
+// mirrorProjectsToLocalStorage(); 
 restoreFromLocalStorage();
 // add the titles of the projects in state to the drop up menu and add task form select options
 addProjectTitlesToDOM(projects); // not from local storage
