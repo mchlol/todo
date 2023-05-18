@@ -82,7 +82,6 @@ function createLiElement(task) {
     
     let title = document.createElement('span');
     title.classList.add('fw-bold', 'm-1')
-    console.log(task.title);
     title.textContent = task.title;
 
     let check = document.createElement('input');
@@ -185,7 +184,7 @@ function addProjectTitlesToDOM(array) {
     let projectMenu = document.querySelector('#projectMenu');
     // get the array of projects from local storage
     // let projects = JSON.parse(localStorage.getItem('projects'));
-    console.log(array); // returns a custom event when custom event is active
+    // console.log(Array.isArray(array)); 
     // for each project; create an option element, add its title to the add task form select
 
     array.forEach(project => {

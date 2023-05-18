@@ -5,7 +5,7 @@ import { Task, Project } from './create.js';
 import './input.scss';
 
 /* ##  STATUS
-    new tasks are not saving to local storage
+    new tasks are not saving to local storage - when the page is refreshed the code runs again which overwrites the contents of projects array
     using addProjectTitlesToDOM on a custom event means the forEach function wont work in the dom.js module because it thinks the array passed in is a custom event. can we use 'this' somehow instead?
 */
 
@@ -96,11 +96,7 @@ function displayTasks() {
 
     // set the active project to default project ## FOR NOW ##
     const activeProject = getProject('General tasks'); // retrieve from local storage
-    console.log(activeProject);
     changeProjectHeader(activeProject); 
-    // get the project by its title and look at its tasks array
-    console.table(activeProject.tasks);
-    console.log(getProjectIndex(activeProject.title));
 
     // if there are no tasks in the active project
     if (activeProject.tasks.length === 0) {
@@ -109,24 +105,22 @@ function displayTasks() {
         return noTasks();
     } else {
         list.innerHTML = ''; 
-        console.log(activeProject.tasks);
         const html = activeProject.tasks.forEach(task => createLiElement(task));
-        console.table(html);
         return html;
     }
 }
 
 // copy the state of the tasks array to local storage
-function mirrorToLocalStorage() {
-    // tasks should be stored in separate category arrays 
-    // sort the tasks
-    let sortedTasks = sortTasks(tasks);
-    // ... THEN store them in localStorage under a key called 'tasks'...
-    localStorage.setItem('tasks', JSON.stringify(sortedTasks));
-    console.log('tasks array mirrored to local storage');
-    // returning the list of SORTED tasks
-    return list.dispatchEvent(new CustomEvent('tasks updated'));
-    };
+// function mirrorToLocalStorage() {
+//     // tasks should be stored in separate category arrays 
+//     // sort the tasks
+//     let sortedTasks = sortTasks(tasks);
+//     // ... THEN store them in localStorage under a key called 'tasks'...
+//     localStorage.setItem('tasks', JSON.stringify(sortedTasks));
+//     console.log('tasks array mirrored to local storage');
+//     // returning the list of SORTED tasks
+//     return list.dispatchEvent(new CustomEvent('tasks updated'));
+//     };
 
     // copy the state of the projects array to local storage
 function mirrorProjectsToLocalStorage() {
@@ -148,7 +142,6 @@ function restoreFromLocalStorage() {
     } else {
         // if there is no data
         const localStorageTasks = JSON.parse(localStorage.getItem('projects'));
-        console.log(localStorageTasks);
         return list.dispatchEvent(new CustomEvent('tasksUpdated'));
     };
 }
@@ -311,13 +304,12 @@ addProjectForm.addEventListener('submit', handleAddProjectSubmit);
 
 // when the tasksUpdated custom event fires:
 // copy tasks to local storage
-list.addEventListener('tasksUpdated', mirrorToLocalStorage);
+// list.addEventListener('tasksUpdated', mirrorToLocalStorage);
 list.addEventListener('tasksUpdated', mirrorProjectsToLocalStorage);
 // call the display tasks function
 list.addEventListener('tasksUpdated', displayTasks);
 // add any new project titles to the DOM
-// list.addEventListener('tasksUpdated', addProjectTitlesToDOM);
-   list.addEventListener('tasksUpdated', addProjectTitlesToDOM);    
+// list.addEventListener('tasksUpdated', addProjectTitlesToDOM); 
 
 // when a checkbox or edit/delete icon is clicked:
 list.addEventListener('click', handleClick);
