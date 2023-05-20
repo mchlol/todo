@@ -7,7 +7,7 @@ import './input.scss';
 /* ##  STATUS
     projects are not being saved at all
     new tasks are not saving to local storage - when the page is refreshed projects array is overwritten
-    priority status is not displaying on tasks
+    priority status is not displaying on tasks - fixed, but change the keyword category to status
 */
 
 
@@ -22,16 +22,20 @@ const list = document.querySelector('#task-list');
 let projects = [];
 
 // create a dummy task as an example
-let testTaskClass = new Task("Vacuum","upstairs and downstairs","2023-04-25","Low","general");
+let testTaskClass = new Task("Vacuum","upstairs and downstairs","2023-04-25","3","general");
 
-projects = [ // initialise with one project that's where our default tasks will go
-    {
-        title: "General tasks",
-        description: "Life admin etc.",
-        // could create a keyword using a camelCase function? eg "Daily Tasks" becomes "dailyTasks"
-        tasks: [testTaskClass],
-    },
-];
+// create a default project
+// projects is initialised as an empty array, so we want to add an object to it without overwriting this every time the page is refreshed. 
+let generalTasks = {
+    title: "General tasks",
+    description: "Life admin etc.",
+    tasks: [testTaskClass]
+};
+
+// add the project using push so if there's stuff in there it won't be overwritten
+projects.push(generalTasks);
+
+// now copy that into local storage
 
 
 // handle ADD TASK form submit
@@ -72,8 +76,6 @@ function handleAddProjectSubmit(event) {
 
     projects.push(project);
     event.target.reset();
-    
-    console.table(projects);
 
     return list.dispatchEvent(new CustomEvent('tasks updated'));
 }
@@ -129,6 +131,8 @@ function displayTasks() {
     // copy the state of the projects array to local storage
 function mirrorProjectsToLocalStorage() {
     console.log('calling mirror projects to local storage');
+    console.log("here's whats in the local projects variable...");
+    console.table(projects);
     localStorage.setItem('projects', JSON.stringify(projects));
     return list.dispatchEvent(new CustomEvent('tasks updated'));
 };
@@ -136,10 +140,12 @@ function mirrorProjectsToLocalStorage() {
  // get the data from local storage
 function restoreFromLocalStorage() {
     let activeProject = checkActiveProject();
+    // check what the active project is:
     console.log('active project: ' + activeProject);
-    let localStorageTasks = JSON.parse(localStorage.getItem('projects'));
+    // assign the localStorage contents to a variable
+    let localStorageProjects = JSON.parse(localStorage.getItem('projects'));
     // check if any data was found
-    if (!localStorageTasks) { 
+    if (!localStorageProjects) { 
         // if the localStorageTasks variable is falsy it's empty
         console.log('no tasks in localStorage yet');
         return noTasks();

@@ -22189,14 +22189,19 @@ function createLiElement(task) {
         priority.classList.add('text-warning');
         priority.textContent = 'Medium priority';
     } else if (task.priority == 3) {
-        priority.classList.add('text-success');
+        priority.classList.add('text-black-50');
         priority.textContent = 'Low priority';
-    } 
+    } else {
+        priority.classList.add('text-body-tertiary')
+        priority.textContent = "No priority";
+    }
+    console.log(task.priority, priority);
     
 
     let iconWrap = document.createElement('div');
     iconWrap.classList.add('d-flex');
 
+    // ## ISSUE - all tasks get assigned the same id for these icons, but each element must have a unique id - use class instead?
     let editBtn = document.createElement('button');
     editBtn.classList.add('btn','btn-sm');
     editBtn.setAttribute('id','edit');
@@ -22216,7 +22221,7 @@ function createLiElement(task) {
     taskPrimaryWrap.append(check,title)
     listItem.append(taskPrimaryWrap,taskSecondaryWrap);
 
-    // return the final li element appended to the ul element?
+    // return the final li element appended to the ul element...
     return taskList.appendChild(listItem);
 }
 
