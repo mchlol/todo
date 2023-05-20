@@ -7,7 +7,7 @@ import './input.scss';
 /* ##  STATUS
     projects are not being saved at all
     new tasks are not saving to local storage - when the page is refreshed projects array is overwritten
-    priority status is not displaying on tasks - fixed, but change the keyword category to status
+    change the keyword category to status for displaying "overdue" etc. messages
 */
 
 
@@ -181,7 +181,7 @@ function deleteTask(id) {
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
-
+// ## REFACTOR TO USE PROJECTS ARRAY INSTEAD OF TASKS ##
 // mark a task as complete and update its status on the page and in local storage
 function markComplete(id) {
     console.log('calling markComplete()...')

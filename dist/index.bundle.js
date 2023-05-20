@@ -22173,10 +22173,10 @@ function createLiElement(task) {
         dueDate.textContent = dateHandler(parsedDate);
     }
 
-    let category = document.createElement('span');
-    category.classList.add('small', 'm-1');
-    task.category = checkDueDate(task.dueDate);
-    category.textContent = task.category;
+    let status = document.createElement('span');
+    status.classList.add('small', 'm-1');
+    task.status = checkDueDate(task.dueDate);
+    status.textContent = task.status;
 
     let priority = document.createElement('span');
     priority.classList.add('small','m-1');
@@ -22193,8 +22193,6 @@ function createLiElement(task) {
         priority.classList.add('text-body-tertiary')
         priority.textContent = "No priority";
     }
-    console.log(task.priority, priority);
-    
 
     let iconWrap = document.createElement('div');
     iconWrap.classList.add('d-flex');
@@ -22214,7 +22212,7 @@ function createLiElement(task) {
 
     // append the elements
     iconWrap.append(editBtn,delBtn);
-    detailsRow.append(dueDate,category,priority,iconWrap);
+    detailsRow.append(dueDate,status,priority,iconWrap);
     taskSecondaryWrap.append(notes,detailsRow);
     taskPrimaryWrap.append(check,title)
     listItem.append(taskPrimaryWrap,taskSecondaryWrap);
@@ -22347,7 +22345,7 @@ __webpack_require__.r(__webpack_exports__);
 /* ##  STATUS
     projects are not being saved at all
     new tasks are not saving to local storage - when the page is refreshed projects array is overwritten
-    priority status is not displaying on tasks - fixed, but change the keyword category to status
+    change the keyword category to status for displaying "overdue" etc. messages
 */
 
 
@@ -22521,7 +22519,7 @@ function deleteTask(id) {
     return list.dispatchEvent(new CustomEvent('tasksUpdated'));
 }
 
-
+// ## REFACTOR TO USE PROJECTS ARRAY INSTEAD OF TASKS ##
 // mark a task as complete and update its status on the page and in local storage
 function markComplete(id) {
     console.log('calling markComplete()...')
