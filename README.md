@@ -1,5 +1,7 @@
 # To do list - WIP
 
+*This project is on hold until August 2023 while I complete a 3 month bootcamp*
+
 Time to tackle the ol' to do list app. 
 This project is part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list) curriculum.  
 The code for this project does contain a lot of comments and console logs. As this is a beginner project, at this point I plan to leave them *for my own reference*.  
